@@ -1,0 +1,38 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API for ProHits-viz",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node index.js",
+    "prod": "NODE_ENV=production node index.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knightjdr/prohits-viz-api.git"
+  },
+  "author": "James Knight",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/knightjdr/prohits-viz-api/issues"
+  },
+  "homepage": "https://github.com/knightjdr/prohits-viz-api#readme",
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "jest": "^22.4.2",
+    "md5": "^2.2.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "http": "0.0.0",
+    "mongodb": "^3.0.4",
+    "winston": "^2.4.0"
+  }
+}
