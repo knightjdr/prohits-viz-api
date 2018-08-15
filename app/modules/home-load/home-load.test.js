@@ -27,43 +27,59 @@ afterEach(() => {
   Find.mockClear();
 });
 
-describe('home page load', () => {
-  beforeAll(() => {
-    Find
-      .mockResolvedValueOnce(returnValues.news.find)
-      .mockResolvedValueOnce(returnValues.spotlight.find);
-    AddMongoDate.arr
-      .mockReturnValueOnce(returnValues.news.addDate)
-      .mockReturnValueOnce(returnValues.spotlight.addDate);
+describe('Home page load', () => {
+  describe('when database has news and spotlight articles', () => {
+    let response;
+
+    beforeAll(async (done) => {
+      Find
+        .mockResolvedValueOnce(returnValues.news.find)
+        .mockResolvedValueOnce(returnValues.spotlight.find);
+      AddMongoDate.arr
+        .mockReturnValueOnce(returnValues.news.addDate)
+        .mockReturnValueOnce(returnValues.spotlight.addDate);
+      HomeLoad()
+        .then((result) => {
+          response = result;
+          done();
+        });
+    });
+
+    it('should return 200 status', () => {
+      expect(response.status).toBe(200);
+    });
+
+    it('should return data object', () => {
+      expect(response.data).toEqual({
+        news: returnValues.news.addDate,
+        spotlight: returnValues.spotlight.addDate,
+      });
+    });
   });
 
-  test('database has news and spotlight articles', () => (
-    HomeLoad()
-      .then((result) => {
-        expect(result.status).toBe(200);
-        expect(result.data).toEqual({
-          news: returnValues.news.addDate,
-          spotlight: returnValues.spotlight.addDate,
-        });
-      })
-  ));
-});
+  describe('when database query gives and error', () => {
+    let response;
 
-describe('home page load', () => {
-  beforeAll(() => {
-    Find
-      .mockRejectedValueOnce(err)
-      .mockRejectedValueOnce(err);
+    beforeAll(async (done) => {
+      Find
+        .mockRejectedValueOnce(err)
+        .mockRejectedValueOnce(err);
+      HomeLoad()
+        .then((result) => {
+          response = result;
+          done();
+        });
+    });
+
+    it('should return 200 status', () => {
+      expect(response.status).toBe(200);
+    });
+
+    it('should return null data object', () => {
+      expect(response.data).toEqual({
+        news: null,
+        spotlight: null,
+      });
+    });
   });
-
-  test('database query gives and error', () => (
-    HomeLoad()
-      .then((result) => {
-        expect(result.status).toBe(200);
-        expect(result.data).toEqual({
-          news: null,
-          spotlight: null,
-        });
-      })
-  ));
 });

@@ -31,13 +31,13 @@ afterAll(() => (
 ));
 
 describe('FindOne', () => {
-  test('find one record in the database', () => (
+  it('should find one record in the database', () => (
     FindOne('get', { name: 'test' }).then((getCollection) => {
       expect(getCollection).toEqual(response.one);
     })
   ));
 
-  test('subset returned documents from database', () => (
+  it('should subset returned documents from database', () => (
     FindOne('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
       expect(getCollection).toEqual(response.subset);
     })

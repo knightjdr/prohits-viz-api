@@ -5,16 +5,13 @@ const AddMongoDate = {
   arr: (arr) => {
     if (Array.isArray(arr)) {
       return arr.map((obj) => {
-        if (typeof obj === 'object') {
-          return Object.assign(
-            {},
-            obj,
-            {
-              dbDate: obj._id ? IdToDate(obj._id) : null,
-            },
-          );
-        }
-        return obj;
+        return Object.assign(
+          {},
+          obj,
+          {
+            dbDate: obj._id ? IdToDate(obj._id) : null,
+          },
+        );
       });
     }
     return arr;

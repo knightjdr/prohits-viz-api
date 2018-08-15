@@ -1,13 +1,5 @@
 /* eslint global-require: "off" */
 const fs = require('fs');
-const Logger = require('./logger');
-
-// mock config
-jest.mock('./config', () => (
-  {
-    logPrefix: 'test-',
-  }
-));
 
 // expected messages
 const messages = {
@@ -26,27 +18,39 @@ const promiseDelay = () => (
   })
 );
 
-beforeAll(() => {
-  Logger.error('test');
-  Logger.info('test');
-});
 afterAll(() => {
   fs.unlinkSync('logs/test-combined.log');
   fs.unlinkSync('logs/test-error.log');
 });
 
-describe('production logging', () => {
-  test('all messages should log to combined.log', async () => {
-    // need a delay with this test because logger doesn't write immediately
-    await promiseDelay();
-    const file = fs.readFileSync('logs/test-combined.log', 'utf8');
-    expect(file).toMatch(messages.output.combined);
-  });
+describe('Logging', () => {
+  describe('in production', () => {
+    let Logger;
 
-  test('error messages should log to error.log', async () => {
-    // need a delay with this test because logger doesn't write immediately
-    await promiseDelay();
-    const file = fs.readFileSync('logs/test-error.log', 'utf8');
-    expect(file).toMatch(messages.output.error);
+    beforeAll(() => {
+      jest.mock('./config', () => (
+        {
+          logPrefix: 'test-',
+        }
+      ));
+      process.env.NODE_ENV = 'production';
+      Logger = require('./logger');
+      Logger.error('test');
+      Logger.info('test');
+    });
+
+    it('should log all messages to combined.log', async () => {
+      // need a delay with this test because logger doesn't write immediately
+      await promiseDelay();
+      const file = fs.readFileSync('logs/test-combined.log', 'utf8');
+      expect(file).toMatch(messages.output.combined);
+    });
+
+    it('should log error messages to error.log', async () => {
+      // need a delay with this test because logger doesn't write immediately
+      await promiseDelay();
+      const file = fs.readFileSync('logs/test-error.log', 'utf8');
+      expect(file).toMatch(messages.output.error);
+    });
   });
 });

@@ -4,7 +4,7 @@
   "description": "API for ProHits-viz",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development node index.js",
+    "dev": "NODE_ENV=development nodemon node index.js",
     "prod": "NODE_ENV=production node index.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
@@ -33,6 +33,26 @@
     "express": "^4.16.2",
     "http": "0.0.0",
     "mongodb": "^3.0.4",
+    "rimraf": "^2.6.2",
+    "socket.io": "^2.1.1",
+    "uuid": "^3.3.2",
     "winston": "^2.4.0"
+  },
+  "nodemonConfig": {
+    "ext": ".js,.json",
+    "ignore": [
+      "coverage/*",
+      "log/*",
+      "node_modules/",
+      "tmp/*",
+      "**/*.test.js"
+    ],
+    "watch": [
+      "app/*",
+      "config.js",
+      "index.js",
+      "logger.js"
+    ],
+    "verbose": true
   }
 }

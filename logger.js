@@ -14,8 +14,8 @@ const tsOptions = {
 };
 const tsFormat = () => (new Date()).toLocaleTimeString('en-CA', tsOptions);
 
-// configure logger
-// the filename prefix is so that in the test env I can write to unique files
+/* Configure logger. The filename prefix is so that in the test env I can write
+** to unique files. */
 const Logger = new (winston.Logger)({
   exitOnError: false,
   transports: [
@@ -35,7 +35,7 @@ const Logger = new (winston.Logger)({
   ],
 });
 
-// in development environment don't log to files, just console
+// In development environment don't log to files, just console.
 if (env === 'development') {
   Logger.remove('error-file');
   Logger.remove('log-file');

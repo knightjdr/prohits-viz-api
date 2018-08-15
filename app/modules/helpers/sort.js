@@ -1,4 +1,4 @@
-// sort two characters or numbers
+// Sort two characters or numbers.
 const Sort = {
   character: (a, b) => {
     // ensure a and b are not null or if one is null sort as if less than the other

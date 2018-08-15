@@ -25,17 +25,23 @@ const mappedArr = [
 ];
 
 describe('AddMongoDate', () => {
-  test('add date to array of mongo documents', () => {
-    // map array of objects
+  it('should add date to array of mongo documents', () => {
     expect(AddMongoDate.arr(startingArr)).toEqual(mappedArr);
-    // simply return things that are not arrays
-    expect(AddMongoDate.arr({ a: 1 })).toEqual({ a: 1 });
   });
 
-  test('add date to mongo document', () => {
-    // map array of objects
+  it('should simply return things that are not an array', () => {
+    expect(AddMongoDate.arr({ a: 1 })).toEqual({ a: 1 });
+  })
+
+  it('should add date to mongo document', () => {
     expect(AddMongoDate.obj(startingArr[0])).toEqual(mappedArr[0]);
-    // simply return things that are not object
-    expect(AddMongoDate.arr(['a'])).toEqual(['a']);
   });
+
+  it('should return null date to mongo document', () => {
+    expect(AddMongoDate.obj(startingArr[3])).toEqual(mappedArr[3]);
+  });
+
+  it('should simply return things that are not an object', () =>{
+    expect(AddMongoDate.obj(['a'])).toEqual(['a']);
+  })
 });

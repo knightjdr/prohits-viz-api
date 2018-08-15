@@ -25,17 +25,19 @@ MongoClient.connect
   .mockImplementationOnce(() => Promise.resolve(mockClient))
   .mockImplementationOnce(() => Promise.reject(err));
 
-test('database initialization from mongoclient success', () => (
-  Init().then((data) => {
-    expect(data).toEqual({
-      client: mockClient,
-      db: 'test',
-    });
-  })
-));
+describe('Database initialization', () => {
+  it('should give success', () => (
+    Init().then((data) => {
+      expect(data).toEqual({
+        client: mockClient,
+        db: 'test',
+      });
+    })
+  ));
 
-test('database initialization from mongoclient error', () => (
-  Init().catch((data) => {
-    expect(data).toEqual(new Error('err'));
-  })
-));
+  test('should give error', () => (
+    Init().catch((data) => {
+      expect(data).toEqual(new Error('err'));
+    })
+  ));
+});

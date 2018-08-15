@@ -1,16 +1,18 @@
 const HomeLoad = require('./modules/home-load/home-load');
 const News = require('./modules/news/news');
+const Sync = require('./modules/sync/sync');
 
 const Routes = {
   configure: (app) => {
-    // get all content for home page
+    /* GET */
+    // Get all content for home page.
     app.get('/api/home/', (req, res) => {
       HomeLoad()
         .then((response) => {
           Routes.response(res, response);
         });
     });
-    // get news
+    // Get news.
     app.get('/api/news/', (req, res) => {
       News()
         .then((response) => {
@@ -23,13 +25,21 @@ const Routes = {
           Routes.response(res, response);
         });
     });
-    // invalid get methods
+    // Invalid get methods.
     app.get('*', (req, res) => {
       res.status(404).send({
         message: Routes.messages.invalidRoute,
       });
     });
-    // for invalid methods
+
+    /* POST */
+    app.post('/api/sync/', (req, res) => {
+      Sync(req.app.get('socketio'), req.body)
+        .then((response) => {
+          Routes.response(res, response);
+        });
+    });
+    // For invalid methods.
     app.use((req, res) => {
       res.status(405).send({
         message: Routes.messages.notSupported,
