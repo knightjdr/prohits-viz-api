@@ -1,6 +1,7 @@
 const HomeLoad = require('./modules/home-load/home-load');
+const getSocket = require('./middleware/get-socket');
 const News = require('./modules/news/news');
-const Sync = require('./modules/sync/sync');
+const sync = require('./modules/sync/sync');
 
 const Routes = {
   configure: (app) => {
@@ -33,8 +34,8 @@ const Routes = {
     });
 
     /* POST */
-    app.post('/api/sync/', (req, res) => {
-      Sync(req.app.get('socketio'), req.body)
+    app.post('/api/sync/', getSocket, (req, res) => {
+      sync(res.locals.socket, req.body)
         .then((response) => {
           Routes.response(res, response);
         });
