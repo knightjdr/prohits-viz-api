@@ -1,3 +1,4 @@
+const analysis = require('./modules/analysis/analysis');
 const HomeLoad = require('./modules/home-load/home-load');
 const getSocket = require('./middleware/get-socket');
 const News = require('./modules/news/news');
@@ -13,6 +14,7 @@ const Routes = {
           Routes.response(res, response);
         });
     });
+
     // Get news.
     app.get('/api/news/', (req, res) => {
       News()
@@ -26,6 +28,7 @@ const Routes = {
           Routes.response(res, response);
         });
     });
+
     // Invalid get methods.
     app.get('*', (req, res) => {
       res.status(404).send({
@@ -34,12 +37,29 @@ const Routes = {
     });
 
     /* POST */
+    // GO analysis.
+    app.post('/api/analysis/viz/go', getSocket, (req, res) => {
+      analysis.go(res.locals.socket, req.body)
+        .then((response) => {
+          Routes.response(res, response);
+        });
+    });
+
+    // Sync minimap.
     app.post('/api/sync/', getSocket, (req, res) => {
       sync(res.locals.socket, req.body)
         .then((response) => {
           Routes.response(res, response);
         });
     });
+
+    // Invalid post routes.
+    app.post('*', (req, res) => {
+      res.status(404).send({
+        message: Routes.messages.invalidRoute,
+      });
+    });
+
     // For invalid methods.
     app.use((req, res) => {
       res.status(405).send({
