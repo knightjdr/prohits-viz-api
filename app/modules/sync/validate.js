@@ -1,3 +1,5 @@
+const criteria = require('../helpers/validate-criteria');
+
 const acceptedColors = ['blueBlack', 'greenBlack', 'greyscale', 'redBlack', 'yellowBlack'];
 const acceptedScores = ['gte', 'lte'];
 
@@ -26,21 +28,19 @@ const validateDotplot = (body) => {
     secondaryFilter,
   } = body;
   const syncObj = {
+    imageType: 'dotplot',
     rows,
   };
-  syncObj.abundanceCap = typeof abundanceCap === 'number' ? abundanceCap : defaultSettings.abundanceCap;
+  syncObj.abundanceCap = criteria.isNumber(abundanceCap, defaultSettings.abundanceCap);
   syncObj.edgeColor = edgeColor && acceptedColors.includes(edgeColor) ?
     edgeColor : defaultSettings.edgeColor;
   syncObj.fillColor = fillColor && acceptedColors.includes(fillColor) ?
     fillColor : defaultSettings.fillColor;
-  syncObj.imageType = 'dotplot';
-  syncObj.invertColor = typeof invertColor === 'boolean' ? invertColor : defaultSettings.invertColor;
-  syncObj.primaryFilter = typeof primaryFilter === 'number' ?
-    primaryFilter : defaultSettings.primaryFilter;
+  syncObj.invertColor = criteria.isBoolean(invertColor, defaultSettings.invertColor);
+  syncObj.primaryFilter = criteria.isNumber(primaryFilter, defaultSettings.primaryFilter);
   syncObj.scoreType = scoreType && acceptedScores.includes(scoreType) ?
     scoreType : defaultSettings.scoreType;
-  syncObj.secondaryFilter = typeof secondaryFilter === 'number' ?
-    secondaryFilter : defaultSettings.secondaryFilter;
+  syncObj.secondaryFilter = criteria.isNumber(secondaryFilter, defaultSettings.secondaryFilter);
 
   return syncObj;
 };
@@ -54,13 +54,13 @@ const validateHeatmap = (body) => {
     scoreType,
   } = body;
   const syncObj = {
+    imageType: 'heatmap',
     rows,
   };
-  syncObj.abundanceCap = typeof abundanceCap === 'number' ? abundanceCap : defaultSettings.abundanceCap;
+  syncObj.abundanceCap = criteria.isNumber(abundanceCap, defaultSettings.abundanceCap);
   syncObj.fillColor = fillColor && acceptedColors.includes(fillColor) ?
     fillColor : defaultSettings.fillColor;
-  syncObj.imageType = 'heatmap';
-  syncObj.invertColor = typeof invertColor === 'boolean' ? invertColor : defaultSettings.invertColor;
+    syncObj.invertColor = criteria.isBoolean(invertColor, defaultSettings.invertColor);
   syncObj.scoreType = scoreType && acceptedScores.includes(scoreType) ?
     scoreType : defaultSettings.scoreType;
 
