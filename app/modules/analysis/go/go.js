@@ -1,13 +1,15 @@
-const fetch = require('isomorphic-fetch');
+/* global fetch */
+
+require('isomorphic-fetch');
 
 const parseText = require('./parse-text');
-const ConvertToForm = require('../to-form');
+const convertToForm = require('../convert-to-form');
 const { validateGo } = require('./validate');
 
 // Peform GO analysis.
 const go = (socket, body) => (
   new Promise((resolve) => {
-    const validatedForm = ConvertToForm(validateGo(body));
+    const validatedForm = convertToForm(validateGo(body));
 
     const url = 'https://biit.cs.ut.ee/gprofiler/index.cgi';
     fetch(url, {
@@ -26,12 +28,15 @@ const go = (socket, body) => (
       .then(response => (
         response.text()
       ))
+      .then(text => (
+        parseText(text)
+      ))
       .then((data) => {
         socket.emit(
           'action',
           {
             analysisType: 'go',
-            results: parseText(data),
+            results: data,
             type: 'SET_VIZ_ANALYSIS_RESULTS',
           },
         );
