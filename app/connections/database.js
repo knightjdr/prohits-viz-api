@@ -1,16 +1,16 @@
-const Init = require('./init');
+const init = require('./init');
 const Logger = require('../../logger');
 
 // initialize database when class is first requried
-const Database = {
+const database = {
   client: null,
   close: () => (
     new Promise((resolve, reject) => {
-      if (Database.connection) {
-        Database.client.close()
+      if (database.connection) {
+        database.client.close()
           .then(() => {
-            Database.client = null;
-            Database.connection = null;
+            database.client = null;
+            database.connection = null;
             Logger.info('database connection closed');
             resolve();
           })
@@ -25,10 +25,10 @@ const Database = {
   connection: null,
   init: () => (
     new Promise((resolve, reject) => {
-      Init()
+      init()
         .then((initObj) => {
-          Database.client = initObj.client;
-          Database.connection = initObj.db;
+          database.client = initObj.client;
+          database.connection = initObj.db;
           resolve();
         })
         .catch((err) => {
@@ -38,4 +38,5 @@ const Database = {
     })
   ),
 };
-module.exports = Database;
+
+module.exports = database;

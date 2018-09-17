@@ -1,7 +1,7 @@
-const Config = require('../../../config');
-const Database = require('../../connections/database');
+const config = require('../../../config');
+const database = require('../../connections/database');
 
-const Find = (
+const find = (
   collection,
   queryObject = {},
   returnObject = {},
@@ -9,8 +9,8 @@ const Find = (
   limit = 0,
 ) => (
   new Promise((resolve, reject) => {
-    const db = Database.connection;
-    db.collection(`${Config.database.prefix}${collection}`)
+    const db = database.connection;
+    db.collection(`${config.database.prefix}${collection}`)
       .find(queryObject, { projection: returnObject })
       .sort(sorted)
       .limit(limit)
@@ -23,4 +23,4 @@ const Find = (
       });
   })
 );
-module.exports = Find;
+module.exports = find;

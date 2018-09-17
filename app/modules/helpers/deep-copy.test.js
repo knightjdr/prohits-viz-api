@@ -1,4 +1,4 @@
-const DeepCopy = require('./deep-copy');
+const deepCopy = require('./deep-copy');
 const md5 = require('md5');
 
 const testValues = {
@@ -17,19 +17,19 @@ const md5Expected = {
 
 describe('deep copy', () => {
   it('should return null when value is nullish', () => {
-    expect(DeepCopy(null)).toBeNull();
-    expect(DeepCopy('')).toBeNull();
+    expect(deepCopy(null)).toBeNull();
+    expect(deepCopy('')).toBeNull();
   });
 
   it('should deep copy an array', () => {
-    expect(md5(DeepCopy(testValues.arr))).toBe(md5Expected.arr);
+    expect(md5(deepCopy(testValues.arr))).toBe(md5Expected.arr);
   });
 
   it('should deep copy an object', () => {
-    expect(md5(DeepCopy(testValues.obj))).toBe(md5Expected.obj);
+    expect(md5(deepCopy(testValues.obj))).toBe(md5Expected.obj);
   });
 
   it('should deep copy an array of objects', () => {
-    expect(md5(DeepCopy(testValues.arrObj))).toBe(md5Expected.arrObj);
+    expect(md5(deepCopy(testValues.arrObj))).toBe(md5Expected.arrObj);
   });
 });

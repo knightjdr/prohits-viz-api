@@ -1,9 +1,9 @@
 process.env.NODE_ENV = test;
-const Database = require('../../connections/database');
-const Find = require('./find');
+const database = require('../../connections/database');
+const find = require('./find');
 const { ObjectID } = require('mongodb');
 
-// mock Config
+// mock config
 jest.mock('../../../config', () => (
   {
     database: {
@@ -40,39 +40,39 @@ const response = {
 };
 
 beforeAll(() => (
-  Database.init()
+  database.init()
 ));
 afterAll(() => (
-  Database.close()
+  database.close()
 ));
 
-describe('Find', () => {
+describe('find', () => {
   it('should find all records in the database', () => (
-    Find('get').then((getCollection) => {
+    find('get').then((getCollection) => {
       expect(getCollection).toEqual(response.all);
     })
   ));
 
   it('should find one record in the database', () => (
-    Find('get', { name: 'test' }).then((getCollection) => {
+    find('get', { name: 'test' }).then((getCollection) => {
       expect(getCollection).toEqual(response.one);
     })
   ));
 
   it('should find subset returned documents from database', () => (
-    Find('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
+    find('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
       expect(getCollection).toEqual(response.subset);
     })
   ));
 
   it('should find sort returned documents from database', () => (
-    Find('get', {}, {}, { _id: -1 }).then((getCollection) => {
+    find('get', {}, {}, { _id: -1 }).then((getCollection) => {
       expect(getCollection).toEqual(response.sorted);
     })
   ));
 
   it('should find limit returned documents from database', () => (
-    Find('get', {}, {}, {}, 1).then((getCollection) => {
+    find('get', {}, {}, {}, 1).then((getCollection) => {
       expect(getCollection).toEqual(response.limit);
     })
   ));

@@ -1,18 +1,13 @@
-const IdToDate = require('./id-to-date');
+const idToDate = require('./id-to-date');
 
 // adds ISO date to an array of mongo documents based on the _id field
-const AddMongoDate = {
+const addMongoDate = {
   arr: (arr) => {
     if (Array.isArray(arr)) {
-      return arr.map((obj) => {
-        return Object.assign(
-          {},
-          obj,
-          {
-            dbDate: obj._id ? IdToDate(obj._id) : null,
-          },
-        );
-      });
+      return arr.map(obj => ({
+        ...obj,
+        dbDate: obj._id ? idToDate(obj._id) : null,
+      }));
     }
     return arr;
   },
@@ -25,11 +20,11 @@ const AddMongoDate = {
         {},
         obj,
         {
-          dbDate: obj._id ? IdToDate(obj._id) : null,
+          dbDate: obj._id ? idToDate(obj._id) : null,
         },
       );
     }
     return obj;
   },
 };
-module.exports = AddMongoDate;
+module.exports = addMongoDate;

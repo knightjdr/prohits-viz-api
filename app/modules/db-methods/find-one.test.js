@@ -1,6 +1,6 @@
 process.env.NODE_ENV = test;
-const Database = require('../../connections/database');
-const FindOne = require('./find-one');
+const database = require('../../connections/database');
+const findOne = require('./find-one');
 const { ObjectID } = require('mongodb');
 
 // mock Config
@@ -24,21 +24,21 @@ const response = {
 };
 
 beforeAll(() => (
-  Database.init()
+  database.init()
 ));
 afterAll(() => (
-  Database.close()
+  database.close()
 ));
 
-describe('FindOne', () => {
+describe('findOne', () => {
   it('should find one record in the database', () => (
-    FindOne('get', { name: 'test' }).then((getCollection) => {
+    findOne('get', { name: 'test' }).then((getCollection) => {
       expect(getCollection).toEqual(response.one);
     })
   ));
 
   it('should subset returned documents from database', () => (
-    FindOne('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
+    findOne('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
       expect(getCollection).toEqual(response.subset);
     })
   ));

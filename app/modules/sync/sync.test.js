@@ -15,24 +15,29 @@ validate.validateSync = jest.fn().mockReturnValue({});
 
 const sync = require('./sync');
 
-const socket = {
-  emit: jest.fn(),
+const req = {
+  body: {},
+};
+const res = {
+  end: jest.fn(),
+  locals: {
+    socket: { emit: jest.fn() },
+  },
+  status: jest.fn(),
 };
 
 describe('Call sync promise', () => {
   describe('with successful file write', () => {
-    let result;
-
-    beforeAll(async (done) => {
-      sync(socket, {})
-        .then((value) => {
-          result = value;
-          done();
-        });
+    beforeAll(() => {
+      sync(req, res);
     });
 
-    it('should resolve with status 200', () => {
-      expect(result.status).toBe(200);
+    it('should resolve with default status', () => {
+      expect(res.status).not.toHaveBeenCalled();
+    });
+
+    it('should end response', () => {
+      expect(res.end).toHaveBeenCalled();
     });
 
     it('should validate body', () => {
@@ -59,7 +64,7 @@ describe('Call sync promise', () => {
     });
 
     it('should call write callback', () => {
-      expect(writeCallback).toHaveBeenCalledWith('err', socket, 'testdir');
+      expect(writeCallback).toHaveBeenCalledWith('err', res.locals.socket, 'testdir');
     });
   });
 });

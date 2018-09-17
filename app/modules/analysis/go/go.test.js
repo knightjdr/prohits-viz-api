@@ -7,7 +7,7 @@ const validate = require('./validate');
 
 jest.mock('isomorphic-fetch');
 jest.mock('./parse-text');
-jest.mock('../to-form');
+jest.mock('../convert-to-form');
 
 convertToForm.mockReturnValue('form');
 const validateGoOrig = validate.validateGo;
@@ -16,8 +16,15 @@ validate.validateGo = jest.fn().mockReturnValue({});
 // Module under test.
 const go = require('./go');
 
-const socket = {
-  emit: jest.fn(),
+const req = {
+  body: 'body',
+};
+const res = {
+  end: jest.fn(),
+  locals: {
+    socket: { emit: jest.fn() },
+  },
+  status: jest.fn(),
 };
 
 afterAll(() => {
@@ -26,20 +33,21 @@ afterAll(() => {
 });
 
 describe('GO anlaysis', () => {
-  describe('with succesfuly fetch', () => {
-    let resolvedResult;
-
+  describe('with succesful fetch', () => {
     beforeAll(async (done) => {
       fetchMock.postOnce('*', 'text');
       parseText.mockResolvedValue({});
-      go(socket, 'body').then((result) => {
-        resolvedResult = result;
+      go(req, res).then(() => {
         done();
       });
     });
 
-    it('should resolve with status 200', () => {
-      expect(resolvedResult.status).toBe(200);
+    it('should resolve with default status', () => {
+      expect(res.status).not.toHaveBeenCalled();
+    });
+
+    it('should end response', () => {
+      expect(res.end).toHaveBeenCalled();
     });
 
     it('should validate request body', () => {
@@ -71,23 +79,24 @@ describe('GO anlaysis', () => {
         results: {},
         type: 'SET_VIZ_ANALYSIS_RESULTS',
       };
-      expect(socket.emit).toHaveBeenCalledWith('action', action);
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', action);
     });
   });
 
-  describe('with succesfuly fetch', () => {
-    let resolvedResult;
-
+  describe('with failed fetch', () => {
     beforeAll(async (done) => {
       fetchMock.postOnce('*', 400, { overwriteRoutes: true });
-      go(socket, 'body').then((result) => {
-        resolvedResult = result;
+      go(req, res).then(() => {
         done();
       });
     });
 
-    it('should resolve with status 200', () => {
-      expect(resolvedResult.status).toBe(200);
+    it('should resolve with default status', () => {
+      expect(res.status).not.toHaveBeenCalled();
+    });
+
+    it('should end response', () => {
+      expect(res.end).toHaveBeenCalled();
     });
 
     it('should emit socket event', () => {
@@ -95,7 +104,7 @@ describe('GO anlaysis', () => {
         analysisType: 'go',
         type: 'VIZ_ANALYSIS_ERROR',
       };
-      expect(socket.emit).toHaveBeenCalledWith('action', action);
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', action);
     });
   });
 });

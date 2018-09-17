@@ -6,10 +6,10 @@ const parseText = require('./parse-text');
 const convertToForm = require('../convert-to-form');
 const { validateGo } = require('./validate');
 
-// Peform GO analysis.
-const go = (socket, body) => (
+const go = (req, res) => (
   new Promise((resolve) => {
-    const validatedForm = convertToForm(validateGo(body));
+    const { socket } = res.locals;
+    const validatedForm = convertToForm(validateGo(req.body));
 
     const url = 'https://biit.cs.ut.ee/gprofiler/index.cgi';
     fetch(url, {
@@ -45,7 +45,8 @@ const go = (socket, body) => (
         socket.emit('action', { analysisType: 'go', type: 'VIZ_ANALYSIS_ERROR' });
       });
 
-    resolve({ status: 200 });
+    res.end();
+    resolve();
   })
 );
 

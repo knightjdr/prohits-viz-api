@@ -1,5 +1,5 @@
-// Sort two characters or numbers.
-const Sort = {
+// sort two characters or numbers.
+const sort = {
   character: (a, b) => {
     // ensure a and b are not null or if one is null sort as if less than the other
     if (
@@ -40,9 +40,9 @@ const Sort = {
       return -1;
     }
     // x and y are numeric, now convert to numbers and sort
-    const xSort = Number(x);
-    const ySort = Number(y);
-    return xSort - ySort;
+    const xsort = Number(x);
+    const ysort = Number(y);
+    return xsort - ysort;
   },
 };
-module.exports = Sort;
+module.exports = sort;

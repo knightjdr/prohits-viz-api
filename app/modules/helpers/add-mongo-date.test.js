@@ -1,10 +1,10 @@
-const AddMongoDate = require('./add-mongo-date');
-const IdToDate = require('./id-to-date');
+const addMongoDate = require('./add-mongo-date');
+const idToDate = require('./id-to-date');
 const { ObjectID } = require('mongodb');
 
 // mock idToDate
 jest.mock('./id-to-date');
-IdToDate
+idToDate
   .mockReturnValueOnce('2018-03-12T16:36:33Z')
   .mockReturnValueOnce('2018-03-12T16:36:40Z')
   .mockReturnValueOnce(null)
@@ -24,24 +24,24 @@ const mappedArr = [
   { field: 'bbb', dbDate: null },
 ];
 
-describe('AddMongoDate', () => {
+describe('addMongoDate', () => {
   it('should add date to array of mongo documents', () => {
-    expect(AddMongoDate.arr(startingArr)).toEqual(mappedArr);
+    expect(addMongoDate.arr(startingArr)).toEqual(mappedArr);
   });
 
   it('should simply return things that are not an array', () => {
-    expect(AddMongoDate.arr({ a: 1 })).toEqual({ a: 1 });
-  })
+    expect(addMongoDate.arr({ a: 1 })).toEqual({ a: 1 });
+  });
 
   it('should add date to mongo document', () => {
-    expect(AddMongoDate.obj(startingArr[0])).toEqual(mappedArr[0]);
+    expect(addMongoDate.obj(startingArr[0])).toEqual(mappedArr[0]);
   });
 
   it('should return null date to mongo document', () => {
-    expect(AddMongoDate.obj(startingArr[3])).toEqual(mappedArr[3]);
+    expect(addMongoDate.obj(startingArr[3])).toEqual(mappedArr[3]);
   });
 
-  it('should simply return things that are not an object', () =>{
-    expect(AddMongoDate.obj(['a'])).toEqual(['a']);
-  })
+  it('should simply return things that are not an object', () => {
+    expect(addMongoDate.obj(['a'])).toEqual(['a']);
+  });
 });

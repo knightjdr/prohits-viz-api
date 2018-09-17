@@ -1,7 +1,7 @@
 const Config = require('../../../config');
 const Database = require('../../connections/database');
 
-const Find = (
+const find = (
   collection,
   queryObject = {},
   returnObject = {},
@@ -18,4 +18,4 @@ const Find = (
       });
   })
 );
-module.exports = Find;
+module.exports = find;

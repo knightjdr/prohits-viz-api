@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 const Config = require('../../config');
 
 // initialize a mongodb database
-const Init = () => (
+const init = () => (
   new Promise((resolve, reject) => {
     const dbParams = `${Config.database.user}:${Config.database.pw}@localhost:27017/${Config.database.name}`;
     const url = `mongodb://${dbParams}`;
@@ -18,4 +18,4 @@ const Init = () => (
       });
   })
 );
-module.exports = Init;
+module.exports = init;

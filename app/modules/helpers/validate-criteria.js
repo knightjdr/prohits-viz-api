@@ -1,4 +1,4 @@
-/* Criteria check is the input value is of the specified type,
+/* Criteria check's if the input value is of the specified type,
 ** and if not it returns the default arg. */
 const criteria = {
   isBoolean: (value, defaultValue) => (

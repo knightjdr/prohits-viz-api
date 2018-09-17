@@ -1,10 +1,15 @@
-const AddMongoDate = require('../helpers/add-mongo-date');
-const Find = require('../db-methods/find');
-const HomeLoad = require('./home-load');
+const addMongoData = require('../helpers/add-mongo-date');
+const find = require('../db-methods/find');
+const homeLoad = require('./home-load');
 
-const err = new Error('err');
+jest.mock('../helpers/add-mongo-date');
+jest.mock('../db-methods/find');
 
-// return data
+const req = {};
+const res = {
+  send: jest.fn(),
+  status: jest.fn(),
+};
 const returnValues = {
   news: {
     addDate: [{ headline: 1, dbDate: 'a' }, { headline: 2, dbDate: 'b' }],
@@ -16,41 +21,32 @@ const returnValues = {
   },
 };
 
-// mock AddMongoData
-jest.mock('../helpers/add-mongo-date');
-
-// mock Find
-jest.mock('../db-methods/find');
-
-afterEach(() => {
-  AddMongoDate.arr.mockClear();
-  Find.mockClear();
-});
-
 describe('Home page load', () => {
   describe('when database has news and spotlight articles', () => {
-    let response;
+    afterAll(() => {
+      res.send.mockClear();
+      res.status.mockClear();
+    });
 
     beforeAll(async (done) => {
-      Find
+      find
         .mockResolvedValueOnce(returnValues.news.find)
         .mockResolvedValueOnce(returnValues.spotlight.find);
-      AddMongoDate.arr
+      addMongoData.arr
         .mockReturnValueOnce(returnValues.news.addDate)
         .mockReturnValueOnce(returnValues.spotlight.addDate);
-      HomeLoad()
-        .then((result) => {
-          response = result;
+      homeLoad(req, res)
+        .then(() => {
           done();
         });
     });
 
-    it('should return 200 status', () => {
-      expect(response.status).toBe(200);
+    it('should use default status', () => {
+      expect(res.status).not.toHaveBeenCalled();
     });
 
-    it('should return data object', () => {
-      expect(response.data).toEqual({
+    it('should send response data', () => {
+      expect(res.send).toHaveBeenCalledWith({
         news: returnValues.news.addDate,
         spotlight: returnValues.spotlight.addDate,
       });
@@ -58,25 +54,27 @@ describe('Home page load', () => {
   });
 
   describe('when database query gives and error', () => {
-    let response;
+    afterAll(() => {
+      res.send.mockClear();
+      res.status.mockClear();
+    });
 
     beforeAll(async (done) => {
-      Find
-        .mockRejectedValueOnce(err)
-        .mockRejectedValueOnce(err);
-      HomeLoad()
-        .then((result) => {
-          response = result;
+      find
+        .mockRejectedValueOnce(new Error())
+        .mockRejectedValueOnce(new Error());
+      homeLoad(req, res)
+        .then(() => {
           done();
         });
     });
 
-    it('should return 200 status', () => {
-      expect(response.status).toBe(200);
+    it('should return default status', () => {
+      expect(res.status).not.toHaveBeenCalled();
     });
 
     it('should return null data object', () => {
-      expect(response.data).toEqual({
+      expect(res.send).toHaveBeenCalledWith({
         news: null,
         spotlight: null,
       });

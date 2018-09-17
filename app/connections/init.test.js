@@ -1,4 +1,4 @@
-const Init = require('./init');
+const init = require('./init');
 const { MongoClient } = require('mongodb');
 
 const err = new Error('err');
@@ -27,7 +27,7 @@ MongoClient.connect
 
 describe('Database initialization', () => {
   it('should give success', () => (
-    Init().then((data) => {
+    init().then((data) => {
       expect(data).toEqual({
         client: mockClient,
         db: 'test',
@@ -36,7 +36,7 @@ describe('Database initialization', () => {
   ));
 
   test('should give error', () => (
-    Init().catch((data) => {
+    init().catch((data) => {
       expect(data).toEqual(new Error('err'));
     })
   ));
