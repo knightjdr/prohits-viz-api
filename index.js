@@ -7,7 +7,7 @@ const config = require('./config');
 const database = require('./app/connections/database');
 const logger = require('./logger');
 const responseHeaders = require('./setup/response-headers');
-const routes = require('./app/routes/routes');
+const router = require('./app/routes/router');
 const socketConfig = require('./setup/socket-config');
 
 // Init app.
@@ -17,7 +17,7 @@ const initApp = () => {
   app.use(responseHeaders);
   app.use(cors());
   app.use(bodyparser.json({ limit: '100mb' }));
-  routes.configure(app);
+  app.use('/api', router);
   server.listen(config.port, () => {
     logger.info(`Server listening on port ${server.address().port}`);
   });

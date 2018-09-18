@@ -1,6 +1,6 @@
-const fs = require('fs');
-
-const writeCallback = require('./write-callback');
+const mkdir = require('../export/mkdir');
+const spawnProcess = require('./spawn');
+const writeDataFile = require('../export/write-data-file');
 const workDir = require('../helpers/work-dir');
 const { validateSync } = require('./validate');
 
@@ -8,18 +8,24 @@ const { validateSync } = require('./validate');
 const sync = (req, res) => {
   const { socket } = res.locals;
   const validated = validateSync(req.body);
-  const workingDir = workDir();
-
-  // Generate image directories.
-  fs.mkdirSync(`${workingDir}/minimap`);
-  fs.mkdirSync(`${workingDir}/svg`);
-
-  // Write JSON to file and spawn process (do not wait).
-  fs.writeFile(`${workingDir}/map.json`, JSON.stringify(validated), 'utf8', (err) => {
-    writeCallback(err, socket, workingDir);
-  });
-
-  res.end();
+  if (validated.err) {
+    res.status(400).send({ message: validated.err.toString() });
+  } else {
+    res.end();
+    let workingDir;
+    workDir()
+      .then((dir) => {
+        workingDir = dir;
+        return Promise.all([
+          mkdir(workingDir, ['minimap', 'svg']),
+          writeDataFile(workingDir, validated.data),
+        ]);
+      })
+      .then(() => spawnProcess(socket, workingDir))
+      .catch(() => {
+        socket.emit('action', { type: 'SYNC_ERROR' });
+      });
+  }
 };
 
 module.exports = sync;
