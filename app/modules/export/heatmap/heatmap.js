@@ -1,9 +1,9 @@
 const mkdir = require('../mkdir');
 const spawnProcess = require('./spawn');
+const validate = require('../../validation/validate');
 const writeDataFile = require('../write-data-file');
 const writeDownloadFile = require('../write-download-file');
 const workDir = require('../../helpers/work-dir');
-const { validate } = require('./validate');
 
 /* Generate a heatmap or dotplot for a data set. First, a working directory
 ** is created, and then sub directories for storing generated images, a file
@@ -12,7 +12,7 @@ const { validate } = require('./validate');
 const heatmap = (req, res) => {
   const { outputType } = req.body;
   const { socket } = res.locals;
-  const validated = validate(req.body);
+  const validated = validate(req.body.imageType, req.body);
   if (validated.err) {
     res.status(400).send({ message: validated.err.toString() });
   } else {

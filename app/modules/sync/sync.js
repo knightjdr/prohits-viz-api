@@ -1,13 +1,13 @@
 const mkdir = require('../export/mkdir');
 const spawnProcess = require('./spawn');
+const validate = require('../validation/validate');
 const writeDataFile = require('../export/write-data-file');
 const workDir = require('../helpers/work-dir');
-const { validateSync } = require('./validate');
 
 // Generate a minimap for a data set.
 const sync = (req, res) => {
   const { socket } = res.locals;
-  const validated = validateSync(req.body);
+  const validated = validate(req.body.imageType, req.body, ['columns']);
   if (validated.err) {
     res.status(400).send({ message: validated.err.toString() });
   } else {

@@ -1,8 +1,7 @@
-const path = require('path');
-
 const config = require('../../../config');
 const exists = require('./exists');
 const readFile = require('./read-file');
+const readStream = require('./read-stream');
 
 /* downloadFile will take the working directory specified by the request
 ** and check to see if a file with download instructions exists in that
@@ -11,15 +10,9 @@ const readFile = require('./read-file');
 const downloadFile = (req, res) => {
   const { folder } = req.params;
   const downloadInfoFile = `${config.workDir}${folder}/download.txt`;
-  let ext;
   exists(downloadInfoFile)
-    .then(() => {
-      ext = path.extname(downloadInfoFile);
-      return readFile(downloadInfoFile, 'utf8');
-    })
-    .then((targetFile) => {
-      res.download(`${config.workDir}${folder}/${targetFile}`);
-    })
+    .then(() => readFile(downloadInfoFile, 'utf8'))
+    .then(targetFile => readStream(`${config.workDir}${folder}`, targetFile, res))
     .catch(() => {
       res.status(500);
       res.end();
