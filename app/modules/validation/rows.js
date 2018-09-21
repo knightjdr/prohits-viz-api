@@ -29,6 +29,7 @@ const rows = (imageType, rowData) => {
   if (
     rowData &&
     Array.isArray(rowData) &&
+    rowData.length > 0 &&
     rowData[0] && // Ensures not null as null is an object.
     typeof rowData[0] === 'object' &&
     Object.prototype.hasOwnProperty.call(rowData[0], 'name') &&

@@ -1,7 +1,4 @@
 const mockSpawn = require('mock-spawn');
-const rimraf = require('rimraf');
-
-jest.mock('rimraf');
 
 // Mock spawn.
 const testSpawn = mockSpawn();
@@ -13,30 +10,25 @@ const socket = {
   emit: jest.fn(),
 };
 
-describe('Spawning the sync process', () => {
+describe('Spawning the export process', () => {
   describe('when successful', () => {
     beforeAll(async (done) => {
       socket.emit.mockClear();
-      testSpawn.setDefault(testSpawn.simple(0, 'url'));
-      spawnProcess(socket, 'testdir/')
+      testSpawn.setDefault(testSpawn.simple(0));
+      spawnProcess(socket, 'tmp/workDir', 'svg')
         .then(() => {
           done();
         });
     });
 
-    it('should call socket emit with url written to stdout', () => {
-      expect(socket.emit).toHaveBeenCalledWith('action', { syncImage: 'url', type: 'MAP_SYNCHED' });
-    });
-
-    it('should call rimraf to remove testdir', () => {
-      expect(rimraf).toHaveBeenCalled();
-      expect(rimraf.mock.calls[0][0]).toBe('testdir/');
+    it('should call socket emit with task path ', () => {
+      expect(socket.emit).toHaveBeenCalledWith('action', { task: 'workDir', type: 'SAVED_IMAGE' });
     });
   });
 
   it('should reject with an error on exit', () => {
     testSpawn.setDefault(testSpawn.simple(1));
-    return expect(spawnProcess(socket, 'testdir/')).rejects.toThrowError();
+    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toThrowError();
   });
 
   it('should reject with a runtime panic error', () => {
@@ -45,6 +37,6 @@ describe('Spawning the sync process', () => {
       this.emit('error', err);
       setTimeout(() => cb(8), 10);
     });
-    return expect(spawnProcess(socket, 'testdir/')).rejects.toThrowError(err);
+    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toThrowError(err);
   });
 });

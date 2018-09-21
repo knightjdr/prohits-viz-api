@@ -1,9 +1,8 @@
 process.env.NODE_ENV = test;
 const database = require('../../connections/database');
-const findOne = require('./find-one');
 const { ObjectID } = require('mongodb');
 
-// mock Config
+// mock config
 jest.mock('../../../config', () => (
   {
     database: {
@@ -16,6 +15,8 @@ jest.mock('../../../config', () => (
 ));
 // mock logger
 jest.mock('../../../logger');
+
+const findOne = require('./find-one');
 
 // expected return values
 const response = {
@@ -30,16 +31,18 @@ afterAll(() => (
   database.close()
 ));
 
-describe('findOne', () => {
-  it('should find one record in the database', () => (
-    findOne('get', { name: 'test' }).then((getCollection) => {
-      expect(getCollection).toEqual(response.one);
-    })
-  ));
+describe('Query for a single entry', () => {
+  describe('when successful', () => {
+    it('should find one record in the database', () => (
+      findOne('get', { name: 'test' }).then((getCollection) => {
+        expect(getCollection).toEqual(response.one);
+      })
+    ));
 
-  it('should subset returned documents from database', () => (
-    findOne('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
-      expect(getCollection).toEqual(response.subset);
-    })
-  ));
+    it('should subset returned documents from database', () => (
+      findOne('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
+        expect(getCollection).toEqual(response.subset);
+      })
+    ));
+  });
 });

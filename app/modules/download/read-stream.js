@@ -1,21 +1,15 @@
 const fs = require('fs');
-const path = require('path');
 const rimraf = require('rimraf');
 
-const mimeType = {
-  pdf: 'application/pdf',
-  png: 'image/png',
-  svg: 'image/svg+xml',
-};
+const extToMimeType = require('./ext-to-mime-type');
 
 const readStream = (workdir, file, res) => (
   new Promise((resolve, reject) => {
-    const ext = path.extname(file).substr(1);
-    res.setHeader('Content-Type', mimeType[ext]);
+    res.setHeader('Content-Type', extToMimeType(file));
     const stream = fs.createReadStream(`${workdir}/${file}`);
     stream.pipe(res);
     stream.on('error', () => {
-      reject(new Error('Error reading file'));
+      reject(new Error(`Could not read: ${file}`));
     });
     stream.on('end', () => {
       res.end();

@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-const writeDownloadFile = (workDir, imageType, outputFormat) => (
+const writeDownloadFile = (workDir, fileName, outputFormat) => (
   new Promise((resolve, reject) => {
-    const downloadFile = `${outputFormat}/${imageType}.${outputFormat}`;
+    const downloadFile = `${outputFormat}/${fileName}.${outputFormat}`;
     fs.writeFile(`${workDir}/download.txt`, downloadFile, 'utf8', (err) => {
       if (!err) {
         resolve();

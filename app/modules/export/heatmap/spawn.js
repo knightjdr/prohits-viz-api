@@ -16,17 +16,16 @@ const spawnProcess = (socket, workingDir, outputType) => (
         cwd: workingDir,
       },
     );
-    syncProcess.on('error', () => {
-      reject();
+    syncProcess.on('error', (err) => {
+      reject(err);
     });
     syncProcess.on('exit', (err) => {
       if (!err) {
         const task = path.basename(workingDir);
         socket.emit('action', { task, type: 'SAVED_IMAGE' });
-      } else {
-        reject();
+        resolve();
       }
-      resolve();
+      reject(err);
     });
   })
 );

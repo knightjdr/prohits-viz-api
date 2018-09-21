@@ -5,13 +5,10 @@ const criteria = require('./criteria');
 const markers = require('./markers');
 const rows = require('./rows');
 const scoreType = require('./score-type');
-const validColor = require('./valid-color');
 
 const validate = imageType => (type, value, defaultSetting) => {
   switch (type) {
     case 'abundanceCap':
-      return criteria.isNumber(value, defaultSetting);
-    case 'annotationFontSize':
       return criteria.isNumber(value, defaultSetting);
     case 'annotations':
       return annotations(value);
@@ -23,8 +20,6 @@ const validate = imageType => (type, value, defaultSetting) => {
       return color(value, defaultSetting);
     case 'invertColor':
       return criteria.isBoolean(value, defaultSetting);
-    case 'markerColor':
-      return validColor(value, defaultSetting);
     case 'markers':
       return markers(value);
     case 'primaryFilter':

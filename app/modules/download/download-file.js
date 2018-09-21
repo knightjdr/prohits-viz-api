@@ -10,7 +10,7 @@ const readStream = require('./read-stream');
 const downloadFile = (req, res) => {
   const { folder } = req.params;
   const downloadInfoFile = `${config.workDir}${folder}/download.txt`;
-  exists(downloadInfoFile)
+  exists(downloadInfoFile, res)
     .then(() => readFile(downloadInfoFile, 'utf8'))
     .then(targetFile => readStream(`${config.workDir}${folder}`, targetFile, res))
     .catch(() => {

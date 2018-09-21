@@ -1,3 +1,9 @@
+const validColor = require('./valid-color');
+
+const defaults = {
+  color: '#000000',
+};
+
 /* A markers array should be of the form:
 
 markers = [
@@ -9,19 +15,25 @@ assuming others will conform to the format used for it.
 */
 const markers = (data) => {
   if (
-    Array.isArray(data) &&
-    data[0] &&
-    typeof data[0] === 'object' &&
-    Object.prototype.hasOwnProperty.call(data[0], 'height') &&
-    Number.isInteger(data[0].height) &&
-    Object.prototype.hasOwnProperty.call(data[0], 'width') &&
-    Number.isInteger(data[0].width) &&
-    Object.prototype.hasOwnProperty.call(data[0], 'x') &&
-    Number.isInteger(data[0].x) &&
-    Object.prototype.hasOwnProperty.call(data[0], 'y') &&
-    Number.isInteger(data[0].y)
+    data &&
+    typeof data === 'object' &&
+    Object.prototype.hasOwnProperty.call(data, 'list') &&
+    Array.isArray(data.list) &&
+    data.list[0] &&
+    typeof data.list[0] === 'object' &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'height') &&
+    Number.isInteger(data.list[0].height) &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'width') &&
+    Number.isInteger(data.list[0].width) &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'x') &&
+    Number.isInteger(data.list[0].x) &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'y') &&
+    Number.isInteger(data.list[0].y)
   ) {
-    return data;
+    return {
+      color: validColor(data.color, defaults.color),
+      list: data.list,
+    };
   }
   return null;
 };

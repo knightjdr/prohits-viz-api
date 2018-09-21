@@ -1,22 +1,28 @@
-const mkdir = require('../export/mkdir');
+const mkdir = require('../mkdir');
 const spawnProcess = require('./spawn');
-const validate = require('../validation/validate');
-const workDir = require('../helpers/work-dir');
-const writeDataFile = require('../export/write-data-file');
+const validate = require('../../validation/validate');
+const workDir = require('../../helpers/work-dir');
+const writeDataFile = require('../write-data-file');
+const writeDownloadFile = require('../write-download-file');
 
-jest.mock('../export/mkdir');
+jest.mock('../mkdir');
 mkdir.mockResolvedValue();
 jest.mock('./spawn');
 spawnProcess.mockResolvedValue();
-jest.mock('../validation/validate');
-jest.mock('../helpers/work-dir');
-jest.mock('../export/write-data-file');
+jest.mock('../../validation/validate');
+jest.mock('../../helpers/work-dir');
+jest.mock('../write-data-file');
 writeDataFile.mockResolvedValue();
+jest.mock('../write-download-file');
+writeDownloadFile.mockResolvedValue();
 
-const sync = require('./sync');
+const heatmap = require('./heatmap');
 
 const req = {
-  body: { imageType: 'dotplot' },
+  body: {
+    imageType: 'dotplot',
+    outputType: 'png',
+  },
 };
 const res = {
   end: jest.fn(),
@@ -31,13 +37,13 @@ const sleep = ms => (
   new Promise(resolve => setTimeout(resolve, ms))
 );
 
-describe('Syncing minimap', () => {
+describe('Exporting heatmap', () => {
   describe('when successful', () => {
     beforeAll(async (done) => {
       res.end.mockClear();
-      validate.mockReturnValue({ data: 'data' });
+      validate.mockReturnValue({ data: { imageType: 'dotplot' } });
       workDir.mockResolvedValue('workdir');
-      sync(req, res);
+      heatmap(req, res);
       await sleep(200);
       done();
     });
@@ -51,15 +57,19 @@ describe('Syncing minimap', () => {
     });
 
     it('should create output directories', () => {
-      expect(mkdir).toHaveBeenCalledWith('workdir', ['minimap', 'svg']);
+      expect(mkdir).toHaveBeenCalledWith('workdir', ['svg', 'png']);
     });
 
     it('should write request body to file', () => {
-      expect(writeDataFile).toHaveBeenCalledWith('workdir', 'data');
+      expect(writeDataFile).toHaveBeenCalledWith('workdir', { imageType: 'dotplot' });
+    });
+
+    it('should write download instructions to file', () => {
+      expect(writeDownloadFile).toHaveBeenCalledWith('workdir', 'dotplot', 'png');
     });
 
     it('should spawn child process', () => {
-      expect(spawnProcess).toHaveBeenCalledWith(res.locals.socket, 'workdir');
+      expect(spawnProcess).toHaveBeenCalledWith(res.locals.socket, 'workdir', 'png');
     });
   });
 
@@ -68,7 +78,7 @@ describe('Syncing minimap', () => {
       res.end.mockClear();
       validate.mockReturnValue({ data: 'data' });
       workDir.mockRejectedValue();
-      sync(req, res);
+      heatmap(req, res);
       await sleep(200);
       done();
     });
@@ -78,7 +88,7 @@ describe('Syncing minimap', () => {
     });
 
     it('should emit error event to socket', () => {
-      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { type: 'SYNC_ERROR' });
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { type: 'SAVE_ERROR' });
     });
   });
 
@@ -87,7 +97,7 @@ describe('Syncing minimap', () => {
       res.send.mockClear();
       res.status.mockClear();
       validate.mockReturnValue({ err: new Error('test error') });
-      sync(req, res);
+      heatmap(req, res);
       await sleep(200);
       done();
     });

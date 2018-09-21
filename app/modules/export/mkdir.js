@@ -4,6 +4,14 @@ const fs = require('fs');
 ** in the workDir arg. The workDir must already exist. */
 const mkdir = (workDir, dirs) => (
   new Promise((resolve, reject) => {
+    if (
+      !dirs ||
+      !Array.isArray(dirs) ||
+      dirs.length < 1
+    ) {
+      reject(new Error('No directories specified'));
+    }
+
     const respond = (made, total) => {
       if (made === total) {
         resolve();

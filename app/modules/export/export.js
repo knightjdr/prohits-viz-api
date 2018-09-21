@@ -10,6 +10,8 @@ const exportContent = (req, res) => {
       heatmap(req, res);
       break;
     default:
+      res.status(422);
+      res.end();
       break;
   }
 };

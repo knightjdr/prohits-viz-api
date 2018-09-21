@@ -7,13 +7,11 @@ const { settings } = parameters;
 const neededProps = {
   dotplot: [
     'abundanceCap',
-    'annotationFontSize',
     'annotations',
     'columns',
     'edgeColor',
     'fillColor',
     'invertColor',
-    'markerColor',
     'markers',
     'primaryFilter',
     'rows',
@@ -22,12 +20,10 @@ const neededProps = {
   ],
   heatmap: [
     'abundanceCap',
-    'annotationFontSize',
     'annotations',
     'columns',
     'edgeColor',
     'invertColor',
-    'markerColor',
     'markers',
     'rows',
   ],

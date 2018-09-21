@@ -18,17 +18,16 @@ const spawnProcess = (socket, workingDir) => (
     syncProcess.stdout.on('data', (data) => {
       url += data.toString();
     });
-    syncProcess.on('error', () => {
-      reject();
+    syncProcess.on('error', (err) => {
+      reject(err);
     });
     syncProcess.on('exit', (err) => {
       if (!err) {
         socket.emit('action', { syncImage: url, type: 'MAP_SYNCHED' });
-        // Delete working directory.
         rimraf(workingDir, () => {});
         resolve();
       } else {
-        reject();
+        reject(err);
       }
     });
   })

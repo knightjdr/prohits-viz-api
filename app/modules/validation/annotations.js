@@ -1,8 +1,17 @@
+const criteria = require('./criteria');
+
+const defaults = {
+  fontSize: 12,
+};
+
 /* An annotations object should be of the form:
 
-annotations = [
-  { text: 'text, x: 0, y: 0.5 },
-];
+annotations = {
+  fontSize: 12,
+  list: [
+    { text: 'text, x: 0, y: 0.5 },
+  ],
+},;
 
 I only test the first item for performance reasons,
 assuming others will conform to the format used for it. Also
@@ -11,14 +20,20 @@ don't test this for performance.
 */
 const annotations = (data) => {
   if (
-    Array.isArray(data) &&
-    data[0] &&
-    typeof data[0] === 'object' &&
-    Object.prototype.hasOwnProperty.call(data[0], 'text') &&
-    Object.prototype.hasOwnProperty.call(data[0], 'x') &&
-    Object.prototype.hasOwnProperty.call(data[0], 'y')
+    data &&
+    typeof data === 'object' &&
+    Object.prototype.hasOwnProperty.call(data, 'list') &&
+    Array.isArray(data.list) &&
+    data.list[0] &&
+    typeof data.list[0] === 'object' &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'text') &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'x') &&
+    Object.prototype.hasOwnProperty.call(data.list[0], 'y')
   ) {
-    return data;
+    return {
+      fontSize: criteria.isNumber(data.fontSize, defaults.fontSize),
+      list: data.list,
+    };
   }
   return null;
 };

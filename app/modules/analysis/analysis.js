@@ -7,6 +7,8 @@ const analysis = (req, res) => {
       go(req, res);
       break;
     default:
+      res.status(422);
+      res.end();
       break;
   }
 };

@@ -1,5 +1,5 @@
-const Config = require('../../../config');
-const Database = require('../../connections/database');
+const config = require('../../../config');
+const database = require('../../connections/database');
 
 const find = (
   collection,
@@ -7,11 +7,11 @@ const find = (
   returnObject = {},
 ) => (
   new Promise((resolve, reject) => {
-    const db = Database.connection;
-    db.collection(`${Config.database.prefix}${collection}`)
+    const db = database.connection;
+    db.collection(`${config.database.prefix}${collection}`)
       .findOne(queryObject, { projection: returnObject })
-      .then((documents) => {
-        resolve(documents);
+      .then((document) => {
+        resolve(document);
       })
       .catch((err) => {
         reject(err);

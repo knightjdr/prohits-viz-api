@@ -6,7 +6,7 @@ const readFile = (file, encoding) => (
       if (!err) {
         resolve(data);
       } else {
-        reject(new Error(`${file} does not exist`));
+        reject(new Error(`Could not read ${file}`));
       }
     });
   })

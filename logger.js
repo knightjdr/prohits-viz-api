@@ -1,6 +1,6 @@
 const winston = require('winston');
 
-const Config = require('./config');
+const config = require('./config');
 
 // set env and log directory
 const env = process.env.NODE_ENV || 'development';
@@ -20,14 +20,14 @@ const Logger = new (winston.Logger)({
   exitOnError: false,
   transports: [
     new winston.transports.File({
-      filename: `${logDir}/${Config.logPrefix}error.log`,
+      filename: `${logDir}/${config.logPrefix}error.log`,
       json: false,
       level: 'error',
       name: 'error-file',
       timestamp: tsFormat,
     }),
     new winston.transports.File({
-      filename: `${logDir}/${Config.logPrefix}combined.log`,
+      filename: `${logDir}/${config.logPrefix}combined.log`,
       json: false,
       name: 'log-file',
       timestamp: tsFormat,

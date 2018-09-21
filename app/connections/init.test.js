@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 
 const err = new Error('err');
 
-// mock Config
+// mock config
 jest.mock('../../config', () => (
   {
     database: {
@@ -25,7 +25,7 @@ MongoClient.connect
   .mockImplementationOnce(() => Promise.resolve(mockClient))
   .mockImplementationOnce(() => Promise.reject(err));
 
-describe('Database initialization', () => {
+describe('database initialization', () => {
   it('should give success', () => (
     init().then((data) => {
       expect(data).toEqual({

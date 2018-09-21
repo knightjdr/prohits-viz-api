@@ -1,16 +1,16 @@
 const { MongoClient } = require('mongodb');
-const Config = require('../../config');
+const config = require('../../config');
 
 // initialize a mongodb database
 const init = () => (
   new Promise((resolve, reject) => {
-    const dbParams = `${Config.database.user}:${Config.database.pw}@localhost:27017/${Config.database.name}`;
+    const dbParams = `${config.database.user}:${config.database.pw}@localhost:27017/${config.database.name}`;
     const url = `mongodb://${dbParams}`;
     MongoClient.connect(url)
       .then((client) => {
         resolve({
           client,
-          db: client.db(Config.database.name),
+          db: client.db(config.database.name),
         });
       })
       .catch((err) => {
