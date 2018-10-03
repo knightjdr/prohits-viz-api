@@ -3,7 +3,7 @@ const rimraf = require('rimraf');
 
 const extToMimeType = require('./ext-to-mime-type');
 
-const readStream = (workdir, file, res) => (
+const readStream = (workdir, file, res, remove = false) => (
   new Promise((resolve, reject) => {
     res.setHeader('Content-Type', extToMimeType(file));
     const stream = fs.createReadStream(`${workdir}/${file}`);
@@ -13,7 +13,9 @@ const readStream = (workdir, file, res) => (
     });
     stream.on('end', () => {
       res.end();
-      rimraf(workdir, () => {});
+      if (remove) {
+        rimraf(workdir, () => {});
+      }
       resolve();
     });
   })

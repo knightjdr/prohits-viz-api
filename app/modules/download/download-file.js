@@ -12,7 +12,7 @@ const downloadFile = (req, res) => {
   const downloadInfoFile = `${config.workDir}${folder}/download.txt`;
   exists(downloadInfoFile, res)
     .then(() => readFile(downloadInfoFile, 'utf8'))
-    .then(targetFile => readStream(`${config.workDir}${folder}`, targetFile, res))
+    .then(targetFile => readStream(`${config.workDir}${folder}`, targetFile, res, true))
     .catch(() => {
       res.status(500);
       res.end();
