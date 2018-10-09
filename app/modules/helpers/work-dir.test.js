@@ -1,12 +1,14 @@
 const mockFS = require('mock-fs');
 const fs = require('fs');
-const uuidv1 = require('uuid/v1');
+const Puid = require('puid');
 
 jest.mock('../../../config', () => ({
   workDir: 'tmp/',
 }));
-jest.mock('uuid/v1');
-uuidv1.mockReturnValue('id');
+jest.mock('puid');
+Puid.mockImplementation(() => ({
+  generate: () => 'id',
+}));
 
 const workDir = require('./work-dir');
 

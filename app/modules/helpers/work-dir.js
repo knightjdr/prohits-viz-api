@@ -1,11 +1,11 @@
 const fs = require('fs');
-const uuidv1 = require('uuid/v1');
+const Puid = require('puid');
 
 const config = require('../../../config');
 
 const workDir = () => (
   new Promise((resolve, reject) => {
-    const id = uuidv1();
+    const id = new Puid(false).generate();
     const workingDir = `${config.workDir}${id}`;
     fs.mkdir(workingDir, (err) => {
       if (!err) {
