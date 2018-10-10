@@ -1,27 +1,46 @@
-const existsError = require('./exists-error');
+const path = require('path');
+
 const listFiles = require('../files/list-files');
 const writeStatus = require('./write-status');
 
-const updateStatus = (workDir, form, socket) => (
+/* Removes the extension for an array of files and
+** appends the file name to the arr argument. */
+const stripExt = (files, arr) => (
+  files.reduce((accum, file) => {
+    accum.push(path.parse(file).name);
+    return accum;
+  }, [...arr])
+);
+
+const updateStatus = workDir => (
   new Promise((resolve) => {
-    const files = ['log'];
+    let files = [];
     let status = 'complete';
 
-    // Check for error file.
-    existsError(workDir)
-      .then(() => listFiles(workDir, 'interactive'))
-      .then((interactiveFiles) => {
-        files.push(interactiveFiles);
-        writeStatus(workDir, status, files, socket);
+    /* Get a list of txt (status) files in main directory. Then
+    ** get list of interactive files. Interactive folder
+    ** may not exists, so want to do this in two steps
+    ** since the first promise will never throw an error. */
+    listFiles(workDir, '.txt')
+      .then((statusFiles) => {
+        files = stripExt(statusFiles, files);
+        return listFiles(`${workDir}/interactive`, '.json');
+      }).then((interactiveFiles) => {
+        files = stripExt(interactiveFiles, files);
+        return writeStatus(workDir, status, files);
+      })
+      .then(() => {
         resolve();
       })
       .catch(() => {
         status = 'error';
-        files.push('error');
-        writeStatus(workDir, status, files, socket);
+        writeStatus(workDir, status, files);
         resolve();
       });
   })
 );
 
-module.exports = updateStatus;
+module.exports = {
+  stripExt,
+  updateStatus,
+};

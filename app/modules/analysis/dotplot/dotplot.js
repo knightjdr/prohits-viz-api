@@ -5,7 +5,8 @@ const getWorkDir = require('../../helpers/work-dir');
 const moveFiles = require('../files/move-files');
 const path = require('path');
 const spawnTask = require('./spawn');
-const updateStatus = require('../status/update-status');
+const validateDotplot = require('./validate');
+const { updateStatus } = require('../status/update-status');
 
 /* This task will
 **  1. Create a working directory
@@ -20,7 +21,7 @@ const updateStatus = require('../status/update-status');
 const dotplot = (req, res) => (
   new Promise((resolve) => {
     const { socket } = res.locals;
-    const validatedForm = {}; // convertToForm(validateGo(req.body));
+    const validatedForm = validateDotplot(req.body, req.files);
     const subDirs = ['files'];
     let taskID;
     let workDir;
@@ -35,14 +36,15 @@ const dotplot = (req, res) => (
       })
       .then(() => {
         res.send({ id: taskID });
-        return moveFiles(req.files, workDir);
+        return moveFiles(req.files, workDir, req.body.sampleFile);
       })
-      .then(() => spawnTask(validatedForm, socket))
+      .then(() => spawnTask(validatedForm, workDir))
       .then(() => Promise.all([
         updateStatus(workDir, validatedForm, socket),
         deleteDirs(subDirs, workDir),
       ]))
       .then(() => {
+        socket.emit('action', { type: 'SHOULD_UPDATE_TASKS' });
         resolve();
       })
       .catch(() => {

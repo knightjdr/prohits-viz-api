@@ -1,10 +1,16 @@
 const fs = require('fs');
 
-const listFiles = (workDir, dir) => (
+/* Get list of files in specified directory. If fileExt is specified,
+** only files with that extension will be returned. */
+const listFiles = (dir, fileExt) => (
   new Promise((resolve, reject) => {
-    fs.readdir(`${workDir}/${dir}`, (err, files) => {
+    fs.readdir(dir, (err, files) => {
       if (!err) {
-        resolve(files);
+        let filtered = files;
+        if (fileExt) {
+          filtered = filtered.filter(file => file.endsWith(fileExt));
+        }
+        resolve(filtered);
       }
       reject(new Error(`Error listing ${dir} folder`));
     });

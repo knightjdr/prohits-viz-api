@@ -1,4 +1,4 @@
-const fs = require('fs');
+const writeFile = require('../files/write-file');
 
 const createStatus = (workDir, body) => (
   new Promise((resolve, reject) => {
@@ -8,13 +8,13 @@ const createStatus = (workDir, body) => (
       status: 'running',
     };
     const fileContent = JSON.stringify(status, null, 2);
-    fs.writeFile(`${workDir}/status.json`, fileContent, 'utf8', (err) => {
-      if (!err) {
+    writeFile(`${workDir}/status.json`, fileContent)
+      .then(() => {
         resolve();
-      } else {
-        reject(new Error(`Could not create status file in task ${workDir}`));
-      }
-    });
+      })
+      .catch(() => {
+        reject(new Error(`Could not create status file for task ${workDir}`));
+      });
   })
 );
 

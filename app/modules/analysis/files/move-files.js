@@ -6,13 +6,16 @@ const shouldResolve = require('./should-resolve');
 /* Transfer files from upload folder to working directory.
 ** If a file is called 'samplefile.txt', use the sample file
 ** instead of the actual input file.path */
-const moveFiles = (files, workDir) => (
+const moveFiles = (files, workDir, useSample = false) => (
   new Promise((resolve, reject) => {
     let moved = 0;
     files.forEach((file) => {
       let method;
       let filePath;
-      if (file.originalname === 'samplefile.txt') {
+      if (
+        useSample &&
+        file.originalname === 'samplefile.txt'
+      ) {
         method = 'copyFile';
         filePath = config.samplefile;
       } else {
