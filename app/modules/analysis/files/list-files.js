@@ -2,7 +2,7 @@ const fs = require('fs');
 
 /* Get list of files in specified directory. If fileExt is specified,
 ** only files with that extension will be returned. */
-const listFiles = (dir, fileExt) => (
+const listFiles = (dir, fileExt = '') => (
   new Promise((resolve, reject) => {
     fs.readdir(dir, (err, files) => {
       if (!err) {

@@ -1,5 +1,7 @@
+const dotplot = require('./dotplot/dotplot');
 const go = require('./go/go');
 
+jest.mock('./dotplot/dotplot');
 jest.mock('./go/go');
 
 const analysis = require('./analysis');
@@ -10,6 +12,15 @@ const res = {
 };
 
 describe('Vizualization analysis', () => {
+  it('should call dotplot function when request param is "go"', () => {
+    dotplot.mockClear();
+    const req = {
+      params: { type: 'dotplot' },
+    };
+    analysis(req, res);
+    expect(dotplot).toHaveBeenCalledWith(req, res);
+  });
+
   it('should call go function when request param is "go"', () => {
     go.mockClear();
     const req = {

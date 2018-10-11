@@ -24,7 +24,7 @@ const moveFiles = (files, workDir, useSample = false) => (
       }
       fs[method](filePath, `${workDir}/files/${file.originalname}`, (err) => {
         if (err) {
-          reject(new Error('Error moving files to task directory'));
+          reject(new Error(`Error moving file ${file.originalname} to task directory`));
         }
         moved += 1;
         shouldResolve(moved, files.length, resolve);

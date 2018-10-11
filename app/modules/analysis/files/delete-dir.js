@@ -8,7 +8,7 @@ const deleteDir = (dirs, workDir) => (
     dirs.forEach((dir) => {
       rimraf(`${workDir}/${dir}`, (err) => {
         if (err) {
-          resolve();
+          resolve(err);
         }
         deleted += 1;
         shouldResolve(deleted, dirs.length, resolve);

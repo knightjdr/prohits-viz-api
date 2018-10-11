@@ -31,25 +31,42 @@ afterAll(() => {
 
 describe('Streaming a file to response', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
-      res.end.mockClear();
-      res.setHeader.mockClear();
-      readStream('tmp', 'file.svg', res)
-        .then(() => {
-          done();
-        });
+    describe('and not deleting working directory', () => {
+      beforeAll(async (done) => {
+        res.end.mockClear();
+        res.setHeader.mockClear();
+        readStream('tmp', 'file.svg', res)
+          .then(() => {
+            done();
+          });
+      });
+
+      it('should set content-type to mime type', () => {
+        expect(res.setHeader).toHaveBeenCalledWith('Content-Type', 'svg');
+      });
+
+      it('should end response', () => {
+        expect(res.end).toHaveBeenCalled();
+      });
+
+      it('should not delete working directory', () => {
+        expect(rimraf).not.toHaveBeenCalled();
+      });
     });
 
-    it('should set content-type to mime type', () => {
-      expect(res.setHeader).toHaveBeenCalledWith('Content-Type', 'svg');
-    });
+    describe('and deleting working directory', () => {
+      beforeAll(async (done) => {
+        res.end.mockClear();
+        res.setHeader.mockClear();
+        readStream('tmp', 'file.svg', res, true)
+          .then(() => {
+            done();
+          });
+      });
 
-    it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
-    });
-
-    it('should delete working directory', () => {
-      expect(rimraf).toHaveBeenCalledWith('tmp', expect.anything());
+      it('should delete working directory', () => {
+        expect(rimraf).toHaveBeenCalledWith('tmp', expect.anything());
+      });
     });
   });
 

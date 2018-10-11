@@ -1,16 +1,6 @@
-const path = require('path');
-
 const listFiles = require('../files/list-files');
+const stripExt = require('../files/strip-ext');
 const writeStatus = require('./write-status');
-
-/* Removes the extension for an array of files and
-** appends the file name to the arr argument. */
-const stripExt = (files, arr) => (
-  files.reduce((accum, file) => {
-    accum.push(path.parse(file).name);
-    return accum;
-  }, [...arr])
-);
 
 const updateStatus = workDir => (
   new Promise((resolve) => {
@@ -30,17 +20,14 @@ const updateStatus = workDir => (
         return writeStatus(workDir, status, files);
       })
       .then(() => {
-        resolve();
+        resolve('here');
       })
       .catch(() => {
         status = 'error';
         writeStatus(workDir, status, files);
-        resolve();
+        resolve('here2');
       });
   })
 );
 
-module.exports = {
-  stripExt,
-  updateStatus,
-};
+module.exports = updateStatus;

@@ -6,7 +6,7 @@ const moveFiles = require('../files/move-files');
 const path = require('path');
 const spawnTask = require('./spawn');
 const validateDotplot = require('./validate');
-const { updateStatus } = require('../status/update-status');
+const updateStatus = require('../status/update-status');
 
 /* This task will
 **  1. Create a working directory

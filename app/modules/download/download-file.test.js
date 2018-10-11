@@ -43,7 +43,7 @@ describe('Downloading a file', () => {
     });
 
     it('should stream file to download', () => {
-      expect(readStream).toHaveBeenCalledWith('tmp/folder', 'svg/file.svg', res);
+      expect(readStream).toHaveBeenCalledWith('tmp/folder', 'svg/file.svg', res, true);
     });
 
     it('should not end response', () => {

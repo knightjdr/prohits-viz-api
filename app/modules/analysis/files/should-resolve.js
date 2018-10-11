@@ -1,5 +1,5 @@
 const shouldResolve = (curr, total, resolve) => {
-  if (curr === total) {
+  if (curr >= total) {
     resolve();
   }
 };
