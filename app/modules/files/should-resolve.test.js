@@ -19,4 +19,10 @@ describe('Should resolve', () => {
     shouldResolve(2, 1, resolve);
     expect(resolve).toHaveBeenCalled();
   });
+
+  it('should call resolve with resolve value', () => {
+    resolve.mockClear();
+    shouldResolve(1, 1, resolve, 'value');
+    expect(resolve).toHaveBeenCalledWith('value');
+  });
 });

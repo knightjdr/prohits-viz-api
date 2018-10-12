@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const config = require('../../../../config');
+const config = require('../../../config');
 const shouldResolve = require('./should-resolve');
 
 /* Transfer files from upload folder to working directory.
@@ -14,6 +14,7 @@ const moveFiles = (files, workDir, useSample = false) => (
       let filePath;
       if (
         useSample &&
+        Boolean(useSample) &&
         file.originalname === 'samplefile.txt'
       ) {
         method = 'copyFile';

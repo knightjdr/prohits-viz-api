@@ -4,6 +4,7 @@ const express = require('express');
 const http = require('http');
 
 const config = require('./config');
+const clearFolders = require('./app/modules/clear/clear-folders');
 const database = require('./app/connections/database');
 const logger = require('./logger');
 const responseHeaders = require('./setup/response-headers');
@@ -34,5 +35,7 @@ async function init() {
     initApp();
   }
 }
+
+clearFolders();
 
 init();

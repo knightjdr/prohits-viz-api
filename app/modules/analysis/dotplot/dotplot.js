@@ -1,9 +1,10 @@
-const createDirs = require('../files/create-dir');
-const createStatus = require('../status/create-status');
-const deleteDirs = require('../files/delete-dir');
-const getWorkDir = require('../../helpers/work-dir');
-const moveFiles = require('../files/move-files');
 const path = require('path');
+
+const createDirs = require('../../files/create-dir');
+const createStatus = require('../status/create-status');
+const deleteDirs = require('../../files/delete-dir');
+const getWorkDir = require('../../helpers/work-dir');
+const moveFiles = require('../../files/move-files');
 const spawnTask = require('./spawn');
 const validateDotplot = require('./validate');
 const updateStatus = require('../status/update-status');
@@ -31,7 +32,7 @@ const dotplot = (req, res) => (
         workDir = dir;
         return Promise.all([
           createDirs(subDirs, workDir),
-          createStatus(workDir, req.body),
+          createStatus(workDir, validatedForm),
         ]);
       })
       .then(() => {
@@ -40,7 +41,7 @@ const dotplot = (req, res) => (
       })
       .then(() => spawnTask(validatedForm, workDir))
       .then(() => Promise.all([
-        updateStatus(workDir, validatedForm, socket),
+        updateStatus(workDir),
         deleteDirs(subDirs, workDir),
       ]))
       .then(() => {

@@ -1,8 +1,8 @@
-const readfile = require('../files/read-file');
-const writefile = require('../files/write-file');
+const readfile = require('../../files/read-file');
+const writefile = require('../../files/write-file');
 
-jest.mock('../files/read-file');
-jest.mock('../files/write-file');
+jest.mock('../../files/read-file');
+jest.mock('../../files/write-file');
 
 const writeStatus = require('./write-status');
 

@@ -1,4 +1,4 @@
-const writeFile = require('../files/write-file');
+const writeFile = require('../../files/write-file');
 
 const createStatus = (workDir, body) => (
   new Promise((resolve, reject) => {

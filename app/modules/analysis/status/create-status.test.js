@@ -1,6 +1,6 @@
-const writefile = require('../files/write-file');
+const writefile = require('../../files/write-file');
 
-jest.mock('../files/write-file');
+jest.mock('../../files/write-file');
 
 // Mock date
 const DATE_TO_USE = new Date();

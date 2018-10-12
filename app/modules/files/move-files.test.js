@@ -1,7 +1,7 @@
 const mockFS = require('mock-fs');
 const fs = require('fs');
 
-jest.mock('../../../../config', () => ({
+jest.mock('../../../config', () => ({
   samplefile: 'sample-files/analysis-file.txt',
 }));
 
@@ -34,7 +34,7 @@ describe('Move files for analysis', () => {
       const files = [
         { originalname: 'samplefile.txt', path: '' },
       ];
-      moveFiles(files, 'tmp/workDir', true)
+      moveFiles(files, 'tmp/workDir', 'true')
         .then(() => {
           done();
         });

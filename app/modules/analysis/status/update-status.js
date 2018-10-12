@@ -1,5 +1,5 @@
-const listFiles = require('../files/list-files');
-const stripExt = require('../files/strip-ext');
+const listFiles = require('../../files/list-files');
+const stripExt = require('../../files/strip-ext');
 const writeStatus = require('./write-status');
 
 const updateStatus = workDir => (

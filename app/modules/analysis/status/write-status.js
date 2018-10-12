@@ -1,5 +1,5 @@
-const readfile = require('../files/read-file');
-const writefile = require('../files/write-file');
+const readfile = require('../../files/read-file');
+const writefile = require('../../files/write-file');
 
 const writeStatus = (workDir, status, files) => (
   new Promise((resolve, reject) => {
