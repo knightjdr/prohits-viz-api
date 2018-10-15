@@ -13,7 +13,7 @@ const oldFiles = files => (
       fs.stat(file, (err, stat) => {
         if (
           !err &&
-          currTime.valueOf() - stat.mtime.valueOf() > config.oldFile
+          currTime.valueOf() - stat.mtime.valueOf() > config.expiredFile
         ) {
           old.push(file);
         }
