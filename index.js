@@ -36,6 +36,6 @@ async function init() {
   }
 }
 
-clearFolders();
+setInterval(clearFolders, config.clearDelay);
 
 init();

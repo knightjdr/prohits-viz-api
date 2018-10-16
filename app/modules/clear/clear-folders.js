@@ -22,9 +22,4 @@ const clearFolders = () => {
     });
 };
 
-// Check tmp analysis and upload folders every hour.
-const checkFolders = () => {
-  setInterval(clearFolders, config.clearDelay);
-};
-
-module.exports = checkFolders;
+module.exports = clearFolders;
