@@ -1,7 +1,6 @@
 const mockFS = require('mock-fs');
 const fs = require('fs');
 
-const config = require('../../../../config');
 const validate = require('./validate');
 const workDir = require('../../helpers/work-dir');
 
@@ -10,7 +9,6 @@ jest.mock('./validate');
 
 const viz = require('./viz');
 
-console.log();
 const mockedFileSystem = {
   tmp: {
     test1: {},
