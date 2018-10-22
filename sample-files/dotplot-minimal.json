@@ -9,11 +9,6 @@
 	"parameters": {
 		"imageType": "dotplot"
 	},
-	"settings": {
-		"current": {
-			"imageType": "dotplot"
-		}
-	},
 	"rows": {
 		"list": [
 			{
