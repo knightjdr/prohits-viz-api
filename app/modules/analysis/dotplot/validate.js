@@ -8,6 +8,7 @@ const acceptedFields = [
   'biclusteringApprox',
   'clustering',
   'clusteringMethod',
+  'clusteringOptimize',
   'control',
   'distance',
   'edgeColor',
