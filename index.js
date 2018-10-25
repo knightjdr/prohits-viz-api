@@ -20,7 +20,7 @@ const initApp = () => {
   app.use(corsSetup());
   app.use(authorizedOrigin);
   app.use(bodyparser.json({ limit: '100mb' }));
-  app.use('/api', router);
+  app.use(config.base, router);
   server.listen(config.port, () => {
     logger.info(`Server listening on port ${server.address().port}`);
   });
