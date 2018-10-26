@@ -54,6 +54,17 @@ const validate = (form, files) => {
   if (validated.clustering !== 'none') {
     delete validated.conditionClustering;
     delete validated.readoutClustering;
+  } else {
+    if (validated.conditionList) {
+      validated.conditionList.replace('\n', ' ');
+      const re = RegExp(/([^\s,]+)/g);
+      validated.conditionList = validated.conditionList.match(re).join(',');
+    }
+    if (validated.readoutList) {
+      validated.readoutList.replace('\n', ' ');
+      const re = RegExp(/([^\s,]+)/g);
+      validated.readoutList = validated.readoutList.match(re).join(',');
+    }
   }
 
   // Delete unneeding fields and "false" fields.
