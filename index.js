@@ -27,15 +27,14 @@ const initApp = () => {
   socketConfig(app, server);
 };
 
-async function init() {
-  // Init database.
-  const db = await database.init();
-  // If there is an error log it, otherwise init app.
-  if (db instanceof Error) {
-    logger.error(db);
-  } else {
-    initApp();
-  }
+function init() {
+  database.init()
+    .then(() => {
+      initApp();
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
 }
 
 setInterval(clearFolders, config.clearDelay);
