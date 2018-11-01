@@ -11,7 +11,8 @@ const origins = process.env.NODE_ENV === 'production' ?
 ** an authorized origin. Currently any origin can access API endpoints at
 ** /api/third-pary, but only prohits-viz can access the others. */
 const authorizedOrigin = (req, res, next) => {
-  const re = new RegExp(/^\/api\/third-party/);
+  next();
+  /* const re = new RegExp(/^\/api\/third-party/);
   if (
     req.originalUrl.search(re) > -1 ||
     origins.includes(req.get('origin'))
@@ -20,7 +21,7 @@ const authorizedOrigin = (req, res, next) => {
   } else {
     res.status(403);
     res.end();
-  }
+  } */
 };
 
 module.exports = authorizedOrigin;
