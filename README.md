@@ -5,7 +5,7 @@ This API allows third-party access to the analysis and visualization tools at Pr
 # Overview
 
 ## Address
-https<nolink>://prohits-viz.lunenfeld.ca/v2/api/third-party
+https<nolink>://prohits-viz.org/api/third-party
 
 ## Endpoints
 

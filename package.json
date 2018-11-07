@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon n use 9.4.0 index.js",
-    "prod": "NODE_ENV=production n use 9.4.0 index.js",
-    "prod-forever": "NODE_ENV=production forever start -c 'n use 9.4.0' -a --uid 'prohits-viz-api' -l /mnt/prohitsdata/html/ProhitsTools/forever/prohits-viz-api.log --pidFile /mnt/prohitsdata/html/ProhitsTools/forever/pids/prohits-viz-api.pid index.js",
+    "prod": "NODE_ENV=production node index.js",
+    "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' index.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
