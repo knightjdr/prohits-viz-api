@@ -14,7 +14,7 @@ describe('Autorized origin', () => {
         next.mockClear();
         const req = {
           originalUrl: '/api/anything',
-          get: () => 'https://prohits-viz.lunenfeld.ca',
+          get: () => 'https://prohits-viz.org',
         };
         authorizedOrigin(req, res, next);
       });
@@ -29,7 +29,7 @@ describe('Autorized origin', () => {
         next.mockClear();
         const req = {
           originalUrl: '/api/third-party/anything',
-          get: () => 'https://prohits-viz.lunenfeld.ca',
+          get: () => 'https://prohits-viz.org',
         };
         authorizedOrigin(req, res, next);
       });
