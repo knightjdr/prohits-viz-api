@@ -1,3 +1,5 @@
+const url = require('url');
+
 const config = require('../config');
 
 const getOrigins = () => (
@@ -10,9 +12,10 @@ const getOrigins = () => (
 const authorizedOrigin = (req, res, next) => {
   const origins = getOrigins();
   const re = new RegExp(/^\/api\/third-party/);
+  const urlDetails = req.get('referer') ? url.parse(req.get('referer')) : {};
   if (
     req.originalUrl.search(re) > -1 ||
-    origins.includes(req.get('origin'))
+    origins.includes(urlDetails.host)
   ) {
     next();
   } else {

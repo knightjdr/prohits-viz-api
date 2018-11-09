@@ -29,7 +29,7 @@ const viz = (req, res) => (
         .then(() => {
           const taskFolder = path.basename(workingDir);
           const { imageType } = validated.json.parameters;
-          const url = `${config.origin}/visualization/${taskFolder}/${imageType}`;
+          const url = `${config.protocol}://${config.origin}/visualization/${taskFolder}/${imageType}`;
           res.send({ url });
           resolve();
         })
