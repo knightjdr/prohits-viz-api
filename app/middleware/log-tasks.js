@@ -1,4 +1,5 @@
 const insert = require('../modules/db-methods/insert');
+const urlDetails = require('../modules/helpers/url-details');
 
 // Logs requests to database
 const logTask = (req, res, next) => {
@@ -7,7 +8,7 @@ const logTask = (req, res, next) => {
     date: new Date().toISOString(),
     file: false,
     fileSize: 0,
-    origin: req.get('origin'),
+    origin: urlDetails(req).host,
     path,
     type: params && params.type ? params.type : '',
   };

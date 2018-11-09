@@ -1,4 +1,8 @@
 process.env.NODE_ENV = 'production';
+const urlDetails = require('../app/modules/helpers/url-details');
+
+jest.mock('../app/modules/helpers/url-details');
+
 const authorizedOrigin = require('./authorized-origin');
 
 const next = jest.fn();
@@ -12,9 +16,9 @@ describe('Autorized origin', () => {
     describe('accesing non-third party endpoint', () => {
       beforeAll(() => {
         next.mockClear();
+        urlDetails.mockReturnValue({ host: 'prohits-viz.org' });
         const req = {
           originalUrl: '/api/anything',
-          get: () => 'https://prohits-viz.org/',
         };
         authorizedOrigin(req, res, next);
       });
@@ -27,9 +31,9 @@ describe('Autorized origin', () => {
     describe('accesing third party endpoint', () => {
       beforeAll(() => {
         next.mockClear();
+        urlDetails.mockReturnValue({ host: 'prohits-viz.org' });
         const req = {
           originalUrl: '/api/third-party/anything',
-          get: () => 'https://prohits-viz.org/',
         };
         authorizedOrigin(req, res, next);
       });
@@ -44,11 +48,11 @@ describe('Autorized origin', () => {
     describe('accesing non-third party endpoint', () => {
       beforeAll(() => {
         next.mockClear();
+        urlDetails.mockReturnValue({ host: 'other.ca' });
         res.end.mockClear();
         res.status.mockClear();
         const req = {
           originalUrl: '/api/anything',
-          get: () => 'https://other.ca/',
         };
         authorizedOrigin(req, res, next);
       });
@@ -69,9 +73,9 @@ describe('Autorized origin', () => {
     describe('accesing third party endpoint', () => {
       beforeAll(() => {
         next.mockClear();
+        urlDetails.mockReturnValue({ host: 'other.ca' });
         const req = {
           originalUrl: '/api/third-party/anything',
-          get: () => 'https://other.ca/',
         };
         authorizedOrigin(req, res, next);
       });

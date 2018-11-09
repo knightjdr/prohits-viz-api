@@ -1,6 +1,7 @@
 const insert = require('../modules/db-methods/insert');
 
 jest.mock('../modules/db-methods/insert');
+jest.mock('../modules/helpers/url-details', () => () => ({ host: 'test.org' }));
 
 // Mock date
 const DATE_TO_USE = new Date();
@@ -23,7 +24,6 @@ describe('Log tasks', () => {
         insert.mockClear();
         next.mockClear();
         const req = {
-          get: () => 'test.org',
           files: [
             { originalname: 'file1.txt', size: 1000 },
           ],

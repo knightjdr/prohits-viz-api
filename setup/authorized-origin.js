@@ -1,6 +1,5 @@
-const url = require('url');
-
 const config = require('../config');
+const urlDetails = require('../app/modules/helpers/url-details');
 
 const getOrigins = () => (
   [config.origin, ...config.thirdPartyOrigins]
@@ -11,11 +10,11 @@ const getOrigins = () => (
 ** /api/third-pary, but only prohits-viz can access the others. */
 const authorizedOrigin = (req, res, next) => {
   const origins = getOrigins();
-  const re = new RegExp(/^\/api\/third-party/);
-  const urlDetails = req.get('referer') ? url.parse(req.get('referer')) : {};
+  const re = new RegExp(/third-party/);
+  const url = urlDetails(req);
   if (
     req.originalUrl.search(re) > -1 ||
-    origins.includes(urlDetails.host)
+    origins.includes(url.host)
   ) {
     next();
   } else {
