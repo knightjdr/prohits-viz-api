@@ -1,6 +1,6 @@
 const mcache = require('memory-cache');
 
-const CACHE_TIME = 15; // Cache time in minutes;
+const CACHE_TIME = 10080; // Cache time in minutes. One week.
 
 const cache = (req, res, next) => {
   const key = `__express__${req.originalUrl || req.url}`;
