@@ -52,7 +52,7 @@ describe('Third party viz', () => {
     });
   });
 
-  describe('with validation error', () => {
+  describe('with validate data', () => {
     beforeAll(async (done) => {
       res.end.mockClear();
       res.status.mockClear();

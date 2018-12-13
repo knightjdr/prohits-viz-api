@@ -18,7 +18,7 @@ const sync = (req, res) => {
       .then((dir) => {
         workingDir = dir;
         return Promise.all([
-          mkdir(workingDir, ['minimap', 'svg']),
+          mkdir(workingDir, ['minimap']),
           writeDataFile(workingDir, validated.data),
         ]);
       })

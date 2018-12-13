@@ -22,6 +22,8 @@ const validate = imageType => (type, value, defaultSetting) => {
       return criteria.isBoolean(value, defaultSetting);
     case 'markers':
       return markers(value);
+    case 'minAbundance':
+      return criteria.isNumber(value, defaultSetting);
     case 'primaryFilter':
       return criteria.isNumber(value, defaultSetting);
     case 'rows':

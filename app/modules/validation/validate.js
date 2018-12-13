@@ -13,6 +13,7 @@ const neededProps = {
     'fillColor',
     'invertColor',
     'markers',
+    'minAbundance',
     'primaryFilter',
     'rows',
     'scoreType',
@@ -22,9 +23,10 @@ const neededProps = {
     'abundanceCap',
     'annotations',
     'columns',
-    'edgeColor',
+    'fillColor',
     'invertColor',
     'markers',
+    'minAbundance',
     'rows',
   ],
 };
@@ -35,7 +37,7 @@ const neededProps = {
 const validate = (imageType, data, ignore = []) => {
   const props = neededProps[imageType].filter(prop => !ignore.includes(prop));
   const errs = [];
-  const validateFunc = validator('dotplot');
+  const validateFunc = validator(imageType);
   const validatedObj = iterator(props, data, settings[imageType], validateFunc, errs);
 
   return {

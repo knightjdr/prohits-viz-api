@@ -4,7 +4,7 @@
   "description": "API for ProHits-viz",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon n use 9.4.0 index.js",
+    "dev": "NODE_ENV=development nodemon n use 10.4.1 index.js",
     "prod": "NODE_ENV=production node index.js",
     "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' index.js",
     "test": "jest",

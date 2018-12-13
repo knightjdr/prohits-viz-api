@@ -51,7 +51,7 @@ describe('Syncing minimap', () => {
     });
 
     it('should create output directories', () => {
-      expect(mkdir).toHaveBeenCalledWith('workdir', ['minimap', 'svg']);
+      expect(mkdir).toHaveBeenCalledWith('workdir', ['minimap']);
     });
 
     it('should write request body to file', () => {

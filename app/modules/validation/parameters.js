@@ -1,4 +1,4 @@
-const colorSchemes = ['blueBlack', 'greenBlack', 'greyscale', 'redBlack', 'yellowBlack'];
+const colorSchemes = ['blueBlack', 'blueRed', 'blueYellow', 'greenBlack', 'greyscale', 'redBlack', 'yellowBlack'];
 
 const settings = {
   dotplot: {
@@ -9,6 +9,7 @@ const settings = {
     imageType: 'dotplot',
     invertColor: false,
     markerColor: '#000000',
+    minAbundance: 0,
     primaryFilter: 0.01,
     scoreType: 'lte',
     secondaryFilter: 0.05,
@@ -20,6 +21,7 @@ const settings = {
     imageType: 'dotplot',
     invertColor: false,
     markerColor: '#000000',
+    minAbundance: 0,
   },
 };
 

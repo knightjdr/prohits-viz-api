@@ -25,6 +25,7 @@ describe('Heatmap validation interface', () => {
           },
         ],
       },
+      minAbundance: 5,
       primaryFilter: 0.01,
       rows: [
         { data: [{ ratio: 0.5, score: 0.01, value: 0.5 }], name: 'a' },
