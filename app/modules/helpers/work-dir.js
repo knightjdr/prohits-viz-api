@@ -1,11 +1,11 @@
 const fs = require('fs');
-const Puid = require('puid');
+const nanoid = require('nanoid');
 
 const config = require('../../../config');
 
 const workDir = () => (
   new Promise((resolve, reject) => {
-    const id = new Puid(false).generate();
+    const id = nanoid(14);
     const workingDir = `${config.workDir}${id}`;
     fs.mkdir(workingDir, (err) => {
       if (!err) {

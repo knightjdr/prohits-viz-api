@@ -7,7 +7,6 @@ const stat = require('./stat');
 const downloadFolder = (req, res) => {
   const { folder } = req.params;
   const taskFolder = `${config.workDir}${folder}`;
-  console.log(taskFolder);
   stat(taskFolder, res)
     .then(() => archive(taskFolder, res))
     .catch(() => {
