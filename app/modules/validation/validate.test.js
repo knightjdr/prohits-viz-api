@@ -33,6 +33,8 @@ describe('Heatmap validation interface', () => {
       ],
       scoreType: 'lte',
       secondaryFilter: 0.05,
+      xLabel: 'x',
+      yLabel: 'y',
     };
     const expected = {
       err: undefined,

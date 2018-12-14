@@ -1,27 +1,28 @@
 const colorSchemes = ['blueBlack', 'blueRed', 'blueYellow', 'greenBlack', 'greyscale', 'redBlack', 'yellowBlack'];
 
+const common = {
+  abundanceCap: 50,
+  annotationFontSize: 12,
+  conditionColumn: 'Conditions',
+  fillColor: 'blueBlack',
+  invertColor: false,
+  markerColor: '#000000',
+  minAbundance: 0,
+  readoutColumn: 'Readouts',
+};
+
 const settings = {
   dotplot: {
-    abundanceCap: 50,
-    annotationFontSize: 12,
+    ...common,
     edgeColor: 'blueBlack',
-    fillColor: 'blueBlack',
     imageType: 'dotplot',
-    invertColor: false,
-    markerColor: '#000000',
-    minAbundance: 0,
     primaryFilter: 0.01,
     scoreType: 'lte',
     secondaryFilter: 0.05,
   },
   heatmap: {
-    abundanceCap: 50,
-    annotationFontSize: 12,
-    fillColor: 'blueBlack',
-    imageType: 'dotplot',
-    invertColor: false,
-    markerColor: '#000000',
-    minAbundance: 0,
+    ...common,
+    imageType: 'heatmap',
   },
 };
 

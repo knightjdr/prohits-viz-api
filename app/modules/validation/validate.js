@@ -4,32 +4,34 @@ const validator = require('./validator');
 
 const { settings } = parameters;
 
+const common = [
+  'abundanceCap',
+  'annotations',
+  'columns',
+  'fillColor',
+  'invertColor',
+  'markers',
+  'minAbundance',
+  'rows',
+];
+
 const neededProps = {
   dotplot: [
-    'abundanceCap',
-    'annotations',
-    'columns',
+    ...common,
     'edgeColor',
-    'fillColor',
-    'invertColor',
-    'markers',
-    'minAbundance',
     'primaryFilter',
-    'rows',
     'scoreType',
     'secondaryFilter',
   ],
   heatmap: [
-    'abundanceCap',
-    'annotations',
-    'columns',
-    'fillColor',
-    'invertColor',
-    'markers',
-    'minAbundance',
-    'rows',
+    ...common,
   ],
 };
+
+const optionalProps = [
+  'xLabel',
+  'yLabel',
+];
 
 /* Validation checks parameters and if they are invalid, uses the default.
 ** If, however, the row or columns objects are invalid, returns an err. Properties
@@ -39,11 +41,20 @@ const validate = (imageType, data, ignore = []) => {
   const errs = [];
   const validateFunc = validator(imageType);
   const validatedObj = iterator(props, data, settings[imageType], validateFunc, errs);
+  const objWithOptional = optionalProps.reduce((accum, prop) => {
+    if (data[prop]) {
+      return {
+        ...accum,
+        [prop]: data[prop],
+      };
+    }
+    return accum;
+  }, validatedObj);
 
   return {
     err: errs[0],
     data: {
-      ...validatedObj,
+      ...objWithOptional,
       imageType,
     },
   };
