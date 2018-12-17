@@ -3,7 +3,6 @@ const compression = require('compression');
 const express = require('express');
 const http = require('http');
 
-const authorizedOrigin = require('./setup/authorized-origin');
 const config = require('./config');
 const corsSetup = require('./setup/cors');
 const clearFolders = require('./app/modules/clear/clear-folders');
@@ -12,6 +11,7 @@ const logger = require('./logger');
 const responseHeaders = require('./setup/response-headers');
 const router = require('./app/routes/router');
 const socketConfig = require('./setup/socket-config');
+const { authorizedOrigin } = require('./setup/authorized-origin');
 
 // Init app.
 const initApp = () => {

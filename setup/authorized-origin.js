@@ -1,26 +1,38 @@
-const config = require('../config');
-const urlDetails = require('../app/modules/helpers/url-details');
+const validateThirdParty = require('../app/modules/third-party/auth/auth');
 
-const getOrigins = () => (
-  [config.origin, ...config.thirdPartyOrigins]
-);
+const forbidden = (res, err) => {
+  if (err) {
+    res.statusMessage(err.toString());
+  }
+  res.status(403);
+  res.end();
+};
 
 /* This middleware checks to see if the endpoint is being accessed by
-** an authorized origin. Currently any origin can access API endpoints at
+** a user connected to prohits-viz.org. It uses their socket ID to confirm.
+** Currently any origin can access API endpoints at
 ** /api/third-pary, but only prohits-viz can access the others. */
 const authorizedOrigin = (req, res, next) => {
-  const origins = getOrigins();
   const re = new RegExp(/third-party/);
-  const url = urlDetails(req);
-  if (
-    req.originalUrl.search(re) > -1 ||
-    origins.includes(url.host)
+  const sessionID = req.get('session');
+  const sessions = req.app.get('sessions');
+  if (req.method === 'GET') {
+    next();
+  } else if (
+    req.method === 'POST'
+    && sessions.includes(sessionID)
   ) {
     next();
+  } else if (req.originalUrl.search(re) > -1) {
+    validateThirdParty(req)
+      .then(() => { next(); })
+      .catch((err) => { forbidden(res, err); });
   } else {
-    res.status(403);
-    res.end();
+    forbidden(res);
   }
 };
 
-module.exports = authorizedOrigin;
+module.exports = {
+  authorizedOrigin,
+  forbidden,
+};
