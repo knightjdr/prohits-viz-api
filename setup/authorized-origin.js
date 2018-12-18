@@ -10,8 +10,7 @@ const forbidden = (res, err) => {
 
 /* This middleware checks to see if the endpoint is being accessed by
 ** a user connected to prohits-viz.org. It uses their socket ID to confirm.
-** Currently any origin can access API endpoints at
-** /api/third-pary, but only prohits-viz can access the others. */
+** API endpoints at /api/third-pary are validated using the apikey. */
 const authorizedOrigin = (req, res, next) => {
   const re = new RegExp(/third-party/);
   const sessionID = req.get('session');
