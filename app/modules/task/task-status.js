@@ -3,7 +3,7 @@ const fs = require('fs');
 const config = require('../../../config');
 const shouldResolve = require('./should-resolve');
 
-const exists = tasks => (
+const status = tasks => (
   new Promise((resolve) => {
     if (tasks.length === 0) {
       resolve({ list: [], status: [] });
@@ -36,4 +36,4 @@ const exists = tasks => (
   })
 );
 
-module.exports = exists;
+module.exports = status;
