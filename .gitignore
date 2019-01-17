@@ -65,3 +65,7 @@ config.js
 
 # temporary folders
 tmp/
+
+# download folders
+scripts/interactors/downloads
+files
