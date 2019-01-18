@@ -3,17 +3,17 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const parseIntact = taxon => (
+const parseIntact = (taxon, infile, outfile) => (
   new Promise((resolve, reject) => {
     const geneRegex = new RegExp(/uniprotkb:([^(]+)\(gene name\)/);
     const speciesRegex = new RegExp(/taxid:(\d+)/);
 
     const species = {};
-    const stream = fs.createWriteStream('../../files/interactors.txt', { flags: 'a' });
+    const stream = fs.createWriteStream(outfile, { flags: 'a' });
 
     let isHeader = true;
     const lineReader = readline.createInterface({
-      input: fs.createReadStream('./downloads/intact.tab'),
+      input: fs.createReadStream(infile),
     });
     lineReader.on('line', (line) => {
       if (!isHeader) {

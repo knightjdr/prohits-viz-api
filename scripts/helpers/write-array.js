@@ -2,16 +2,20 @@
 
 const fs = require('fs');
 
-const writeArray = arr => (
+const writeArray = (arr, file, varName) => (
   new Promise((resolve) => {
-    const stream = fs.createWriteStream('../../files/interactor-species.js', { flags: 'w' });
+    const stream = fs.createWriteStream(file);
 
-    stream.write('/* eslint quotes: 0 */\n\nconst species = [\n');
+    stream.write(`/* eslint quotes: 0 */\n\nconst ${varName} = [\n`);
     arr.forEach((item) => {
       stream.write(`  "${item}",\n`);
     });
-    stream.write('];\n\nexport default species;\n\n');
-    resolve();
+    stream.write(`];\n\nexport default ${varName};\n\n`);
+    stream.end();
+
+    stream.on('finish', () => {
+      resolve();
+    });
   })
 );
 
