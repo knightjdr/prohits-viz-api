@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const readline = require('readline');
+const sortArray = require('../helpers/sort-array-strings');
 
 const parseTissues = (infile, outfile, flags) => (
   new Promise((resolve, reject) => {
@@ -22,7 +23,9 @@ const parseTissues = (infile, outfile, flags) => (
     });
     lineReader.on('close', () => {
       stream.end();
-      resolve(tissues);
+      const tissueArr = Object.keys(tissues);
+      sortArray(tissueArr);
+      resolve(tissueArr);
     });
     lineReader.on('error', (err) => {
       reject(err);

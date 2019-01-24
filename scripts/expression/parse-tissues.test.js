@@ -32,6 +32,6 @@ describe('Parse tissues', () => {
   });
 
   it('should return a list of cells', () => {
-    expect(species).toEqual({ cellA: 1, cellB: 1 });
+    expect(species).toEqual(['cellA', 'cellB']);
   });
 });
