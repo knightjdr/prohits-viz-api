@@ -12,7 +12,7 @@ let taxon;
 
 const biogridFile = './downloads/biogrid.tab';
 const intactFile = './downloads/intact.tab';
-const outFile = '../../files/interactors.txt';
+const outFile = '../../files/interactions.txt';
 
 download()
   .then(() => parseTaxonomy())
