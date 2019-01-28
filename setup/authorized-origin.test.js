@@ -16,45 +16,24 @@ const req = {
 const res = {
   end: jest.fn(),
   status: jest.fn(),
-  statusMessage: jest.fn(),
 };
 const sleep = ms => (
   new Promise(resolve => setTimeout(resolve, ms))
 );
 
 describe('Forbidden response', () => {
-  describe('with error', () => {
-    beforeAll(() => {
-      res.end.mockClear();
-      res.status.mockClear();
-      res.statusMessage.mockClear();
-      forbidden(res, new Error('test error'));
-    });
-
-    it('should set response status', () => {
-      expect(res.status).toHaveBeenCalledWith(403);
-    });
-
-    it('should set response status message', () => {
-      expect(res.statusMessage).toHaveBeenCalledWith('Error: test error');
-    });
-
-    it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
-    });
+  beforeAll(() => {
+    res.end.mockClear();
+    res.status.mockClear();
+    forbidden(res);
   });
 
-  describe('without error', () => {
-    beforeAll(() => {
-      res.end.mockClear();
-      res.status.mockClear();
-      res.statusMessage.mockClear();
-      forbidden(res);
-    });
+  it('should set response status', () => {
+    expect(res.status).toHaveBeenCalledWith(403);
+  });
 
-    it('should not set response status message', () => {
-      expect(res.statusMessage).not.toHaveBeenCalled();
-    });
+  it('should end response', () => {
+    expect(res.end).toHaveBeenCalled();
   });
 });
 

@@ -1,9 +1,6 @@
 const validateThirdParty = require('../app/modules/third-party/auth/auth');
 
-const forbidden = (res, err) => {
-  if (err) {
-    res.statusMessage(err.toString());
-  }
+const forbidden = (res) => {
   res.status(403);
   res.end();
 };
