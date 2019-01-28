@@ -6,7 +6,7 @@ jest.mock('../../files/write-file');
 
 const writeStatus = require('./write-status');
 
-const json = '{"status": "running"}';
+const json = '{"primaryFile": "dotplot", "status": "running"}';
 
 describe('Write to status file', () => {
   describe('when status file exists', () => {
@@ -27,6 +27,7 @@ describe('Write to status file', () => {
 
     it('should call write file', () => {
       const expectedStatus = JSON.stringify({
+        primaryFile: 'dotplot',
         status,
         files,
       }, null, 2);
@@ -34,7 +35,33 @@ describe('Write to status file', () => {
     });
   });
 
-  it('should through error when reading status file throws error', async (done) => {
+  describe('when status file but primaryFile arg is defined', () => {
+    const files = ['log'];
+    const status = 'complete';
+
+    beforeAll(async (done) => {
+      readfile.mockResolvedValueOnce(json);
+      writeStatus('workDir', status, files, 'error')
+        .then(() => {
+          done();
+        });
+    });
+
+    it('should call read file', () => {
+      expect(readfile).toHaveBeenCalledWith('workDir/status.json');
+    });
+
+    it('should call write file', () => {
+      const expectedStatus = JSON.stringify({
+        primaryFile: 'error',
+        status,
+        files,
+      }, null, 2);
+      expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
+    });
+  });
+
+  it('should throw error when reading status file throws error', async (done) => {
     const expectedError = new Error('Could not update status file');
     readfile.mockRejectedValueOnce();
     writeStatus('workDir', 'complete', [])

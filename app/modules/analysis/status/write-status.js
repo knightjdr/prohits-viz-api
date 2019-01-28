@@ -1,7 +1,7 @@
 const readfile = require('../../files/read-file');
 const writefile = require('../../files/write-file');
 
-const writeStatus = (workDir, status, files) => (
+const writeStatus = (workDir, status, files, primaryFile) => (
   new Promise((resolve, reject) => {
     readfile(`${workDir}/status.json`)
       .then((data) => {
@@ -9,6 +9,7 @@ const writeStatus = (workDir, status, files) => (
         const newStatus = {
           ...json,
           files,
+          primaryFile: primaryFile || json.primaryFile,
           status,
         };
         const content = JSON.stringify(newStatus, null, 2);

@@ -9,7 +9,7 @@ const updateStatus = workDir => (
 
     /* Get a list of txt (status) files in main directory. Then
     ** get list of interactive files. Interactive folder
-    ** may not exists, so want to do this in two steps
+    ** may not exist, so want to do this in two steps
     ** since the first promise will never throw an error. */
     listFiles(workDir, '.txt')
       .then((statusFiles) => {
@@ -24,7 +24,7 @@ const updateStatus = workDir => (
       })
       .catch(() => {
         status = 'error';
-        writeStatus(workDir, status, files);
+        writeStatus(workDir, status, files, 'error');
         resolve('here2');
       });
   })

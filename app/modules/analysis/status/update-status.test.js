@@ -88,6 +88,7 @@ describe('Update status file', () => {
         const expectedStatus = {
           analysis: 'dotplot',
           date: new Date().toISOString(),
+          primaryFile: 'error',
           status: 'error',
           files: [
             'error',
