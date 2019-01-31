@@ -5,7 +5,7 @@ describe('Validate dotplot form', () => {
     it('should have control column when control subtraction requested', () => {
       const form = {
         control: 'controlColumn',
-        ctrlSub: true,
+        ctrlSub: 'true',
       };
       const validated = validate(form, []);
       expect(validated.control).toBe('controlColumn');
@@ -14,7 +14,7 @@ describe('Validate dotplot form', () => {
     it('should not have control column when control subtraction is not requested', () => {
       const form = {
         control: 'controlColumn',
-        ctrlSub: false,
+        ctrlSub: 'false',
       };
       const validated = validate(form, []);
       expect(validated.control).toBeUndefined();
@@ -25,7 +25,7 @@ describe('Validate dotplot form', () => {
     it('should have readout length column when adjustment requested', () => {
       const form = {
         readoutLength: 'lengthColumn',
-        readoutLengthNorm: true,
+        readoutLengthNorm: 'true',
       };
       const validated = validate(form, []);
       expect(validated.readoutLength).toBe('lengthColumn');
@@ -34,7 +34,7 @@ describe('Validate dotplot form', () => {
     it('should not have readout length column when adjustment is not requested', () => {
       const form = {
         readoutLength: 'lengthColumn',
-        readoutLengthNorm: false,
+        readoutLengthNorm: 'false',
       };
       const validated = validate(form, []);
       expect(validated.readoutLength).toBeUndefined();

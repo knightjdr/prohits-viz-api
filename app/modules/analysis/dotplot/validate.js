@@ -1,3 +1,5 @@
+const isTrue = require('../../helpers/is-true');
+
 const acceptedFields = [
   'abundance',
   'abundanceCap',
@@ -36,12 +38,12 @@ const validate = (form, files) => {
   let validated = { ...form };
 
   // Clear control column if not required.
-  if (validated.control && !validated.ctrlSub) {
+  if (validated.control && !isTrue(validated.ctrlSub)) {
     validated.control = '';
   }
 
   // Clear readout length column if not required.
-  if (validated.readoutLength && !validated.readoutLengthNorm) {
+  if (validated.readoutLength && !isTrue(validated.readoutLengthNorm)) {
     validated.readoutLength = '';
   }
 

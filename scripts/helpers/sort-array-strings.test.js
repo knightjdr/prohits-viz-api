@@ -1,4 +1,4 @@
-import SortArrayStrings from './sort-array-strings';
+const SortArrayStrings = require('./sort-array-strings');
 
 const unsorted = ['b', 'A', 'm', 'G'];
 const sorted = ['A', 'b', 'G', 'm'];
