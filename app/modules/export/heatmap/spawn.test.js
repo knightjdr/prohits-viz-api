@@ -27,8 +27,9 @@ describe('Spawning the export process', () => {
   });
 
   it('should reject with an error on exit', () => {
-    testSpawn.setDefault(testSpawn.simple(1));
-    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toThrowError();
+    const err = new Error('error');
+    testSpawn.setDefault(testSpawn.simple(err));
+    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toEqual(err);
   });
 
   it('should reject with a runtime panic error', () => {
@@ -37,6 +38,6 @@ describe('Spawning the export process', () => {
       this.emit('error', err);
       setTimeout(() => cb(8), 10);
     });
-    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toThrowError(err);
+    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toEqual(err);
   });
 });

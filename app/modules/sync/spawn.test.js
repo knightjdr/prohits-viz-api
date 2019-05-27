@@ -35,8 +35,9 @@ describe('Spawning the sync process', () => {
   });
 
   it('should reject with an error on exit', () => {
-    testSpawn.setDefault(testSpawn.simple(1));
-    return expect(spawnProcess(socket, 'testdir/')).rejects.toThrowError();
+    const err = new Error('error');
+    testSpawn.setDefault(testSpawn.simple(err));
+    return expect(spawnProcess(socket, 'testdir/')).rejects.toEqual(err);
   });
 
   it('should reject with a runtime panic error', () => {
@@ -45,6 +46,6 @@ describe('Spawning the sync process', () => {
       this.emit('error', err);
       setTimeout(() => cb(8), 10);
     });
-    return expect(spawnProcess(socket, 'testdir/')).rejects.toThrowError(err);
+    return expect(spawnProcess(socket, 'testdir/')).rejects.toEqual(err);
   });
 });
