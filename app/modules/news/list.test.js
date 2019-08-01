@@ -42,9 +42,7 @@ describe('News list', () => {
     });
 
     it('should return data object', () => {
-      expect(res.send).toHaveBeenCalledWith({
-        news: returnValues.news.addDate,
-      });
+      expect(res.send).toHaveBeenCalledWith(returnValues.news.addDate);
     });
   });
 
