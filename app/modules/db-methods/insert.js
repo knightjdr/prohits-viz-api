@@ -1,20 +1,15 @@
 const config = require('../../../config');
 const database = require('../../connections/database');
 
-const find = (
-  collection,
-  insertObject = {},
-) => (
-  new Promise((resolve, reject) => {
+const insert = async (collection, insertObject = {}) => {
+  try {
     const db = database.connection;
-    db.collection(`${config.database.prefix}${collection}`)
-      .insert(insertObject)
-      .then(() => {
-        resolve();
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  })
-);
-module.exports = find;
+    await db.collection(`${config.database.prefix}${collection}`)
+      .insert(insertObject);
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = insert;

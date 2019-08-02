@@ -1,79 +1,75 @@
-process.env.NODE_ENV = test;
-const database = require('../../connections/database');
-const find = require('./find');
+const mongodb = require('mongo-mock');
 const { ObjectID } = require('mongodb');
 
-// mock config
+const database = require('../../connections/database');
+const find = require('./find');
+
 jest.mock('../../../config', () => (
   {
     database: {
-      name: 'sandbox',
       prefix: 'test_',
-      pw: 'sandboxpw',
-      user: 'sandbox',
     },
   }
 ));
-// mock logger
-jest.mock('../../../logger');
+jest.mock('../../connections/database', () => ({
+  connection: null,
+}));
 
-// expected return values
-const response = {
-  all: [
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-    { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
-  ],
-  limit: [
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  ],
-  one: [
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  ],
-  sorted: [
-    { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  ],
-  subset: [
-    { field: 'a' },
-    { field: 'b' },
-  ],
-};
+const documents = [
+  { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
+  { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
+];
 
-beforeAll(() => (
-  database.init()
-));
-afterAll(() => (
-  database.close()
-));
+beforeAll(async (done) => {
+  mongodb.max_delay = 0;
+  const { MongoClient } = mongodb;
+  const url = 'mongodb://localhost:27017/test';
+
+  // Insert some documents.
+  MongoClient.connect(url, {}, (err, db) => {
+    database.connection = db;
+    db.collection('test_documents').insertMany(documents, () => {
+      done();
+    });
+  });
+});
 
 describe('find', () => {
-  it('should find all records in the database', () => (
-    find('get').then((getCollection) => {
-      expect(getCollection).toEqual(response.all);
-    })
-  ));
+  it('should find all records in the database', async () => {
+    const docs = await find('documents');
+    const expected = documents;
+    expect(docs).toEqual(expected);
+  });
 
-  it('should find one record in the database', () => (
-    find('get', { name: 'test' }).then((getCollection) => {
-      expect(getCollection).toEqual(response.one);
-    })
-  ));
+  it('should find one record in the database', async () => {
+    const docs = await find('documents', { name: 'test' });
+    const expected = documents.slice(0, 1);
+    expect(docs).toEqual(expected);
+  });
 
-  it('should find subset returned documents from database', () => (
-    find('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
-      expect(getCollection).toEqual(response.subset);
-    })
-  ));
+  it('should find subset returned documents from database', async () => {
+    const docs = await find('documents', {}, { _id: 0, field: 1 });
+    const expected = [
+      { field: 'a' },
+      { field: 'b' },
+    ];
+    expect(docs).toEqual(expected);
+  });
 
-  it('should find sort returned documents from database', () => (
-    find('get', {}, {}, { _id: -1 }).then((getCollection) => {
-      expect(getCollection).toEqual(response.sorted);
-    })
-  ));
+  it('should find sort returned documents from database', async () => {
+    const docs = await find('documents', {}, {}, { _id: -1 });
+    const expected = [
+      { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
+      { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
+    ];
+    expect(docs).toEqual(expected);
+  });
 
-  it('should find limit returned documents from database', () => (
-    find('get', {}, {}, {}, 1).then((getCollection) => {
-      expect(getCollection).toEqual(response.limit);
-    })
-  ));
+  it('should find limit returned documents from database', async () => {
+    const docs = await find('documents', {}, {}, {}, 1);
+    const expected = [
+      { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
+    ];
+    expect(docs).toEqual(expected);
+  });
 });

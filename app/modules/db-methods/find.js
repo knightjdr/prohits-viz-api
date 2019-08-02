@@ -1,26 +1,17 @@
 const config = require('../../../config');
 const database = require('../../connections/database');
 
-const find = (
-  collection,
-  queryObject = {},
-  returnObject = {},
-  sorted = {},
-  limit = 0,
-) => (
-  new Promise((resolve, reject) => {
+const find = async (collection, queryObject = {}, returnObject = {}, sorted = {}, limit = 0) => {
+  try {
     const db = database.connection;
-    db.collection(`${config.database.prefix}${collection}`)
+    return db.collection(`${config.database.prefix}${collection}`)
       .find(queryObject, { projection: returnObject })
       .sort(sorted)
       .limit(limit)
-      .toArray()
-      .then((documents) => {
-        resolve(documents);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  })
-);
+      .toArray();
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = find;

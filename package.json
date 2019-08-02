@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=development nodemon n use 12.6.0 index.js",
     "prod": "NODE_ENV=production node index.js",
     "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' index.js",
-    "test": "jest",
+    "test": "jest --watch",
     "test:coverage": "jest --coverage"
   },
   "repository": {
@@ -29,7 +29,8 @@
     "jest": "^24.8.0",
     "md5": "^2.2.1",
     "mock-fs": "^4.7.0",
-    "mock-spawn": "^0.2.6"
+    "mock-spawn": "^0.2.6",
+    "mongo-mock": "^3.7.1"
   },
   "dependencies": {
     "archiver": "^3.0.0",

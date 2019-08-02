@@ -1,4 +1,5 @@
-process.env.NODE_ENV = test;
+const mongodb = require('mongo-mock');
+
 const database = require('../../connections/database');
 const findOne = require('./find');
 const insert = require('./insert');
@@ -7,30 +8,31 @@ const insert = require('./insert');
 jest.mock('../../../config', () => (
   {
     database: {
-      name: 'sandbox',
       prefix: 'test_',
-      pw: 'sandboxpw',
-      user: 'sandbox',
     },
   }
 ));
-// mock logger
-jest.mock('../../../logger');
+jest.mock('../../connections/database', () => ({
+  connection: null,
+}));
 
-beforeAll(() => (
-  database.init()
-));
-afterAll(() => (
-  database.close()
-));
+beforeAll(async (done) => {
+  mongodb.max_delay = 0;
+  const { MongoClient } = mongodb;
+  const url = 'mongodb://localhost:27017/test';
 
-describe('find', () => {
-  it('should insert a record in the database', () => {
+  // Insert some documents.
+  MongoClient.connect(url, {}, (err, db) => {
+    database.connection = db;
+    done();
+  });
+});
+
+describe('Insert document', () => {
+  it('should insert a record in the database', async () => {
     const date = new Date().toISOString();
-    return insert('insert', { date })
-      .then(() => findOne('insert', { date }, {}))
-      .then((result) => {
-        expect(result[0].date).toBe(date);
-      });
+    await insert('insert', { date });
+    const document = await findOne('insert', { date }, {});
+    expect(document[0].date).toBe(date);
   });
 });

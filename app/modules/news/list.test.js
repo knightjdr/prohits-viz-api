@@ -20,21 +20,13 @@ const returnValues = {
 
 describe('News list', () => {
   describe('when find returns response object', () => {
-    afterAll(() => {
-      res.end.mockClear();
+    beforeAll(async (done) => {
       res.send.mockClear();
       res.status.mockClear();
-    });
-
-    beforeAll(async (done) => {
-      find
-        .mockResolvedValueOnce(returnValues.news.find);
-      addMongoDate.arr
-        .mockReturnValueOnce(returnValues.news.addDate);
-      list(req, res)
-        .then(() => {
-          done();
-        });
+      find.mockResolvedValueOnce(returnValues.news.find);
+      addMongoDate.arr.mockReturnValueOnce(returnValues.news.addDate);
+      await list(req, res);
+      done();
     });
 
     it('should return default status', () => {
@@ -47,19 +39,12 @@ describe('News list', () => {
   });
 
   describe('when there is a news list error', () => {
-    afterAll(() => {
-      res.end.mockClear();
-      res.send.mockClear();
-      res.status.mockClear();
-    });
-
     beforeAll(async (done) => {
-      find
-        .mockRejectedValueOnce(new Error());
-      list(req, res)
-        .then(() => {
-          done();
-        });
+      res.end.mockClear();
+      res.status.mockClear();
+      find.mockRejectedValueOnce(new Error());
+      await list(req, res);
+      done();
     });
 
     afterAll(() => {

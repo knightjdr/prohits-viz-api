@@ -11,31 +11,28 @@ const res = {
   status: jest.fn(),
 };
 const returnValues = {
-  news: {
-    addDate: [{ headline: 1, dbDate: 'a' }, { headline: 2, dbDate: 'b' }],
-    find: [{ headline: 1 }, { headline: 2 }],
+  article: {
+    addDate: [{ headline: 'article 1', dbDate: 'a' }, { headline: 'article 2', dbDate: 'b' }],
+    find: [{ headline: 'article 1' }, { headline: 'article 2' }],
   },
 };
 
 describe('News article', () => {
   describe('when there is a matching headline', () => {
-    afterAll(() => {
-      res.end.mockClear();
-      res.send.mockClear();
+    beforeAll(async (done) => {
+      findOne.mockClear();
       res.status.mockClear();
+      res.send.mockClear();
+      findOne.mockResolvedValueOnce(returnValues.article.find[0]);
+      addMongoDate.obj.mockReturnValueOnce(returnValues.article.addDate[0]);
+
+      const req = { params: { headline: 'article-1' } };
+      await article(req, res);
+      done();
     });
 
-    beforeAll(async (done) => {
-      findOne
-        .mockResolvedValueOnce(returnValues.news.find[0]);
-      addMongoDate.obj
-        .mockReturnValueOnce(returnValues.news.addDate[0]);
-
-      const req = { params: { headline: 'title' } };
-      article(req, res)
-        .then(() => {
-          done();
-        });
+    it('should find article with headline', () => {
+      expect(findOne).toHaveBeenCalledWith('news', { headline: 'article 1' });
     });
 
     it('should return default status', () => {
@@ -44,26 +41,24 @@ describe('News article', () => {
 
     it('should return correct item', () => {
       expect(res.send).toHaveBeenCalledWith({
-        news: returnValues.news.addDate[0],
+        article: returnValues.article.addDate[0],
       });
     });
   });
 
   describe('when there is no news item matching title', () => {
-    afterAll(() => {
+    beforeAll(async (done) => {
+      findOne.mockClear();
       res.end.mockClear();
-      res.send.mockClear();
       res.status.mockClear();
+      findOne.mockResolvedValueOnce(null);
+      const req = { params: { headline: 'title-unknown' } };
+      await article(req, res);
+      done();
     });
 
-    beforeAll(async (done) => {
-      findOne
-        .mockResolvedValueOnce(null);
-      const req = { params: { headline: 'title missing' } };
-      article(req, res)
-        .then(() => {
-          done();
-        });
+    it('should find article with headline', () => {
+      expect(findOne).toHaveBeenCalledWith('news', { headline: 'title unknown' });
     });
 
     it('should return 204 status', () => {
@@ -76,20 +71,13 @@ describe('News article', () => {
   });
 
   describe('when there is a news item error', () => {
-    afterAll(() => {
-      res.end.mockClear();
-      res.send.mockClear();
-      res.status.mockClear();
-    });
-
     beforeAll(async (done) => {
-      findOne
-        .mockRejectedValueOnce(new Error());
+      res.end.mockClear();
+      res.status.mockClear();
+      findOne.mockRejectedValueOnce(new Error());
       const req = { params: { headline: 'title' } };
-      article(req, res)
-        .then(() => {
-          done();
-        });
+      await article(req, res);
+      done();
     });
 
     it('should return 500 status', () => {
