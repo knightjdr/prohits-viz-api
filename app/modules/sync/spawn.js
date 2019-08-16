@@ -23,7 +23,7 @@ const spawnProcess = (socket, workingDir) => (
     });
     syncProcess.on('exit', (err) => {
       if (!err) {
-        socket.emit('action', { syncImage: url, type: 'MAP_SYNCHED' });
+        socket.emit('action', { syncedImage: url, type: 'MINIMAP_SYNCHED' });
         rimraf(workingDir, () => {});
         resolve();
       } else {

@@ -19,7 +19,6 @@ const req = {
   body: { imageType: 'dotplot' },
 };
 const res = {
-  end: jest.fn(),
   locals: {
     socket: { emit: jest.fn() },
   },
@@ -34,7 +33,7 @@ const sleep = ms => (
 describe('Syncing minimap', () => {
   describe('when successful', () => {
     beforeAll(async (done) => {
-      res.end.mockClear();
+      res.send.mockClear();
       validate.mockReturnValue({ data: 'data' });
       workDir.mockResolvedValue('workdir');
       sync(req, res);
@@ -42,8 +41,8 @@ describe('Syncing minimap', () => {
       done();
     });
 
-    it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
+    it('should send response', () => {
+      expect(res.send).toHaveBeenCalledWith({});
     });
 
     it('should create working directory', () => {
@@ -65,7 +64,7 @@ describe('Syncing minimap', () => {
 
   describe('when there is promise rejection', () => {
     beforeAll(async (done) => {
-      res.end.mockClear();
+      res.send.mockClear();
       validate.mockReturnValue({ data: 'data' });
       workDir.mockRejectedValue();
       sync(req, res);
@@ -73,8 +72,8 @@ describe('Syncing minimap', () => {
       done();
     });
 
-    it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
+    it('should send response', () => {
+      expect(res.send).toHaveBeenCalledWith({});
     });
 
     it('should emit error event to socket', () => {

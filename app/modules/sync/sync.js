@@ -12,7 +12,7 @@ const sync = (req, res) => {
     res.status(400);
     res.send({ message: validated.err.toString() });
   } else {
-    res.end();
+    res.send({});
     let workingDir;
     workDir()
       .then((dir) => {
