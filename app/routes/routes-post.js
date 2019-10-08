@@ -16,7 +16,7 @@ const post = (router) => {
   router.post('/analysis/viz/:type', getSocket, logTasks, analysis);
   router.post('/analysis/:type', upload.array('file'), getSocket, logTasks, analysis);
   router.post('/export/:type', getSocket, exportImage);
-  router.post('/sync/', noCacheClient, getSocket, sync);
+  router.post('/sync/:dataID', noCacheClient, getSocket, sync);
   router.post('/task/', task);
   router.post('/third-party/viz', logTasks, thirdPartyViz);
   router.post('*', (req, res) => {

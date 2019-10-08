@@ -4,7 +4,7 @@
   "description": "API for ProHits-viz",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon n use 12.6.0 index.js",
+    "dev": "NODE_ENV=development nodemon n use 12.10.0 index.js",
     "prod": "NODE_ENV=production node index.js",
     "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' index.js",
     "test": "jest --watch",
@@ -28,7 +28,7 @@
     "fetch-mock": "^6.5.2",
     "jest": "^24.8.0",
     "md5": "^2.2.1",
-    "mock-fs": "^4.7.0",
+    "mock-fs": "^4.10.1",
     "mock-spawn": "^0.2.6",
     "mongo-mock": "^3.7.1"
   },

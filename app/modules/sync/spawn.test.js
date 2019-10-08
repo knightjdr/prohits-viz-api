@@ -15,17 +15,14 @@ const socket = {
 
 describe('Spawning the sync process', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       socket.emit.mockClear();
       testSpawn.setDefault(testSpawn.simple(0, 'url'));
-      spawnProcess(socket, 'testdir/')
-        .then(() => {
-          done();
-        });
+      await spawnProcess(socket, 'testdir/', 'id');
     });
 
     it('should call socket emit with url written to stdout', () => {
-      expect(socket.emit).toHaveBeenCalledWith('action', { syncedImage: 'url', type: 'MINIMAP_SYNCHED' });
+      expect(socket.emit).toHaveBeenCalledWith('action', { dataID: 'id', syncedImage: 'url', type: 'MINIMAP_SYNCHED' });
     });
 
     it('should call rimraf to remove testdir', () => {
@@ -37,7 +34,7 @@ describe('Spawning the sync process', () => {
   it('should reject with an error on exit', () => {
     const err = new Error('error');
     testSpawn.setDefault(testSpawn.simple(err));
-    return expect(spawnProcess(socket, 'testdir/')).rejects.toEqual(err);
+    return expect(spawnProcess(socket, 'testdir/', 'id')).rejects.toEqual(err);
   });
 
   it('should reject with a runtime panic error', () => {
@@ -46,6 +43,6 @@ describe('Spawning the sync process', () => {
       this.emit('error', err);
       setTimeout(() => cb(8), 10);
     });
-    return expect(spawnProcess(socket, 'testdir/')).rejects.toEqual(err);
+    return expect(spawnProcess(socket, 'testdir/', 'id')).rejects.toEqual(err);
   });
 });

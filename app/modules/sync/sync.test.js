@@ -17,6 +17,9 @@ const sync = require('./sync');
 
 const req = {
   body: { imageType: 'dotplot' },
+  params: {
+    dataID: 'id',
+  },
 };
 const res = {
   locals: {
@@ -32,13 +35,12 @@ const sleep = ms => (
 
 describe('Syncing minimap', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.send.mockClear();
       validate.mockReturnValue({ data: 'data' });
       workDir.mockResolvedValue('workdir');
       sync(req, res);
       await sleep(200);
-      done();
     });
 
     it('should send response', () => {
@@ -58,18 +60,17 @@ describe('Syncing minimap', () => {
     });
 
     it('should spawn child process', () => {
-      expect(spawnProcess).toHaveBeenCalledWith(res.locals.socket, 'workdir');
+      expect(spawnProcess).toHaveBeenCalledWith(res.locals.socket, 'workdir', 'id');
     });
   });
 
   describe('when there is promise rejection', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.send.mockClear();
       validate.mockReturnValue({ data: 'data' });
       workDir.mockRejectedValue();
       sync(req, res);
       await sleep(200);
-      done();
     });
 
     it('should send response', () => {
@@ -77,18 +78,17 @@ describe('Syncing minimap', () => {
     });
 
     it('should emit error event to socket', () => {
-      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { type: 'SYNC_ERROR' });
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { dataID: 'id', type: 'SYNC_ERROR' });
     });
   });
 
   describe('when there is a validation error', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.send.mockClear();
       res.status.mockClear();
       validate.mockReturnValue({ err: new Error('test error') });
       sync(req, res);
       await sleep(200);
-      done();
     });
 
     it('should set status code', () => {
