@@ -28,7 +28,7 @@
     "fetch-mock": "^6.5.2",
     "jest": "^24.8.0",
     "md5": "^2.2.1",
-    "mock-fs": "^4.10.1",
+    "mock-fs": "^4.10.2",
     "mock-spawn": "^0.2.6",
     "mongo-mock": "^3.7.1"
   },
@@ -45,7 +45,7 @@
     "isomorphic-fetch": "^2.2.1",
     "memory-cache": "^0.2.0",
     "mkdirp": "^0.5.1",
-    "mongodb": "^3.0.4",
+    "mongodb": "^3.3.3",
     "multer": "^1.4.0",
     "nanoid": "^2.0.0",
     "rimraf": "^2.6.2",
