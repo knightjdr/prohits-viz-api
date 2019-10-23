@@ -22,7 +22,7 @@ describe('Spawning the sync process', () => {
     });
 
     it('should call socket emit with url written to stdout', () => {
-      expect(socket.emit).toHaveBeenCalledWith('action', { dataID: 'id', syncedImage: 'url', type: 'MINIMAP_SYNCHED' });
+      expect(socket.emit).toHaveBeenCalledWith('action', { selectionID: 'id', syncedImage: 'url', type: 'MINIMAP_SYNCHED' });
     });
 
     it('should call rimraf to remove testdir', () => {
