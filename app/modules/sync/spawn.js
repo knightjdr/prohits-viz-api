@@ -2,7 +2,7 @@ const rimraf = require('rimraf');
 const { spawn } = require('child_process');
 
 // Spawn Golang task to sync minimap.
-const spawnProcess = (socket, workingDir, selectionID) => (
+const spawnProcess = (socket, workingDir, snapshotID) => (
   new Promise((resolve, reject) => {
     let url = '';
     const syncProcess = spawn(
@@ -23,7 +23,7 @@ const spawnProcess = (socket, workingDir, selectionID) => (
     });
     syncProcess.on('exit', (err) => {
       if (!err) {
-        socket.emit('action', { selectionID, syncedImage: url, type: 'MINIMAP_SYNCHED' });
+        socket.emit('action', { snapshotID, syncedImage: url, type: 'MINIMAP_SYNCHED' });
         rimraf(workingDir, () => {});
         resolve();
       } else {

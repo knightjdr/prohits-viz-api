@@ -18,7 +18,7 @@ const sync = require('./sync');
 const req = {
   body: { imageType: 'dotplot' },
   params: {
-    selectionID: 'id',
+    snapshotID: 'id',
   },
 };
 const res = {
@@ -78,7 +78,7 @@ describe('Syncing minimap', () => {
     });
 
     it('should emit error event to socket', () => {
-      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { selectionID: 'id', type: 'SYNC_ERROR' });
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { snapshotID: 'id', type: 'SYNC_ERROR' });
     });
   });
 

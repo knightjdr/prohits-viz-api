@@ -6,7 +6,7 @@ const workDir = require('../helpers/work-dir');
 
 const sync = async (req, res) => {
   const { socket } = res.locals;
-  const { selectionID } = req.params;
+  const { snapshotID } = req.params;
   try {
     const validated = validate(req.body.imageType, req.body, ['columns']);
     if (validated.err) {
@@ -19,10 +19,10 @@ const sync = async (req, res) => {
         mkdir(workingDir, ['minimap']),
         writeDataFile(workingDir, validated.data),
       ]);
-      await spawnProcess(socket, workingDir, selectionID);
+      await spawnProcess(socket, workingDir, snapshotID);
     }
   } catch (error) {
-    socket.emit('action', { selectionID, type: 'SYNC_ERROR' });
+    socket.emit('action', { snapshotID, type: 'SYNC_ERROR' });
   }
 };
 
