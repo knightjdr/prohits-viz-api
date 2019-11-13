@@ -5,7 +5,7 @@ const insert = async (collection, insertObject = {}) => {
   try {
     const db = database.connection;
     await db.collection(`${config.database.prefix}${collection}`)
-      .insert(insertObject);
+      .insertOne(insertObject);
     return null;
   } catch (error) {
     throw error;

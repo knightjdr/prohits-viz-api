@@ -1,53 +1,39 @@
-/* global fetch */
+const fetch = require('../../helpers/fetch');
+const validateGprofiler = require('./validate');
 
-require('isomorphic-fetch');
+const url = 'https://biit.cs.ut.ee/gprofiler/api/gost/profile/';
 
-const parseText = require('./parse-text');
-const convertToForm = require('../convert-to-form');
-const { validateGo } = require('./validate');
-
-const go = (req, res) => (
-  new Promise((resolve) => {
-    const { socket } = res.locals;
-    const validatedForm = convertToForm(validateGo(req.body));
-
-    const url = 'https://biit.cs.ut.ee/gprofiler/index.cgi';
-    fetch(url, {
-      body: validatedForm,
-      headers: {
-        Accept: 'text/plain',
-      },
+const go = async (req, res) => {
+  const { socket } = res.locals;
+  try {
+    const validatedData = validateGprofiler(req.body);
+    const fetchOptions = {
+      data: validatedData,
       method: 'POST',
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response;
-      })
-      .then(response => (
-        response.text()
-      ))
-      .then(text => (
-        parseText(text)
-      ))
-      .then((data) => {
-        socket.emit(
-          'action',
-          {
-            analysisType: 'go',
-            results: data,
-            type: 'SET_VIZ_ANALYSIS_RESULTS',
-          },
-        );
-      })
-      .catch(() => {
-        socket.emit('action', { analysisType: 'go', type: 'VIZ_ANALYSIS_ERROR' });
-      });
-
+    };
+    const response = await fetch(url, fetchOptions);
+    const action = {
+      analysis: {
+        data: response.data.result,
+        isProcessing: false,
+      },
+      name: req.body.analysisName,
+      type: 'UPDATE_ANALYSIS',
+    };
+    socket.emit('action', action);
     res.end();
-    resolve();
-  })
-);
+  } catch (error) {
+    const action = {
+      analysis: {
+        didError: true,
+        message: 'There was an error processing the request',
+        processing: false,
+      },
+      name: req.body.analysisName,
+      type: 'UPDATE_ANALYSIS',
+    };
+    socket.emit('action', action);
+  }
+};
 
 module.exports = go;
