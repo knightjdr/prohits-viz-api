@@ -1,5 +1,5 @@
 const dotplot = require('./dotplot/dotplot');
-const go = require('./go/go');
+const gprofiler = require('./gprofiler/gprofiler');
 
 const analysis = (req, res) => {
   const { type } = req.params;
@@ -8,7 +8,7 @@ const analysis = (req, res) => {
       dotplot(req, res);
       break;
     case 'go':
-      go(req, res);
+      gprofiler(req, res);
       break;
     default:
       res.status(422);

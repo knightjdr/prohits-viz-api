@@ -1,4 +1,4 @@
-const removeDuplicates = require('../../helpers/remove-duplicates');
+const removeDuplicates = require('../../../helpers/remove-duplicates');
 
 const reQuotes = new RegExp(/['"]+/g);
 const reSeparator = new RegExp(/[\s,]+/);

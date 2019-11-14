@@ -1,8 +1,8 @@
 const dotplot = require('./dotplot/dotplot');
-const go = require('./go/go');
+const gprofiler = require('./gprofiler/gprofiler');
 
 jest.mock('./dotplot/dotplot');
-jest.mock('./go/go');
+jest.mock('./gprofiler/gprofiler');
 
 const analysis = require('./analysis');
 
@@ -21,18 +21,18 @@ describe('Vizualization analysis', () => {
     expect(dotplot).toHaveBeenCalledWith(req, res);
   });
 
-  it('should call go function when request param is "go"', () => {
-    go.mockClear();
+  it('should call gprofiler function when request param is "go"', () => {
+    gprofiler.mockClear();
     const req = {
       params: { type: 'go' },
     };
     analysis(req, res);
-    expect(go).toHaveBeenCalledWith(req, res);
+    expect(gprofiler).toHaveBeenCalledWith(req, res);
   });
 
   describe('when analysis type is not recognized', () => {
     beforeAll(() => {
-      go.mockClear();
+      gprofiler.mockClear();
       res.end.mockClear();
       res.status.mockClear();
       const req = {
