@@ -16,17 +16,15 @@ describe('Validate password', () => {
   });
 
   it('should not validate when match is undefined', async () => {
-    // Deleted first character from hash
     const match = undefined;
     const password = 'Hb2b0uFVJXKQVou7SfBBdEfepssxpwIj';
-    expect(validate(match, password)).toEqual(new Error('contact address not found'));
+    expect(validate(match, password)).toBeFalsy();
   });
 
-  it('should not validate when match is empty object', async () => {
-    // Deleted first character from hash
-    const match = {};
+  it('should not validate when match is not an object', async () => {
+    const match = [];
     const password = 'Hb2b0uFVJXKQVou7SfBBdEfepssxpwIj';
-    expect(validate(match, password)).toEqual(new Error('contact address not found'));
+    expect(validate(match, password)).toBeFalsy();
   });
 
   it('should not validate when a password does not match hash', async () => {
@@ -39,6 +37,6 @@ describe('Validate password', () => {
       salt: 'qXtlyFINWNiWZkzXrYY+wVKdXtQKMtiyvDuV/6/kQFhP3MrUuQ/5Mzq3/c3EQBbd22E5JAi/lamAzcse9EP3tLSvjm9aBn2kMdQ/lngrMusebFGx8kopCIK1rM0HbBmwPft2YkOwINmhLdYyV8mrYxItIoVgSK3XLk5l2dj0Vco=',
     };
     const password = 'Hb2b0uFVJXKQVou7SfBBdEfepssxpwIj';
-    expect(validate(match, password)).toEqual(new Error('incorrect password'));
+    expect(validate(match, password)).toBeFalsy();
   });
 });

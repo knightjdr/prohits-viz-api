@@ -10,7 +10,7 @@ const find = async (collection, queryObject = {}, returnObject = {}, sorted = {}
       .limit(limit)
       .toArray();
   } catch (error) {
-    throw error;
+    return [];
   }
 };
 

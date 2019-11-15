@@ -3,7 +3,7 @@ const cors = require('cors');
 const headers = ['Accept', 'Apikey', 'Authorization', 'Content-Type', 'Session'];
 
 // All origins are allowed because our api can be used by third party sites.
-const corsSetup = () => (
+const configureCORS = () => (
   cors({
     allowedHeaders: headers,
     origin: '*',
@@ -11,4 +11,4 @@ const corsSetup = () => (
   })
 );
 
-module.exports = corsSetup;
+module.exports = configureCORS;

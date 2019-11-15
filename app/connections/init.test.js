@@ -21,23 +21,20 @@ const mockClient = {
   ),
 };
 jest.mock('mongodb');
-MongoClient.connect
-  .mockImplementationOnce(() => Promise.resolve(mockClient))
-  .mockImplementationOnce(() => Promise.reject(err));
 
 describe('database initialization', () => {
-  it('should give success', () => (
-    init().then((data) => {
-      expect(data).toEqual({
-        client: mockClient,
-        db: 'test',
-      });
-    })
-  ));
+  it('should give success', async () => {
+    MongoClient.connect.mockImplementationOnce(() => Promise.resolve(mockClient))
+    const data = await init();
+    const expected = {
+      client: mockClient,
+      db: 'test',
+    };
+    expect(data).toEqual(expected);
+  });
 
-  test('should give error', () => (
-    init().catch((data) => {
-      expect(data).toEqual(new Error('err'));
-    })
-  ));
+  it('should throw error', async () => {
+    MongoClient.connect.mockImplementationOnce(() => Promise.reject(err));
+    expect(init()).rejects.toEqual(err);
+  });
 });

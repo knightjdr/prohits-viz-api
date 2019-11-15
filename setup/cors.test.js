@@ -1,12 +1,12 @@
 const cors = require('cors');
-const corsMiddleware = require('./cors');
+const configureCORS = require('./configure-cors');
 
 jest.mock('cors');
 
 describe('CORS', () => {
   it('should set cors with options', () => {
     cors.mockClear();
-    corsMiddleware();
+    configureCORS();
     const expected = {
       allowedHeaders: ['Accept', 'Apikey', 'Authorization', 'Content-Type', 'Session'],
       origin: '*',

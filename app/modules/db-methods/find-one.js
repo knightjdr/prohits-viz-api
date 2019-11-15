@@ -1,14 +1,14 @@
 const config = require('../../../config');
 const database = require('../../connections/database');
 
-const find = async (collection, queryObject = {}, returnObject = {}) => {
+const findOne = async (collection, queryObject = {}, returnObject = {}) => {
   try {
     const db = database.connection;
-    return await db.collection(`${config.database.prefix}${collection}`)
+    return db.collection(`${config.database.prefix}${collection}`)
       .findOne(queryObject, { projection: returnObject });
   } catch (error) {
-    throw error;
+    return null;
   }
 };
 
-module.exports = find;
+module.exports = findOne;

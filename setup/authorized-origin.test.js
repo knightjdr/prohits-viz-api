@@ -1,8 +1,8 @@
-const validateThirdParty = require('../app/modules/third-party/auth/auth');
+const checkUserAuth = require('../app/modules/third-party/auth/check-user-auth');
+const { isRequestAuthorized } = require('./authorized-origin');
 
-jest.mock('../app/modules/third-party/auth/auth');
+jest.mock('../app/modules/third-party/auth/check-user-auth');
 
-const { authorizedOrigin, forbidden } = require('./authorized-origin');
 
 const next = jest.fn();
 const req = {
@@ -21,109 +21,87 @@ const sleep = ms => (
   new Promise(resolve => setTimeout(resolve, ms))
 );
 
-describe('Forbidden response', () => {
-  beforeAll(() => {
-    res.end.mockClear();
-    res.status.mockClear();
-    forbidden(res);
-  });
-
-  it('should set response status', () => {
-    expect(res.status).toHaveBeenCalledWith(403);
-  });
-
-  it('should end response', () => {
-    expect(res.end).toHaveBeenCalled();
-  });
-});
-
-describe('Authorized origin', () => {
-  it('should call next for GET method', () => {
-    next.mockClear();
+describe('Check if request is authorized', () => {
+  it('should authorize a GET request', () => {
     const request = {
       ...req,
       method: 'GET',
-      session: '2',
     };
-    authorizedOrigin(request, res, next);
-    expect(next).toHaveBeenCalled();
+    expect(isRequestAuthorized(request)).toBeTruthy();
   });
 
-  describe('accessing endpoint with POST method', () => {
-    it('should call next when socket ID is valid', () => {
-      next.mockClear();
+  describe('POST requests', () => {
+    it('should authorize a request with a valid session ID', () => {
       const request = {
         ...req,
         method: 'POST',
-        session: 'session1',
       };
-      authorizedOrigin(request, res, next);
-      expect(next).toHaveBeenCalled();
+      const sessions = ['session-1', 'session-2', 'session-3'];
+      const sessionID = 'session-2';
+      expect(isRequestAuthorized(request, sessions, sessionID)).toBeTruthy();
     });
 
-    describe('when socket ID is not valid', () => {
-      beforeAll(() => {
-        next.mockClear();
-        res.end.mockClear();
-        res.status.mockClear();
-        const request = {
-          ...req,
-          method: 'POST',
-          session: 'session3',
-        };
-        authorizedOrigin(request, res, next);
-      });
-
-      it('should not call next', () => {
-        expect(next).not.toHaveBeenCalled();
-      });
-
-      it('should set response status', () => {
-        expect(res.status).toHaveBeenCalledWith(403);
-      });
-
-      it('should end response', () => {
-        expect(res.end).toHaveBeenCalled();
-      });
+    it('should not authorize a request with a invalid session ID', () => {
+      const request = {
+        ...req,
+        method: 'POST',
+      };
+      const sessions = ['session-1', 'session-2', 'session-3'];
+      const sessionID = 'session-4';
+      expect(isRequestAuthorized(request, sessions, sessionID)).toBeFalsy();
     });
   });
 
-  describe('accessing third party endpoint', () => {
-    let request;
-
-    beforeAll(() => {
-      request = {
+  describe('Third party urls', () => {
+    it('should authorize a third party with a valid url and credentials', () => {
+      checkUserAuth.mockReturnValue(true);
+      const request = {
         ...req,
         method: 'POST',
         originalUrl: 'third-party',
       };
+      const sessions = [];
+      expect(isRequestAuthorized(request, sessions)).toBeTruthy();
     });
 
-    it('should call next when credentials validated', async () => {
-      next.mockClear();
-      validateThirdParty.mockResolvedValue();
-      authorizedOrigin(request, res, next);
-      await sleep(200);
-      expect(next).toHaveBeenCalled();
+    it('should not authorize a third party with invalid credentials', () => {
+      checkUserAuth.mockReturnValue(false);
+      const request = {
+        ...req,
+        method: 'POST',
+        originalUrl: 'third-party',
+      };
+      const sessions = [];
+      expect(isRequestAuthorized(request, sessions)).toBeFalsy();
     });
 
-    describe('invalid credentials', () => {
-      beforeAll(async (done) => {
-        res.end.mockClear();
-        res.status.mockClear();
-        validateThirdParty.mockRejectedValue();
-        authorizedOrigin(request, res, next);
-        await sleep(200);
-        done();
-      });
-
-      it('should set response status', () => {
-        expect(res.status).toHaveBeenCalledWith(403);
-      });
-
-      it('should end response', () => {
-        expect(res.end).toHaveBeenCalled();
-      });
+    it('should not authorize a third party with an invalid url', () => {
+      checkUserAuth.mockReturnValue(true);
+      const request = {
+        ...req,
+        method: 'POST',
+        originalUrl: 'some-other-route',
+      };
+      const sessions = [];
+      expect(isRequestAuthorized(request, sessions)).toBeFalsy();
     });
+  });
+
+  it('should not authorize INSERT method', () => {
+    const request = {
+      ...req,
+      method: 'INSERT',
+    };
+    const sessions = [];
+    expect(isRequestAuthorized(request, sessions)).toBeFalsy();
+  });
+
+  it('should not authorize DELETE method', () => {
+    const request = {
+      ...req,
+      method: 'DELETE',
+    };
+    const sessions = [];
+    expect(isRequestAuthorized(request, sessions)).toBeFalsy();
   });
 });

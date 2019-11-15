@@ -1,4 +1,4 @@
-const responseHeaders = require('./response-headers');
+const setResponseHeaders = require('./set-response-headers');
 
 const next = jest.fn();
 const res = {
@@ -8,7 +8,7 @@ const res = {
 describe('Resonse headers', () => {
   beforeAll(() => {
     res.setHeader.mockClear();
-    responseHeaders(jest.fn(), res, next);
+    setResponseHeaders(jest.fn(), res, next);
   });
 
   it('should set three headers', () => {

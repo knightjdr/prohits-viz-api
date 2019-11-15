@@ -8,7 +8,7 @@ const insert = async (collection, insertObject = {}) => {
       .insertOne(insertObject);
     return null;
   } catch (error) {
-    throw error;
+    return error;
   }
 };
 

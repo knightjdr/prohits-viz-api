@@ -47,9 +47,8 @@ describe('Query for a single entry', () => {
     });
 
     it('should not find a record in the database', async () => {
-      const expected = null;
       const document = await findOne('documents', { name: 'test-missing' });
-      expect(document).toEqual(expected);
+      expect(document).toBeNull();
     });
   });
 });
@@ -60,7 +59,8 @@ describe('Query throwing an error', () => {
     database.connection = undefined;
   });
 
-  it('should throw an error', () => (
-    expect(findOne('documents', { name: 'test' })).rejects.not.toBeNull()
-  ));
+  it('should return null on error', async () => {
+    const document = await findOne('documents', { name: 'test' });
+    expect(document).toBeNull();
+  });
 });

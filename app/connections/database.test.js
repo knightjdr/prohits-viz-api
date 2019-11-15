@@ -1,99 +1,65 @@
-/* eslint global-require: "off" */
 const database = require('./database');
 const init = require('./init');
-const Logger = require('../../logger');
 
-const err = new Error('err');
 // mock init
 jest.mock('./init');
 
-// mock logger
-jest.mock('../../logger');
-Logger.error = jest.fn();
-Logger.info = jest.fn();
-
-afterEach(() => {
-  database.client = null;
-  database.connection = null;
-  Logger.error.mockClear();
-  Logger.info.mockClear();
-});
-
 describe('database connection', () => {
   describe('with successful connection', () => {
-    beforeAll(() => {
+    afterAll(() => {
+      database.client = null;
+      database.connection = null;
+    });
+
+    beforeAll(async () => {
       init.mockResolvedValue({ client: 'client', db: 'database' });
+      await database.init();
     });
 
-    it('should resolve', () => {
-      database.init()
-        .then(() => {
-          expect(database.connection).toBe('database');
-        });
-    });
-  });
-
-  describe('with unsuccesful connection', () => {
-    beforeAll(() => {
-      init.mockRejectedValue(err);
+    it('should set client', () => {
+      expect(database.client).toBe('client');
     });
 
-    it('reject unsuccessful connection', () => {
-      database.init()
-        .catch(() => {
-          expect(database.connection).toBeNull();
-        });
+    it('should set connection', () => {
+      expect(database.connection).toBe('database');
     });
   });
 
   describe('on closing', () => {
     describe('when connection exists', () => {
-      beforeAll(() => {
-        // create mock resolved value for mongoDB connection with close method
-        const client = {
-          close: () => (new Promise((resolve) => { resolve(); })),
-        };
-        init.mockResolvedValue({ client, db: 'database' });
-        return database.init();
+      let close;
+
+      afterAll(() => {
+        database.client = null;
+        database.connection = null;
       });
 
-      it('should close successfully', () => {
-        database.close().then(() => {
-          expect(database.client).toBeNull();
-          expect(database.connection).toBeNull();
-          expect(Logger.info).toBeCalled();
-        });
-      });
-    });
-
-    describe('fail when connection exists', () => {
-      // create mock rejected value for mongoDB connection with close method
-      const client = {
-        close: () => (new Promise((resolve, reject) => { reject(); })),
-      };
-
-      beforeAll(() => {
-        init.mockResolvedValue({ client, db: 'database' });
-        return database.init();
+      beforeAll(async () => {
+        close = jest.fn();
+        database.client = { close };
+        database.connection = 'connection';
+        await database.close();
       });
 
-      it('should occur gracefully', () => {
-        database.close().catch(() => {
-          expect(database.client).toEqual(client);
-          expect(database.connection).toBe('database');
-          expect(Logger.error).toBeCalled();
-        });
+      it('should close client', () => {
+        expect(close).toHaveBeenCalled();
+      });
+
+      it('should unset client', async () => {
+        expect(database.client).toBeNull();
+      });
+
+      it('should unset connection', async () => {
+        expect(database.connection).toBeNull();
       });
     });
 
     describe('when connection does not exist', () => {
-      it('should close successfully', () => {
-        database.close().then(() => {
-          expect(database.client).toBeNull();
-          expect(database.connection).toBeNull();
-          expect(Logger.info).not.toBeCalled();
-          expect(Logger.error).not.toBeCalled();
-        });
+      it('should not call close', () => {
+        const close = jest.fn();
+        database.client = { close };
+        database.connection = null;
+        expect(close).not.toHaveBeenCalled();
       });
     });
   });
