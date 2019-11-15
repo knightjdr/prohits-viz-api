@@ -38,10 +38,11 @@ describe('Format response from g:Profiler', () => {
         {
           id: 'GO:0005737',
           intersectionSize: 23,
-          genes: ['a'],
+          genes: 'a',
           querySize: 23,
           pValue: 0.001,
           source: 'GO:CC',
+          sourceURL: 'http://amigo.geneontology.org/amigo/term/GO:0005737',
           term: 'cytoplasm',
           termSize: 11620,
         },
