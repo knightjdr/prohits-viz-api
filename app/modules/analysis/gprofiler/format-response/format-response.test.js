@@ -40,7 +40,7 @@ describe('Format response from g:Profiler', () => {
           intersectionSize: 23,
           genes: 'a',
           querySize: 23,
-          pValue: 0.001,
+          pValue: '1.000e-3',
           source: 'GO:CC',
           sourceURL: 'http://amigo.geneontology.org/amigo/term/GO:0005737',
           term: 'cytoplasm',
