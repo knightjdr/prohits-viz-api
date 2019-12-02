@@ -61,11 +61,11 @@ typings/
 .DS_Store
 
 # config
-config.js
+app/config/config.js
 
 # temporary folders
 tmp/
 
 # download folders
 scripts/interactors/downloads
-files
+/files

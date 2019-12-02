@@ -1,18 +1,19 @@
-const article = require('../modules/news/article');
-const cacheAPI = require('../middleware/cache-route');
-const downloadFile = require('../modules/download/download-file');
-const downloadTaskFile = require('../modules/download/download-task-file');
-const downloadFolder = require('../modules/download/download-folder');
-const homeLoad = require('../modules/home-load/home-load');
+const cacheAPI = require('./middleware/cache-route');
 const messages = require('./route-messages');
-const noCacheClient = require('../middleware/no-cache');
-const list = require('../modules/news/list');
+const noCacheClient = require('./middleware/no-cache');
+
+const downloadFile = require('../actions/file/download-file');
+const downloadFolder = require('../actions/task/download/download-folder');
+const downloadTaskFile = require('../actions/task/download/download-task-file');
+const getArticle = require('../actions/news/get-article');
+const getHomeContent = require('../actions/home/get-home-content');
+const getNewsArticles = require('../actions/news/get-news-articles');
 
 const get = (router) => {
   router.get('/file/:folder', downloadFile);
-  router.get('/home/', noCacheClient, cacheAPI, homeLoad);
-  router.get('/news/', noCacheClient, cacheAPI, list);
-  router.get('/news/:headline', noCacheClient, cacheAPI, article);
+  router.get('/home/', noCacheClient, cacheAPI, getHomeContent);
+  router.get('/news/', noCacheClient, cacheAPI, getNewsArticles);
+  router.get('/news/:headline', noCacheClient, cacheAPI, getArticle);
   router.get('/task/:folder', downloadFolder);
   router.get('/task/:folder/:filename', downloadTaskFile);
   router.get('*', (req, res) => {

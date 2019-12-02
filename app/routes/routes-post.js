@@ -1,14 +1,16 @@
-const analysis = require('../modules/analysis/analysis');
-const config = require('../../config');
-const exportImage = require('../modules/export/export');
-const getSocket = require('../middleware/get-socket');
-const logTasks = require('../middleware/log-tasks');
-const messages = require('./route-messages');
 const multer = require('multer');
-const noCacheClient = require('../middleware/no-cache');
-const sync = require('../modules/sync/sync');
-const task = require('../modules/task/task');
-const thirdPartyViz = require('../modules/third-party/viz/viz');
+
+const config = require('../config/config');
+const getSocket = require('./middleware/get-socket');
+const logTasks = require('./middleware/log-tasks');
+const messages = require('./route-messages');
+const noCacheClient = require('./middleware/no-cache');
+
+const analysis = require('../actions/analysis/analysis');
+const exportImage = require('../actions/export/export');
+const handleVizFile = require('../actions/third-party/viz/handle-viz-file');
+const sync = require('../actions/sync/sync');
+const updateStatus = require('../actions/task/status/update-status');
 
 const upload = multer({ dest: config.upload });
 
@@ -17,8 +19,8 @@ const post = (router) => {
   router.post('/analysis/:type', upload.array('file'), getSocket, logTasks, analysis);
   router.post('/export/:type', getSocket, exportImage);
   router.post('/sync/:snapshotID', noCacheClient, getSocket, sync);
-  router.post('/task/', task);
-  router.post('/third-party/viz', logTasks, thirdPartyViz);
+  router.post('/task/', updateStatus);
+  router.post('/third-party/viz', logTasks, handleVizFile);
   router.post('*', (req, res) => {
     res.status(404).send({ message: messages.invalidRoute });
   });

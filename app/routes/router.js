@@ -8,6 +8,7 @@ const router = express.Router();
 
 get(router);
 post(router);
+
 router.use((req, res) => {
   res.status(405).send({
     message: messages.notSupported,

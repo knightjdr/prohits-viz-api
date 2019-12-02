@@ -4,9 +4,9 @@
   "description": "API for ProHits-viz",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon n use 12.13.0 index.js",
-    "prod": "NODE_ENV=production node index.js",
-    "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' index.js",
+    "dev": "NODE_ENV=development nodemon n use 12.13.0 app/server.js",
+    "prod": "NODE_ENV=production node app/server.js",
+    "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' app/server.js",
     "test": "jest --watch",
     "test:coverage": "jest --coverage"
   },
