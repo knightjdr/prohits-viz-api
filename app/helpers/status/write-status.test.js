@@ -13,12 +13,9 @@ describe('Write to status file', () => {
     const files = ['log'];
     const status = 'complete';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       readfile.mockResolvedValueOnce(json);
-      writeStatus('workDir', status, files)
-        .then(() => {
-          done();
-        });
+      await writeStatus('workDir', status, files);
     });
 
     it('should call read file', () => {
@@ -39,12 +36,9 @@ describe('Write to status file', () => {
     const files = ['log'];
     const status = 'complete';
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       readfile.mockResolvedValueOnce(json);
-      writeStatus('workDir', status, files, 'error')
-        .then(() => {
-          done();
-        });
+      await writeStatus('workDir', status, files, 'error');
     });
 
     it('should call read file', () => {
@@ -61,13 +55,9 @@ describe('Write to status file', () => {
     });
   });
 
-  it('should throw error when reading status file throws error', async (done) => {
+  it('should throw error when reading status file throws error', async () => {
     const expectedError = new Error('Could not update status file');
     readfile.mockRejectedValueOnce();
-    writeStatus('workDir', 'complete', [])
-      .catch((err) => {
-        expect(err).toEqual(expectedError);
-        done();
-      });
+    await expect(writeStatus('workDir', 'complete', [])).rejects.toThrowError(expectedError);
   });
 });

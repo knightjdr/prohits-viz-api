@@ -1,7 +1,7 @@
 const path = require('path');
 
 const config = require('../../../config/config');
-const createDir = require('../../../helpers/files/create-dir');
+const createDirs = require('../../../helpers/files/create-dirs');
 const validate = require('./validate');
 const createWorkDir = require('../../../helpers/files/create-work-dir');
 const writeFile = require('../../../helpers/files/write-file');
@@ -18,7 +18,7 @@ const handleVizFile = (req, res) => (
       createWorkDir()
         .then((dir) => {
           workingDir = dir;
-          return createDir(['interactive'], workingDir);
+          return createDirs(workingDir, ['interactive']);
         })
         .then(() => {
           const { imageType } = validated.json.parameters;

@@ -1,11 +1,18 @@
 const fs = require('fs');
-const rimraf = require('rimraf');
 
 const extToMimeType = require('./ext-to-mime-type');
+const removeFile = require('../files/remove-file');
 
-const readStream = (workdir, file, res, remove = false) => (
+const removeFileOnCompletion = (workdir, shouldRemoveFile) => {
+  if (shouldRemoveFile) {
+    removeFile(workdir);
+  }
+};
+
+const readStream = (workdir, file, res, shouldRemoveFile = false) => (
   new Promise((resolve, reject) => {
     res.setHeader('Content-Type', extToMimeType(file));
+
     const stream = fs.createReadStream(`${workdir}/${file}`);
     stream.pipe(res);
     stream.on('error', () => {
@@ -13,9 +20,7 @@ const readStream = (workdir, file, res, remove = false) => (
     });
     stream.on('end', () => {
       res.end();
-      if (remove) {
-        rimraf(workdir, () => {});
-      }
+      removeFileOnCompletion(workdir, shouldRemoveFile);
       resolve();
     });
   })

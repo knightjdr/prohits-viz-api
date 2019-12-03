@@ -1,12 +1,12 @@
-const mkdir = require('../../../helpers/export/mkdir');
+const createDirectories = require('../../../helpers/files/create-dirs');
 const spawnProcess = require('./spawn');
 const validate = require('../../../helpers/validation/validate');
 const createWorkDir = require('../../../helpers/files/create-work-dir');
 const writeDataFile = require('../../../helpers/export/write-data-file');
 const writeDownloadFile = require('../../../helpers/export/write-download-file');
 
-jest.mock('../../../helpers/export/mkdir');
-mkdir.mockResolvedValue();
+jest.mock('../../../helpers/files/create-dirs');
+createDirectories.mockResolvedValue();
 jest.mock('./spawn');
 spawnProcess.mockResolvedValue();
 jest.mock('../../../helpers/validation/validate');
@@ -57,7 +57,7 @@ describe('Exporting heatmap', () => {
     });
 
     it('should create output directories', () => {
-      expect(mkdir).toHaveBeenCalledWith('workdir', ['svg', 'png']);
+      expect(createDirectories).toHaveBeenCalledWith('workdir', ['svg', 'png']);
     });
 
     it('should write request body to file', () => {

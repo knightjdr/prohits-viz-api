@@ -20,12 +20,9 @@ afterEach(() => {
 
 describe('Create status file', () => {
   describe('successfully', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       writefile.mockResolvedValueOnce();
-      createStatus('workDir', body)
-        .then(() => {
-          done();
-        });
+      await createStatus('workDir', body);
     });
 
     it('should call write file', () => {
@@ -40,12 +37,9 @@ describe('Create status file', () => {
   });
 
   describe('successfully with primaryFile different from analysisType', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       writefile.mockResolvedValueOnce();
-      createStatus('workDir', body, 'otherFile')
-        .then(() => {
-          done();
-        });
+      await createStatus('workDir', body, 'otherFile');
     });
 
     it('should call write file', () => {
@@ -59,13 +53,9 @@ describe('Create status file', () => {
     });
   });
 
-  it('should throw error when writing status file throws error', async (done) => {
+  it('should throw error when writing status file throws error', async () => {
     const expectedError = new Error('Could not create status file for task workDir');
     writefile.mockRejectedValueOnce();
-    createStatus('workDir', body)
-      .catch((err) => {
-        expect(err).toEqual(expectedError);
-        done();
-      });
+    await expect(createStatus('workDir', body)).rejects.toThrowError(expectedError);
   });
 });

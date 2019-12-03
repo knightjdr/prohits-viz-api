@@ -12,21 +12,14 @@ afterAll(() => {
 });
 
 describe('Read file', () => {
-  it('should read a file', async (done) => {
+  it('should read a file', async () => {
     const expectedContent = 'file txt';
-    readFile('file1.txt')
-      .then((data) => {
-        expect(data).toBe(expectedContent);
-        done();
-      });
+    const data = await readFile('file1.txt');
+    expect(data).toBe(expectedContent);
   });
 
-  it('should return an error when file can not be read', async (done) => {
+  it('should return an error when file can not be read', async () => {
     const expectedError = new Error('Could not read file: missingFile.txt');
-    readFile('missingFile.txt')
-      .catch((err) => {
-        expect(err).toEqual(expectedError);
-        done();
-      });
+    await expect(readFile('missingFile.txt')).rejects.toThrowError(expectedError);
   });
 });

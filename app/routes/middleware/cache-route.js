@@ -1,22 +1,37 @@
 const mcache = require('memory-cache');
 
-const CACHE_TIME = 10080; // Cache time in minutes. One week.
+const config = require('../../config/config');
 
-const cache = (req, res, next) => {
-  const key = `__express__${req.originalUrl || req.url}`;
-  const cachedBody = mcache.get(key);
-  const cacheMS = CACHE_TIME * 60000;
-  res.setHeader('Expires', new Date(Date.now() + cacheMS).toUTCString());
-  if (cachedBody) {
-    res.send(cachedBody);
+const defineCacheKey = req => (
+  `__express__${req.originalUrl || req.url}`
+);
+
+const createCacheContent = (req) => {
+  const key = defineCacheKey(req);
+  return {
+    key,
+    value: mcache.get(key),
+  };
+};
+
+const sendOrGenerateContent = (res, next, cachedContent) => {
+  const { key, value } = cachedContent;
+  if (value) {
+    res.send(value);
   } else {
     res.sendResponse = res.send;
     res.send = (body) => {
-      mcache.put(key, body, cacheMS);
+      mcache.put(key, body, config.routeCacheTime);
       res.sendResponse(body);
     };
     next();
   }
+};
+
+const cache = (req, res, next) => {
+  const cachedContent = createCacheContent(req);
+  res.setHeader('Expires', new Date(Date.now() + config.routeCacheTime).toUTCString());
+  sendOrGenerateContent(res, next, cachedContent);
 };
 
 module.exports = cache;

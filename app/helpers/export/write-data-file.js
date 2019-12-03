@@ -1,15 +1,7 @@
-const fs = require('fs');
+const writeFile = require('../files/write-file');
 
-const writeDataFile = (workDir, data) => (
-  new Promise((resolve, reject) => {
-    fs.writeFile(`${workDir}/data.json`, JSON.stringify(data), 'utf8', (err) => {
-      if (!err) {
-        resolve();
-      } else {
-        reject(new Error('Could not write data to file'));
-      }
-    });
-  })
-);
+const writeDataFile = async (workDir, data) => {
+  await writeFile(`${workDir}/data.json`, JSON.stringify(data));
+};
 
 module.exports = writeDataFile;

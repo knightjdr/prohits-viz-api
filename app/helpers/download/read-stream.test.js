@@ -32,13 +32,10 @@ afterAll(() => {
 describe('Streaming a file to response', () => {
   describe('when successful', () => {
     describe('and not deleting working directory', () => {
-      beforeAll(async (done) => {
+      beforeAll(async () => {
         res.end.mockClear();
         res.setHeader.mockClear();
-        readStream('tmp', 'file.svg', res)
-          .then(() => {
-            done();
-          });
+        await readStream('tmp', 'file.svg', res);
       });
 
       it('should set content-type to mime type', () => {
@@ -55,13 +52,10 @@ describe('Streaming a file to response', () => {
     });
 
     describe('and deleting working directory', () => {
-      beforeAll(async (done) => {
+      beforeAll(async () => {
         res.end.mockClear();
         res.setHeader.mockClear();
-        readStream('tmp', 'file.svg', res, true)
-          .then(() => {
-            done();
-          });
+        await readStream('tmp', 'file.svg', res, true);
       });
 
       it('should delete working directory', () => {

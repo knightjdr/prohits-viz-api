@@ -1,7 +1,7 @@
 const writeFile = require('../files/write-file');
 
-const createStatus = (workDir, body, primaryFile) => (
-  new Promise((resolve, reject) => {
+const createStatus = async (workDir, body, primaryFile) => {
+  try {
     const status = {
       analysis: body.analysisType,
       date: new Date().toISOString(),
@@ -9,14 +9,11 @@ const createStatus = (workDir, body, primaryFile) => (
       status: 'running',
     };
     const fileContent = JSON.stringify(status, null, 2);
-    writeFile(`${workDir}/status.json`, fileContent)
-      .then(() => {
-        resolve();
-      })
-      .catch(() => {
-        reject(new Error(`Could not create status file for task ${workDir}`));
-      });
-  })
-);
+
+    await writeFile(`${workDir}/status.json`, fileContent);
+  } catch (error) {
+    throw new Error(`Could not create status file for task ${workDir}`);
+  }
+};
 
 module.exports = createStatus;

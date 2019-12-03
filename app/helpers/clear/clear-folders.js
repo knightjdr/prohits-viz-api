@@ -1,25 +1,20 @@
 const addPath = require('./add-path');
-const checkIgnore = require('./check-ignore');
 const config = require('../../config/config');
+const filterOutFoldersToIgnore = require('./filter-folders');
+const getOldFiles = require('./get-old-files');
 const listFiles = require('../../helpers/files/list-files');
-const oldFiles = require('./old-files');
 const removeFiles = require('./remove');
 
-/* List files in folders, gets age, and delete any if they do not
-** match an ignore pattern and are older than the specified config time. */
-const clearFolders = () => {
-  Promise.all([
+const clearFolders = async () => {
+  const files = await Promise.all([
     listFiles(config.workDir),
     listFiles(config.upload),
-  ])
-    .then((files) => {
-      const filesWithPath = addPath(config.workDir, config.upload, files[0], files[1]);
-      return oldFiles(filesWithPath);
-    })
-    .then((old) => {
-      const toRemove = checkIgnore(old);
-      removeFiles(toRemove);
-    });
+  ]);
+
+  const filesInPath = addPath(config, files);
+  const oldFiles = await getOldFiles(filesInPath);
+  const filesToRemove = filterOutFoldersToIgnore(oldFiles);
+  await removeFiles(filesToRemove);
 };
 
 module.exports = clearFolders;

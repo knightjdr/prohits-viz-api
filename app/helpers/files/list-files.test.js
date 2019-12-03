@@ -15,30 +15,20 @@ afterAll(() => {
 });
 
 describe('List all files in a directory', () => {
-  it('should return all files', async (done) => {
+  it('should return all files', async () => {
     const expectedFiles = ['file1.txt', 'file2.txt', 'file3.json'];
-    listFiles('tmp')
-      .then((files) => {
-        expect(files.sort()).toEqual(expectedFiles.sort());
-        done();
-      });
+    const files = await listFiles('tmp');
+    expect(files.sort()).toEqual(expectedFiles.sort());
   });
 
-  it('should return txt files', async (done) => {
+  it('should return txt files', async () => {
     const expectedFiles = ['file1.txt', 'file2.txt'];
-    listFiles('tmp', '.txt')
-      .then((files) => {
-        expect(files.sort()).toEqual(expectedFiles.sort());
-        done();
-      });
+    const files = await listFiles('tmp', '.txt');
+    expect(files.sort()).toEqual(expectedFiles.sort());
   });
 
-  it('should return error', async (done) => {
+  it('should return error', async () => {
     const expectedErr = new Error('Error listing missingDir folder');
-    listFiles('missingDir')
-      .catch((err) => {
-        expect(err).toEqual(expectedErr);
-        done();
-      });
+    await expect(listFiles('missingDir')).rejects.toThrowError(expectedErr);
   });
 });

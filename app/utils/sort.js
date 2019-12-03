@@ -1,48 +1,60 @@
-// sort two characters or numbers.
+const isNumber = require('./is-number');
+
+const checkCharactersDefined = (a, b) => {
+  if (!a && !b) {
+    return 0;
+  } if (!a) {
+    return 1;
+  } if (!b) {
+    return -1;
+  }
+  return null;
+};
+
+const checkNumbersDefined = (a, b) => {
+  if (
+    (!isNumber(a) || a == null) &&
+    (!isNumber(b) || b == null)
+  ) {
+    return 0;
+  } if (!isNumber(a) || a == null) {
+    return 1;
+  } if (!isNumber(b) || b == null) {
+    return -1;
+  }
+  return null;
+};
+
+const compareCharacters = (a, b) => {
+  const nameA = String(a).toLowerCase();
+  const nameB = String(b).toLowerCase();
+  if (nameA < nameB) {
+    return -1;
+  } else if (nameA > nameB) {
+    return 1;
+  }
+  return 0;
+};
+
+const compareNumbers = (a, b) => (
+  Number(a) - Number(b)
+);
+
 const sort = {
   character: (a, b) => {
-    // ensure a and b are not null or if one is null sort as if less than the other
-    if (
-      !a &&
-      !b
-    ) {
-      return 0;
-    } else if (!a) {
-      return 1;
-    } else if (!b) {
-      return -1;
+    let difference = checkCharactersDefined(a, b);
+    if (difference === null) {
+      difference = compareCharacters(a, b);
     }
-    // a and b are defined, now sort ignoring case
-    const nameA = String(a).toLowerCase();
-    const nameB = String(b).toLowerCase();
-    if (nameA < nameB) {
-      return -1;
-    } else if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
+    return difference;
   },
-  numeric: (x, y) => {
-    // ensure x and y are both numeric
-    // if either is null, treat null as greater than numbers
-    if (
-      (Number.isNaN(Number(x)) || x == null) &&
-      (Number.isNaN(Number(y)) || y == null)
-    ) {
-      return 0;
-    } else if (
-      (Number.isNaN(Number(x)) || x == null)
-    ) {
-      return 1;
-    } else if (
-      (Number.isNaN(Number(y)) || y == null)
-    ) {
-      return -1;
+  numeric: (a, b) => {
+    let difference = checkNumbersDefined(a, b);
+    if (difference === null) {
+      difference = compareNumbers(a, b);
     }
-    // x and y are numeric, now convert to numbers and sort
-    const xsort = Number(x);
-    const ysort = Number(y);
-    return xsort - ysort;
+    return difference;
   },
 };
+
 module.exports = sort;

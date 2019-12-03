@@ -34,7 +34,7 @@ describe('Log tasks', () => {
       });
 
       it('should call insert', () => {
-        const insertObj = {
+        const document = {
           date: new Date().toISOString(),
           file: true,
           fileSize: 1000,
@@ -42,7 +42,7 @@ describe('Log tasks', () => {
           path: '/analysis/dotplot',
           type: 'dotplot',
         };
-        expect(insert).toHaveBeenCalledWith('tracking', insertObj);
+        expect(insert).toHaveBeenCalledWith('tracking', document);
       });
 
       it('should call next', () => {
@@ -66,7 +66,7 @@ describe('Log tasks', () => {
       });
 
       it('should call insert', () => {
-        const insertObj = {
+        const document = {
           date: new Date().toISOString(),
           file: true,
           fileSize: 1000,
@@ -74,7 +74,7 @@ describe('Log tasks', () => {
           path: '/analysis/dotplot',
           type: '',
         };
-        expect(insert).toHaveBeenCalledWith('tracking', insertObj);
+        expect(insert).toHaveBeenCalledWith('tracking', document);
       });
 
       it('should call next', () => {
@@ -99,7 +99,7 @@ describe('Log tasks', () => {
     });
 
     it('should call insert', () => {
-      const insertObj = {
+      const document = {
         date: new Date().toISOString(),
         file: false,
         fileSize: 0,
@@ -107,7 +107,7 @@ describe('Log tasks', () => {
         path: '/analysis/dotplot',
         type: 'dotplot',
       };
-      expect(insert).toHaveBeenCalledWith('tracking', insertObj);
+      expect(insert).toHaveBeenCalledWith('tracking', document);
     });
 
     it('should call next', () => {
@@ -133,7 +133,7 @@ describe('Log tasks', () => {
     });
 
     it('should call insert', () => {
-      const insertObj = {
+      const document = {
         date: new Date().toISOString(),
         file: true,
         fileSize: 2000,
@@ -141,7 +141,7 @@ describe('Log tasks', () => {
         path: '/analysis/dotplot',
         type: 'dotplot',
       };
-      expect(insert).toHaveBeenCalledWith('tracking', insertObj);
+      expect(insert).toHaveBeenCalledWith('tracking', document);
     });
 
     it('should call next', () => {

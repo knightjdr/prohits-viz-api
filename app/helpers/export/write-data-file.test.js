@@ -28,9 +28,4 @@ describe('Write data to file', () => {
       expect(fs.readFileSync('tmp/workDir/data.json', 'utf8')).toBe('{"data":"test"}');
     });
   });
-
-  it('should reject when unsuccessful', () => {
-    const err = new Error('Could not write data to file');
-    return expect(writeDataFile('tmp/missingDir', {})).rejects.toThrowError(err);
-  });
 });

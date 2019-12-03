@@ -1,7 +1,7 @@
 const fs = require('fs');
 const mockFS = require('mock-fs');
 
-const remove = require('./remove');
+const removeFile = require('./remove-file');
 
 const mockedFileSystem = {
   tmp: {
@@ -17,17 +17,12 @@ afterAll(() => {
 });
 
 describe('Remove files', () => {
-  let files;
-
   beforeAll(async () => {
-    files = ['tmp/file1.txt', 'tmp/file3.txt'];
-    await remove(files);
+    await removeFile('tmp/file1.txt');
   });
 
-  it('should remove supplied files', () => {
-    files.forEach((file) => {
-      expect(fs.existsSync(file)).toBeFalsy();
-    });
+  it('should remove supplied file', () => {
+    expect(fs.existsSync('tmp/file1.txt')).toBeFalsy();
   });
 
   it('should not remove other files in folder', () => {

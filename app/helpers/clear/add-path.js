@@ -1,6 +1,6 @@
-const addPath = (workDir, uploadDir, workFiles, uploadFiles) => ([
-  ...workFiles.map(file => `${workDir}${file}`),
-  ...uploadFiles.map(file => `${uploadDir}${file}`),
+const addPath = (config, files) => ([
+  ...files[0].map(file => `${config.workDir}${file}`),
+  ...files[1].map(file => `${config.upload}${file}`),
 ]);
 
 module.exports = addPath;

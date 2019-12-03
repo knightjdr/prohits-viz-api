@@ -1,6 +1,6 @@
 const path = require('path');
 
-const createDirs = require('../../../helpers/files/create-dir');
+const createDirs = require('../../../helpers/files/create-dirs');
 const createStatus = require('../../../helpers/status/create-status');
 const deleteDirs = require('../../../helpers/files/delete-dir');
 const getWorkDir = require('../../../helpers/files/create-work-dir');
@@ -31,7 +31,7 @@ const createDotplot = (req, res) => (
         taskID = path.basename(dir);
         workDir = dir;
         return Promise.all([
-          createDirs(subDirs, workDir),
+          createDirs(workDir, subDirs),
           createStatus(workDir, validatedForm),
         ]);
       })
@@ -42,7 +42,7 @@ const createDotplot = (req, res) => (
       .then(() => spawnTask(validatedForm, workDir))
       .then(() => Promise.all([
         updateStatus(workDir),
-        deleteDirs(subDirs, workDir),
+        deleteDirs(workDir, subDirs),
       ]))
       .then(() => {
         socket.emit('action', { type: 'SHOULD_UPDATE_TASKS' });

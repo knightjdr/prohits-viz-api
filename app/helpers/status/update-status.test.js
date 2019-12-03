@@ -10,11 +10,6 @@ global.Date.toISOString = origDate.toISOString;
 
 const updateStatus = require('./update-status');
 
-const sleep = ms => (
-  new Promise(resolve => setTimeout(resolve, ms))
-);
-
-// Must mock file system after requires are complete.
 const status = {
   analysis: 'dotplot',
   date: new Date().toISOString(),
@@ -46,11 +41,8 @@ afterAll(() => {
 
 describe('Update status file', () => {
   describe('successfully', () => {
-    beforeAll(async (done) => {
-      updateStatus('tmp/workDir1')
-        .then(() => {
-          done();
-        });
+    beforeAll(async () => {
+      await updateStatus('tmp/workDir1');
     });
 
     it('should update status file', async (done) => {
@@ -73,17 +65,11 @@ describe('Update status file', () => {
   });
 
   describe('unsuccessfully', () => {
-    beforeAll(async (done) => {
-      updateStatus('tmp/workDir2')
-        .then(() => {
-          done();
-        });
+    beforeAll(async () => {
+      await updateStatus('tmp/workDir2');
     });
 
     it('should update status file with an error when interactive folder is missing', async (done) => {
-      /* Need a brief wait here to allow final writing to status file
-      ** in catch statement. */
-      await sleep(200);
       fs.readFile('tmp/workDir2/status.json', 'utf8', (err, data) => {
         const expectedStatus = {
           analysis: 'dotplot',

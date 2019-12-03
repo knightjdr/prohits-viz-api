@@ -1,4 +1,4 @@
-const mkdir = require('../../../helpers/export/mkdir');
+const createDirectories = require('../../../helpers/files/create-dirs');
 const spawnProcess = require('./spawn');
 const validate = require('../../../helpers/validation/validate');
 const createWorkDir = require('../../../helpers/files/create-work-dir');
@@ -23,7 +23,7 @@ const heatmap = (req, res) => {
       .then((dir) => {
         workingDir = dir;
         return Promise.all([
-          mkdir(workingDir, [...new Set(['svg', outputType])]),
+          createDirectories(workingDir, [...new Set(['svg', outputType])]),
           writeDataFile(workingDir, validated.data),
           writeDownloadFile(workingDir, validated.data.imageType, outputType),
         ]);

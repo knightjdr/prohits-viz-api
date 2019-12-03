@@ -21,12 +21,9 @@ afterAll(() => {
 
 describe('Delete group of directories', () => {
   describe('successfully', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       const list = ['dir1', 'dir2'];
-      deleteDirs(list, 'tmp1')
-        .then(() => {
-          done();
-        });
+      await deleteDirs('tmp1', list);
     });
 
     it('should delete first directory', async (done) => {

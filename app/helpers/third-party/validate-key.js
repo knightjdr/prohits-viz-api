@@ -15,6 +15,7 @@ const validateKey = (match, password) => {
     salt,
   } = match;
   const calculatedHash = crypto.pbkdf2Sync(password, salt, iterations, keylen, algo).toString('hex');
+
   return calculatedHash === hash;
 };
 

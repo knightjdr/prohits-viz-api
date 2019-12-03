@@ -28,9 +28,4 @@ describe('Write download instructions file', () => {
       expect(fs.readFileSync('tmp/workDir/download.txt', 'utf8')).toBe('txt/file.txt');
     });
   });
-
-  it('should reject when unsuccessful', () => {
-    const err = new Error('Could not write download information to file');
-    return expect(writeDownloadFile('tmp/missingDir', 'file', 'txt')).rejects.toThrowError(err);
-  });
 });

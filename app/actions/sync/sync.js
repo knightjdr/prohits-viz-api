@@ -1,4 +1,4 @@
-const mkdir = require('../../helpers/export/mkdir');
+const createDirectories = require('../../helpers/files/create-dirs');
 const spawnProcess = require('./spawn');
 const validate = require('../../helpers/validation/validate');
 const writeDataFile = require('../../helpers/export/write-data-file');
@@ -16,7 +16,7 @@ const sync = async (req, res) => {
       res.send({});
       const workingDir = await createWorkDir();
       await Promise.all([
-        mkdir(workingDir, ['minimap']),
+        createDirectories(workingDir, ['minimap']),
         writeDataFile(workingDir, validated.data),
       ]);
       await spawnProcess(socket, workingDir, snapshotID);

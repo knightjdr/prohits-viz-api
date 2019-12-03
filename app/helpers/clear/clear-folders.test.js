@@ -46,19 +46,13 @@ const mockedFileSystem = {
 };
 mockFS(mockedFileSystem);
 
-const sleep = ms => (
-  new Promise(resolve => setTimeout(resolve, ms))
-);
-
 afterAll(() => {
   mockFS.restore();
 });
 
 describe('Clear folders', () => {
-  beforeAll(async (done) => {
-    clearFolders();
-    await sleep(500);
-    done();
+  beforeAll(async () => {
+    await clearFolders();
   });
 
   it('should clear expired files/folders in tmp folder', async (done) => {

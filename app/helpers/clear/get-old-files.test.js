@@ -5,7 +5,7 @@ jest.mock('../../config/config', () => ({
   expiredFile: 86400000,
 }));
 
-const oldFiles = require('./old-files');
+const getOldFiles = require('./get-old-files');
 
 const mockedFileSystem = {
   tmp: {
@@ -30,19 +30,16 @@ afterAll(() => {
 });
 
 describe('List old files', () => {
-  let old;
+  let oldFiles;
 
   beforeAll(async (done) => {
     const files = ['tmp/file1.txt', 'tmp/file2.txt', 'tmp/file3.txt'];
-    oldFiles(files)
-      .then((result) => {
-        old = result;
-        done();
-      });
+    oldFiles = await getOldFiles(files);
+    done();
   });
 
   it('should return a list of expired files', () => {
     const expectedFiles = ['tmp/file2.txt'];
-    expect(old).toEqual(expectedFiles);
+    expect(oldFiles).toEqual(expectedFiles);
   });
 });
