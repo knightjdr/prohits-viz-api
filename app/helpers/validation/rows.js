@@ -27,19 +27,19 @@ assuming other will conform to the formats used.
 */
 const rows = (imageType, rowData) => {
   if (
-    rowData &&
-    Array.isArray(rowData) &&
-    rowData.length > 0 &&
-    rowData[0] && // Ensures not null as null is an object.
-    typeof rowData[0] === 'object' &&
-    Object.prototype.hasOwnProperty.call(rowData[0], 'name') &&
-    typeof rowData[0].name === 'string' &&
-    Object.prototype.hasOwnProperty.call(rowData[0], 'data') &&
-    Array.isArray(rowData[0].data) &&
-    rowData[0].data[0] &&
-    typeof rowData[0].data[0] === 'object' &&
-    Object.prototype.hasOwnProperty.call(rowData[0].data[0], 'value') &&
-    (
+    rowData
+    && Array.isArray(rowData)
+    && rowData.length > 0
+    && rowData[0] // Ensures not null as null is an object.
+    && typeof rowData[0] === 'object'
+    && rowData[0].name
+    && typeof rowData[0].name === 'string'
+    && rowData[0].data
+    && Array.isArray(rowData[0].data)
+    && rowData[0].data[0]
+    && typeof rowData[0].data[0] === 'object'
+    && rowData[0].data[0].value
+    && (
       imageType === 'heatmap' ||
       (
         Object.prototype.hasOwnProperty.call(rowData[0].data[0], 'ratio') &&

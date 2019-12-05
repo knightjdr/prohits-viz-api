@@ -1,6 +1,6 @@
-const parameters = require('./parameters');
+const defaultValues = require('./default-values');
 
-const { colorSchemes } = parameters;
+const { colorSchemes } = defaultValues;
 
 const color = (data, defaultSetting) => (
   data && colorSchemes.includes(data) ? data : defaultSetting

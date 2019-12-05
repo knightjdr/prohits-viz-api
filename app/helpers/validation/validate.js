@@ -1,62 +1,25 @@
-const iterator = require('./iterator');
-const parameters = require('./parameters');
-const validator = require('./validator');
+const getValidator = require('./validator/get-validator');
+const validateFields = require('./validate-fields');
+const validateOptionalFields = require('./validate-optional-fields');
+const { optionalFields, requiredFields } = require('./fields');
 
-const { settings } = parameters;
+const getFields = (imageType, ignoreFields) => (
+  requiredFields[imageType].filter(field => !ignoreFields.includes(field))
+);
 
-const common = [
-  'abundanceCap',
-  'annotations',
-  'columns',
-  'fillColor',
-  'invertColor',
-  'markers',
-  'minAbundance',
-  'rows',
-];
-
-const neededProps = {
-  dotplot: [
-    ...common,
-    'edgeColor',
-    'primaryFilter',
-    'scoreType',
-    'secondaryFilter',
-  ],
-  heatmap: [
-    ...common,
-  ],
-};
-
-const optionalProps = [
-  'xLabel',
-  'yLabel',
-];
-
-/* Validation checks parameters and if they are invalid, uses the default.
-** If, however, the row or columns objects are invalid, returns an err. Properties
-** to ignore can be specied in the second arg as an array of strings. */
-const validate = (imageType, data, ignore = []) => {
-  const props = neededProps[imageType].filter(prop => !ignore.includes(prop));
-  const errs = [];
-  const validateFunc = validator(imageType);
-  const validatedObj = iterator(props, data, settings[imageType], validateFunc, errs);
-  const objWithOptional = optionalProps.reduce((accum, prop) => {
-    if (data[prop]) {
-      return {
-        ...accum,
-        [prop]: data[prop],
-      };
-    }
-    return accum;
-  }, validatedObj);
+/* Validation checks parameters and if they are invalid, uses a default.
+** It will throw an error for invalid settings that cannot be reconciled. */
+const validate = (imageType, data, ignoreFields = []) => {
+  const fields = getFields(imageType, ignoreFields);
+  const validator = getValidator(imageType);
+  const validated = {
+    ...validateFields(fields, data, validator),
+    ...validateOptionalFields(optionalFields, data),
+  };
 
   return {
-    err: errs[0],
-    data: {
-      ...objWithOptional,
-      imageType,
-    },
+    ...validated,
+    imageType,
   };
 };
 

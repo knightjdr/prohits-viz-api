@@ -1,30 +1,40 @@
-const rimraf = require('rimraf');
 const { spawn } = require('child_process');
 
-// Spawn Golang task to sync minimap.
+const removeFile = require('../../helpers/files/remove-file');
+
+const emitAction = (socket, snapshotID, url) => {
+  socket.emit('action', { snapshotID, syncedImage: url, type: 'MINIMAP_SYNCHED' });
+};
+
+const initializeSpawn = workingDir => (
+  spawn(
+    'pvsync',
+    ['-json', 'data.json'],
+    { cwd: workingDir },
+  )
+);
+
+const uri = {
+  data: '',
+  appendData: function append(data) {
+    this.data += data.toString();
+  },
+};
+
 const spawnProcess = (socket, workingDir, snapshotID) => (
   new Promise((resolve, reject) => {
-    let url = '';
-    const syncProcess = spawn(
-      'pvsync',
-      [
-        '-json',
-        'data.json',
-      ],
-      {
-        cwd: workingDir,
-      },
-    );
+    const syncProcess = initializeSpawn(workingDir);
+
     syncProcess.stdout.on('data', (data) => {
-      url += data.toString();
+      uri.appendData(data);
     });
     syncProcess.on('error', (err) => {
       reject(err);
     });
     syncProcess.on('exit', (err) => {
       if (!err) {
-        socket.emit('action', { snapshotID, syncedImage: url, type: 'MINIMAP_SYNCHED' });
-        rimraf(workingDir, () => {});
+        emitAction(socket, snapshotID, uri.data);
+        removeFile(workingDir);
         resolve();
       } else {
         reject(err);

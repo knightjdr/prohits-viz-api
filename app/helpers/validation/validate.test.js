@@ -36,12 +36,10 @@ describe('Heatmap validation interface', () => {
       xLabel: 'x',
       yLabel: 'y',
     };
+
     const expected = {
-      err: undefined,
-      data: {
-        ...data,
-        imageType: 'dotplot',
-      },
+      ...data,
+      imageType: 'dotplot',
     };
     expect(validate('dotplot', data)).toEqual(expected);
   });

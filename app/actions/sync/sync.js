@@ -7,20 +7,16 @@ const createWorkDir = require('../../helpers/files/create-work-dir');
 const sync = async (req, res) => {
   const { socket } = res.locals;
   const { snapshotID } = req.params;
+  res.send({});
+
   try {
     const validated = validate(req.body.imageType, req.body, ['columns']);
-    if (validated.err) {
-      res.status(400);
-      res.send({ message: validated.err.toString() });
-    } else {
-      res.send({});
-      const workingDir = await createWorkDir();
-      await Promise.all([
-        createDirectories(workingDir, ['minimap']),
-        writeDataFile(workingDir, validated.data),
-      ]);
-      await spawnProcess(socket, workingDir, snapshotID);
-    }
+    const workingDir = await createWorkDir();
+    await Promise.all([
+      createDirectories(workingDir, ['minimap']),
+      writeDataFile(workingDir, validated),
+    ]);
+    await spawnProcess(socket, workingDir, snapshotID);
   } catch (error) {
     socket.emit('action', { snapshotID, type: 'SYNC_ERROR' });
   }

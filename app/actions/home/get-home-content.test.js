@@ -28,17 +28,14 @@ describe('Home page load', () => {
       res.status.mockClear();
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       find
         .mockResolvedValueOnce(returnValues.news.find)
         .mockResolvedValueOnce(returnValues.spotlight.find);
       addMongoDate.arr
         .mockReturnValueOnce(returnValues.news.addDate)
         .mockReturnValueOnce(returnValues.spotlight.addDate);
-      getHomeContent(req, res)
-        .then(() => {
-          done();
-        });
+      await getHomeContent(req, res);
     });
 
     it('should use default status', () => {
@@ -59,14 +56,11 @@ describe('Home page load', () => {
       res.status.mockClear();
     });
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       find
         .mockRejectedValueOnce(new Error())
         .mockRejectedValueOnce(new Error());
-      getHomeContent(req, res)
-        .then(() => {
-          done();
-        });
+      await getHomeContent(req, res);
     });
 
     it('should return default status', () => {

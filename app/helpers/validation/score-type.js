@@ -1,6 +1,6 @@
-const parameters = require('./parameters');
+const defaultValues = require('./default-values');
 
-const { scoreTypes } = parameters;
+const { scoreTypes } = defaultValues;
 
 const scoreType = (data, defaultSetting) => (
   data && scoreTypes.includes(data) ? data : defaultSetting
