@@ -5,9 +5,9 @@
   "main": "app/server.js",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon n use 13.3.0 node --harmony app/server.js",
+    "dev": "NODE_ENV=development nodemon --harmony app/server.js",
     "prod": "NODE_ENV=production node --harmony app/server.js",
-    "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' app/server.js",
+    "prod-forever": "NODE_ENV=production forever start -c 'node --harmony' -a --uid 'prohits-viz-api' app/server.js",
     "test": "jest --watch",
     "test:coverage": "jest --coverage"
   },

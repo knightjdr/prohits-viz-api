@@ -1,29 +1,32 @@
 import validate from './validate';
 
-describe('Heatmap validation interface', () => {
-  it('should return object with valid data', () => {
+describe('Dotplot/Heatmap validation interface', () => {
+  it('should return valid object', () => {
     const data = {
       abundanceCap: 20,
       annotations: {
         fontSize: 15,
-        list: [
-          { text: 'a', x: 0.1, y: 0.2 },
-        ],
+        list: {
+          annotation1: {
+            position: { x: 0.1, y: 0.2 },
+            text: 'a',
+          },
+        },
       },
       columns: ['a', 'b', 'c'],
-      edgeColor: 'blueBlack',
-      fillColor: 'redBlack',
+      edgeColor: 'blue',
+      fillColor: 'red',
       invertColor: true,
       markers: {
         color: '#ffffff',
-        list: [
-          {
+        list: {
+          marker1: {
             height: 10,
             width: 15,
-            x: 5,
-            y: 6,
+            x: 0.5,
+            y: 0.2,
           },
-        ],
+        },
       },
       minAbundance: 5,
       primaryFilter: 0.01,

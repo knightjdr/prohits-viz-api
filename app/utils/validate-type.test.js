@@ -1,4 +1,4 @@
-import validate from './validate-type';
+import * as validate from './validate-type';
 
 describe('Validate array', () => {
   it('should return a valid array', () => {

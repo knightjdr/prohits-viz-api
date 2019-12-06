@@ -2,7 +2,7 @@ import addBackground from './add-background.js';
 import addSources from './add-sources.js';
 import { accepted, defaultGprofilerSettings } from './default-settings.js';
 
-import validate from '../../../../utils/validate-type.js';
+import * as validate from '../../../../utils/validate-type.js';
 
 const validateAgainstArray = (value, arr, defaultValue) => (
   arr.includes(value) ? value : defaultValue

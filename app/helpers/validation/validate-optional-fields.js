@@ -1,9 +1,9 @@
 const validateOptionalFields = (fields, data) => (
-  fields.reduce((accum, prop) => {
-    if (data[prop]) {
+  fields.reduce((accum, field) => {
+    if (data[field]) {
       return {
         ...accum,
-        [prop]: data[prop],
+        [field]: data[field],
       };
     }
     return accum;

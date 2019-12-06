@@ -1,6 +1,4 @@
-/* global fetch */
-
-require('isomorphic-fetch');
+import fetch from 'isomorphic-fetch';
 
 const defaultOptions = {
   data: {},

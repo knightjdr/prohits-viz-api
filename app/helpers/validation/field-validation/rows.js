@@ -21,7 +21,7 @@ rows = [
 I only test the first row and data items for performance reasons,
 assuming other will conform to the formats used.
 */
-const rows = (imageType, rowData) => {
+const validateRows = (imageType, rowData) => {
   if (
     rowData?.[0]?.name
     && rowData?.[0]?.data?.[0]?.value
@@ -38,4 +38,4 @@ const rows = (imageType, rowData) => {
   throw new Error('Invalid row array');
 };
 
-export default rows;
+export default validateRows;
