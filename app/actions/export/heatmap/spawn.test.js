@@ -1,10 +1,10 @@
-const mockSpawn = require('mock-spawn');
+import mockSpawn from 'mock-spawn';
+
+import spawnProcess from './spawn';
 
 // Mock spawn.
 const testSpawn = mockSpawn();
 require('child_process').spawn = testSpawn;
-
-const spawnProcess = require('./spawn');
 
 const socket = {
   emit: jest.fn(),

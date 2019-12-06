@@ -1,21 +1,19 @@
-const extToMimeType = require('./ext-to-mime-type');
-const mockFS = require('mock-fs');
-const rimraf = require('rimraf');
-const stream = require('stream');
+import mockFS from 'mock-fs';
+import rimraf from 'rimraf';
+import stream from 'stream';
+
+import extToMimeType from './ext-to-mime-type';
+import readStream from './read-stream';
 
 jest.mock('./ext-to-mime-type');
 extToMimeType.mockReturnValue('svg');
 jest.mock('rimraf');
 
-const readStream = require('./read-stream');
-
-// Must mock file system after requires are complete.
 mockFS({
   tmp: {
     'file.svg': 'file content',
   },
 });
-
 
 const res = new stream.Writable();
 res._write = (chunk, encoding, done) => {

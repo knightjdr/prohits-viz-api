@@ -1,7 +1,7 @@
-const getValidator = require('./validator/get-validator');
-const validateFields = require('./validate-fields');
-const validateOptionalFields = require('./validate-optional-fields');
-const { optionalFields, requiredFields } = require('./fields');
+import getValidator from './validator/get-validator.js';
+import validateFields from './validate-fields.js';
+import validateOptionalFields from './validate-optional-fields.js';
+import { optionalFields, requiredFields } from './fields.js';
 
 const getFields = (imageType, ignoreFields) => (
   requiredFields[imageType].filter(field => !ignoreFields.includes(field))
@@ -23,4 +23,4 @@ const validate = (imageType, data, ignoreFields = []) => {
   };
 };
 
-module.exports = validate;
+export default validate;

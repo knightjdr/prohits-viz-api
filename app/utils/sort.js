@@ -1,4 +1,4 @@
-const isNumber = require('./is-number');
+import isNumber from './is-number.js';
 
 const checkCharactersDefined = (a, b) => {
   if (!a && !b) {
@@ -57,4 +57,4 @@ const sort = {
   },
 };
 
-module.exports = sort;
+export default sort;

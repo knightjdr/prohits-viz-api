@@ -1,4 +1,4 @@
-const { createSourceLink, links } = require('./create-source-link');
+import { createSourceLink, links } from './create-source-link';
 
 describe('Create source link for gProfiler results', () => {
   describe('sources that can be linked to', () => {

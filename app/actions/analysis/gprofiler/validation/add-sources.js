@@ -6,4 +6,4 @@ const addSources = (defaultSources, body) => (
   ), [])
 );
 
-module.exports = addSources;
+export default addSources;

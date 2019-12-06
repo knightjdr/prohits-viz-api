@@ -2,10 +2,11 @@
   "name": "api",
   "version": "1.0.0",
   "description": "API for ProHits-viz",
-  "main": "index.js",
+  "main": "app/server.js",
+  "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon n use 12.13.0 app/server.js",
-    "prod": "NODE_ENV=production node app/server.js",
+    "dev": "NODE_ENV=development nodemon n use 13.3.0 node --harmony app/server.js",
+    "prod": "NODE_ENV=production node --harmony app/server.js",
     "prod-forever": "NODE_ENV=production forever start -a --uid 'prohits-viz-api' app/server.js",
     "test": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -21,7 +22,10 @@
   },
   "homepage": "https://github.com/knightjdr/prohits-viz-api#readme",
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
+    "babel-eslint": "^10.0.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.10.0",

@@ -1,6 +1,6 @@
 /* eslint quotes: 0 */
 
-const isJson = require('../../../utils/is-json');
+import isJson from '../../../utils/is-json.js';
 
 const validTypes = ['dotplot', 'heatmap', 'scatter'];
 
@@ -99,4 +99,4 @@ const validate = (body) => {
   };
 };
 
-module.exports = validate;
+export default validate;

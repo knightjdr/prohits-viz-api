@@ -1,5 +1,7 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
+import fs from 'fs';
+
+import clearFolders from './clear-folders';
 
 const expiredFile = 86400000;
 jest.mock('../../config/config', () => ({
@@ -8,8 +10,6 @@ jest.mock('../../config/config', () => ({
   upload: 'tmp/uploads/',
   workDir: 'tmp/',
 }));
-
-const clearFolders = require('./clear-folders');
 
 const mockedFileSystem = {
   tmp: {

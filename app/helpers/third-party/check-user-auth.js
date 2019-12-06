@@ -1,5 +1,5 @@
-const findOne = require('../database/find-one');
-const validateKey = require('./validate-key');
+import findOne from '../database/find-one.js';
+import validateKey from './validate-key.js';
 
 const checkUserAuth = async (req) => {
   const apikey = req.get('apikey');
@@ -13,4 +13,4 @@ const checkUserAuth = async (req) => {
   return validateKey(match, password);
 };
 
-module.exports = checkUserAuth;
+export default checkUserAuth;

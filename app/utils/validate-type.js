@@ -1,29 +1,21 @@
-const isObject = require('./is-object');
+import isObject from './is-object.js';
 
-const validateArray = (testArray, defaultArray = []) => (
+export const validateArray = (testArray, defaultArray = []) => (
   Array.isArray(testArray) ? testArray : defaultArray
 );
 
-const validateBoolean = (testValue, defaultBoolean = false) => (
+export const validateBoolean = (testValue, defaultBoolean = false) => (
   typeof testValue === 'boolean' ? testValue : defaultBoolean
 );
 
-const validateNumber = (testValue, defaultNumber = 0) => (
+export const validateNumber = (testValue, defaultNumber = 0) => (
   typeof testValue === 'number' ? testValue : defaultNumber
 );
 
-const validateObject = (testObject, defaultObject = {}) => (
+export const validateObject = (testObject, defaultObject = {}) => (
   isObject(testObject) ? testObject : defaultObject
 );
 
-const validateString = (testValue, defaultString = '') => (
+export const validateString = (testValue, defaultString = '') => (
   typeof testValue === 'string' ? testValue : defaultString
 );
-
-module.exports = {
-  validateArray,
-  validateBoolean,
-  validateNumber,
-  validateObject,
-  validateString,
-};

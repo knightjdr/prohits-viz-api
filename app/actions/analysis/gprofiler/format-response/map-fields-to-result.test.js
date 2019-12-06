@@ -1,4 +1,4 @@
-const mapFieldsToResult = require('./map-fields-to-result');
+import mapFieldsToResult from './map-fields-to-result';
 
 describe('Map g:Profiler result to fields for frontend', () => {
   it('should map api fields to desired properties', () => {

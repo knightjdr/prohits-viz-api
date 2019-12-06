@@ -1,4 +1,4 @@
-const validate = require('./validate');
+import validate from './validate';
 
 describe('Heatmap validation interface', () => {
   it('should return object with valid data', () => {

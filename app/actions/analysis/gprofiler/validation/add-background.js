@@ -1,4 +1,4 @@
-const parseBackground = require('./parse-background');
+import parseBackground from './parse-background.js';
 
 const addBackground = (scope, body, defaultScope) => {
   const options = {};
@@ -15,4 +15,4 @@ const addBackground = (scope, body, defaultScope) => {
   return options;
 };
 
-module.exports = addBackground;
+export default addBackground;

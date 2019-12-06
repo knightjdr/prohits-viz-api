@@ -10,4 +10,4 @@ const validateOptionalFields = (fields, data) => (
   }, {})
 );
 
-module.exports = validateOptionalFields;
+export default validateOptionalFields;

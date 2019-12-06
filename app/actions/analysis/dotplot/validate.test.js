@@ -1,4 +1,4 @@
-const validate = require('./validate');
+import validate from './validate';
 
 describe('Validate dotplot form', () => {
   describe('control options', () => {

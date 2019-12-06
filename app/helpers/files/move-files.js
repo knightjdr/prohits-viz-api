@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 const defineMethodAndPath = (file, useSample) => (
   useSample && Boolean(useSample) && file.originalname === 'samplefile.txt'
@@ -35,4 +35,4 @@ const moveFiles = async (files, workDir, useSample = false) => {
   return Promise.all(promises);
 };
 
-module.exports = moveFiles;
+export default moveFiles;

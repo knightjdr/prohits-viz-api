@@ -1,7 +1,7 @@
-const events = require('events');
-const socketIo = require('socket.io');
+import events from 'events';
+import socketIo from 'socket.io';
 
-const configureSocket = require('./configure-socket');
+import configureSocket from './configure-socket';
 
 jest.mock('socket.io');
 const io = new events.EventEmitter();

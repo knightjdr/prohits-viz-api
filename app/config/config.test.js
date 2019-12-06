@@ -1,4 +1,4 @@
-const config = require('./config');
+import config from './config';
 
 describe('dev config', () => {
   test('load config based on environment', () => {

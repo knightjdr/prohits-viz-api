@@ -1,6 +1,6 @@
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
-const flags = require('./spawn-flags');
+import flags from './spawn-flags.js';
 
 // Spawn Golang task to sync minimap.
 const spawnProcess = (form, workDir) => (
@@ -22,4 +22,4 @@ const spawnProcess = (form, workDir) => (
   })
 );
 
-module.exports = spawnProcess;
+export default spawnProcess;

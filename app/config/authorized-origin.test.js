@@ -1,5 +1,5 @@
-const checkUserAuth = require('../helpers/third-party/check-user-auth');
-const { isRequestAuthorized } = require('./authorized-origin');
+import checkUserAuth from '../helpers/third-party/check-user-auth';
+import { isRequestAuthorized } from './authorized-origin';
 
 jest.mock('../helpers/third-party/check-user-auth');
 

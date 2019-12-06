@@ -1,4 +1,4 @@
-const accepted = {
+export const accepted = {
   domainScope: ['annotated', 'custom', 'known'],
   numberNS: [
     'AFFY_HUEX_1_0_ST_V2',
@@ -15,7 +15,7 @@ const accepted = {
   significanceAlgorithm: ['bonferroni', 'fdr', 'g_SCS'],
 };
 
-const defaultGprofilerSettings = {
+export const defaultGprofilerSettings = {
   all_results: false,
   domain_scope: 'annotated',
   measure_underrepresentation: false,
@@ -40,9 +40,4 @@ const defaultGprofilerSettings = {
     'WP',
   ],
   user_threshold: 0.01,
-};
-
-module.exports = {
-  accepted,
-  defaultGprofilerSettings,
 };

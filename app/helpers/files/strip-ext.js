@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 /* Removes the extension for an array of files and
 ** appends the file name to the arr argument. */
@@ -9,4 +9,4 @@ const stripExt = (files, arr) => (
   ]), [...arr])
 );
 
-module.exports = stripExt;
+export default stripExt;

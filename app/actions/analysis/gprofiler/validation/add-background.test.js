@@ -1,5 +1,5 @@
-const addBackground = require('./add-background');
-const parseBackground = require('./parse-background');
+import addBackground from './add-background';
+import parseBackground from './parse-background';
 
 jest.mock('./parse-background');
 

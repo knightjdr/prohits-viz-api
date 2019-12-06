@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 const extToMimeType = (fileName) => {
   const ext = path.extname(fileName).substr(1);
@@ -16,4 +16,4 @@ const extToMimeType = (fileName) => {
   }
 };
 
-module.exports = extToMimeType;
+export default extToMimeType;

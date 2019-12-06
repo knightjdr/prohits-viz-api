@@ -1,6 +1,6 @@
-const emitAction = require('./emit-action');
-const fetch = require('../../../utils/fetch');
-const validateGprofilerOptions = require('./validation/validate');
+import emitAction from './emit-action.js';
+import fetch from '../../../utils/fetch.js';
+import validateGprofilerOptions from './validation/validate.js';
 
 const url = 'https://biit.cs.ut.ee/gprofiler/api/gost/profile/';
 
@@ -20,4 +20,4 @@ const gprofiler = async (req, res) => {
   res.end();
 };
 
-module.exports = gprofiler;
+export default gprofiler;

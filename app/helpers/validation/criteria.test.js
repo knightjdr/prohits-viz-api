@@ -1,4 +1,4 @@
-const criteria = require('./criteria');
+import criteria from './criteria';
 
 describe('Validate criteria', () => {
   describe('for booleans', () => {

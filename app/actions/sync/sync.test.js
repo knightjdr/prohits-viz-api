@@ -1,8 +1,9 @@
-const createDirectories = require('../../helpers/files/create-dirs');
-const spawnProcess = require('./spawn');
-const validate = require('../../helpers/validation/validate');
-const createWorkDir = require('../../helpers/files/create-work-dir');
-const writeDataFile = require('../../helpers/export/write-data-file');
+import createDirectories from '../../helpers/files/create-dirs';
+import createWorkDir from '../../helpers/files/create-work-dir';
+import spawnProcess from './spawn';
+import sync from './sync';
+import validate from '../../helpers/validation/validate';
+import writeDataFile from '../../helpers/export/write-data-file';
 
 jest.mock('../../helpers/files/create-dirs');
 createDirectories.mockResolvedValue();
@@ -12,8 +13,6 @@ jest.mock('../../helpers/validation/validate');
 jest.mock('../../helpers/export/write-data-file');
 jest.mock('../../helpers/files/create-work-dir');
 writeDataFile.mockResolvedValue();
-
-const sync = require('./sync');
 
 const req = {
   body: { imageType: 'dotplot' },
@@ -37,7 +36,7 @@ describe('Syncing minimap', () => {
   describe('when successful', () => {
     beforeAll(async () => {
       res.send.mockClear();
-      validate.mockReturnValue({ data: 'data' });
+      validate.mockReturnValue('data');
       createWorkDir.mockResolvedValue('workdir');
       sync(req, res);
       await sleep(200);
@@ -79,24 +78,6 @@ describe('Syncing minimap', () => {
 
     it('should emit error event to socket', () => {
       expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { snapshotID: 'id', type: 'SYNC_ERROR' });
-    });
-  });
-
-  describe('when there is a validation error', () => {
-    beforeAll(async () => {
-      res.send.mockClear();
-      res.status.mockClear();
-      validate.mockReturnValue({ err: new Error('test error') });
-      sync(req, res);
-      await sleep(200);
-    });
-
-    it('should set status code', () => {
-      expect(res.status).toHaveBeenCalledWith(400);
-    });
-
-    it('should send error response', () => {
-      expect(res.send).toHaveBeenCalledWith({ message: 'Error: test error' });
     });
   });
 });

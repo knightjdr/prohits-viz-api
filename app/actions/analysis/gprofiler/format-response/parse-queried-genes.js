@@ -1,4 +1,4 @@
-const mapFromValuesToKeys = require('../../../../utils/map-from-values-to-keys');
+import mapFromValuesToKeys from '../../../../utils/map-from-values-to-keys.js';
 
 const parseQueriedGenes = (genesMetadata) => {
   const { ensgs, mapping } = genesMetadata.query.query_1;
@@ -6,4 +6,4 @@ const parseQueriedGenes = (genesMetadata) => {
   return ensgs.map(ensg => ensgToGeneMap[ensg]);
 };
 
-module.exports = parseQueriedGenes;
+export default parseQueriedGenes;

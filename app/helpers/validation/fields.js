@@ -11,7 +11,7 @@ const commonFields = {
   ],
 };
 
-const requiredFields = {
+export const requiredFields = {
   dotplot: [
     ...commonFields.heatmap,
     'edgeColor',
@@ -24,12 +24,7 @@ const requiredFields = {
   ],
 };
 
-const optionalFields = [
+export const optionalFields = [
   'xLabel',
   'yLabel',
 ];
-
-module.exports = {
-  optionalFields,
-  requiredFields,
-};

@@ -1,10 +1,10 @@
-const path = require('path');
+import path from 'path';
 
-const config = require('../../../config/config');
-const createDirs = require('../../../helpers/files/create-dirs');
-const validate = require('./validate');
-const createWorkDir = require('../../../helpers/files/create-work-dir');
-const writeFile = require('../../../helpers/files/write-file');
+import config from '../../../config/config.js';
+import createDirs from '../../../helpers/files/create-dirs.js';
+import validate from './validate.js';
+import createWorkDir from '../../../helpers/files/create-work-dir.js';
+import writeFile from '../../../helpers/files/write-file.js';
 
 const handleVizFile = (req, res) => (
   new Promise((resolve) => {
@@ -42,4 +42,4 @@ const handleVizFile = (req, res) => (
   })
 );
 
-module.exports = handleVizFile;
+export default handleVizFile;

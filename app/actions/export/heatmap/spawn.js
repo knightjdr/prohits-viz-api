@@ -1,5 +1,5 @@
-const path = require('path');
-const { spawn } = require('child_process');
+import path from 'path';
+import { spawn } from 'child_process';
 
 // Spawn Golang task to generate image for saving.
 const spawnProcess = (socket, workingDir, outputType) => (
@@ -30,4 +30,4 @@ const spawnProcess = (socket, workingDir, outputType) => (
   })
 );
 
-module.exports = spawnProcess;
+export default spawnProcess;

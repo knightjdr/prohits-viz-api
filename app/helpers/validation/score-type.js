@@ -1,4 +1,4 @@
-const defaultValues = require('./default-values');
+import defaultValues from './default-values.js';
 
 const { scoreTypes } = defaultValues;
 
@@ -6,4 +6,4 @@ const scoreType = (data, defaultSetting) => (
   data && scoreTypes.includes(data) ? data : defaultSetting
 );
 
-module.exports = scoreType;
+export default scoreType;

@@ -1,7 +1,7 @@
-const config = require('../../../config/config');
-const exists = require('../../../helpers/download/exists');
-const getSubDirectory = require('./get-sub-directory');
-const readStream = require('../../../helpers/download/read-stream');
+import config from '../../../config/config.js';
+import exists from '../../../helpers/download/exists.js';
+import getSubDirectory from './get-sub-directory.js';
+import readStream from '../../../helpers/download/read-stream.js';
 
 const downloadTaskFile = (req, res) => {
   const { filename, folder } = req.params;
@@ -15,4 +15,4 @@ const downloadTaskFile = (req, res) => {
     });
 };
 
-module.exports = downloadTaskFile;
+export default downloadTaskFile;

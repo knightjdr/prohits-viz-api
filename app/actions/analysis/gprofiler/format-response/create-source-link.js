@@ -1,4 +1,4 @@
-const links = {
+export const links = {
   'GO:BP': {
     substring: 0,
     url: 'http://amigo.geneontology.org/amigo/term/',
@@ -33,12 +33,7 @@ const links = {
   },
 };
 
-const createSourceLink = (id, source) => {
+export const createSourceLink = (id, source) => {
   const linkInfo = links[source];
   return linkInfo ? `${linkInfo.url}${id.substring(linkInfo.substring)}` : '';
-};
-
-module.exports = {
-  createSourceLink,
-  links,
 };

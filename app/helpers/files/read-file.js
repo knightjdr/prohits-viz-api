@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const readFile = (file, encoding = 'utf8') => (
   new Promise((resolve, reject) => {
@@ -11,4 +11,4 @@ const readFile = (file, encoding = 'utf8') => (
   })
 );
 
-module.exports = readFile;
+export default readFile;

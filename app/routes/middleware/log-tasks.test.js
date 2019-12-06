@@ -1,4 +1,5 @@
-const insert = require('../../helpers/database/insert');
+import insert from '../../helpers/database/insert';
+import logTasks from './log-tasks';
 
 jest.mock('../../helpers/database/insert');
 jest.mock('../../utils/url-details', () => () => ({ host: 'test.org' }));
@@ -8,8 +9,6 @@ const DATE_TO_USE = new Date();
 const origDate = Date;
 global.Date = jest.fn(() => DATE_TO_USE);
 global.Date.toISOString = origDate.toISOString;
-
-const logTasks = require('./log-tasks');
 
 const next = jest.fn();
 

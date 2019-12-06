@@ -1,6 +1,6 @@
-const mockFS = require('mock-fs');
+import mockFS from 'mock-fs';
 
-const readFile = require('./read-file');
+import readFile from './read-file';
 
 // Must mock file system after requires are complete.
 mockFS({

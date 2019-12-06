@@ -22,4 +22,4 @@ const isJSON = (json, isString = true) => {
   return false;
 };
 
-module.exports = isJSON;
+export default isJSON;

@@ -1,4 +1,4 @@
-const columns = require('./columns');
+import columns from './columns';
 
 const err = new Error('Invalid column array');
 

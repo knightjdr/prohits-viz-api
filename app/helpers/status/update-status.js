@@ -1,6 +1,6 @@
-const listFiles = require('../files/list-files');
-const stripExt = require('../files/strip-ext');
-const writeStatus = require('./write-status');
+import listFiles from '../files/list-files.js';
+import stripExt from '../files/strip-ext.js';
+import writeStatus from './write-status.js';
 
 const updateStatus = async (workDir) => {
   let files = [];
@@ -22,4 +22,4 @@ const updateStatus = async (workDir) => {
   }
 };
 
-module.exports = updateStatus;
+export default updateStatus;

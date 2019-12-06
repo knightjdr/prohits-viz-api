@@ -1,7 +1,7 @@
-const config = require('../../config/config');
-const exists = require('../../helpers/download/exists');
-const readFile = require('./read-file');
-const readStream = require('../../helpers/download/read-stream');
+import config from '../../config/config.js';
+import exists from '../../helpers/download/exists.js';
+import readFile from './read-file.js';
+import readStream from '../../helpers/download/read-stream.js';
 
 /* downloadFile will take the working directory specified by the request
 ** and check to see if a file with download instructions exists in that
@@ -19,4 +19,4 @@ const downloadFile = (req, res) => {
     });
 };
 
-module.exports = downloadFile;
+export default downloadFile;

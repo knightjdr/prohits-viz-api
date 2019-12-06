@@ -1,13 +1,13 @@
-const path = require('path');
+import path from 'path';
 
-const createDirs = require('../../../helpers/files/create-dirs');
-const createStatus = require('../../../helpers/status/create-status');
-const deleteDirs = require('../../../helpers/files/delete-dir');
-const getWorkDir = require('../../../helpers/files/create-work-dir');
-const moveFiles = require('../../../helpers/files/move-files');
-const spawnTask = require('./spawn');
-const validateDotplot = require('./validate');
-const updateStatus = require('../../../helpers/status/update-status');
+import createDirs from '../../../helpers/files/create-dirs.js';
+import createStatus from '../../../helpers/status/create-status.js';
+import deleteDirs from '../../../helpers/files/delete-dir.js';
+import getWorkDir from '../../../helpers/files/create-work-dir.js';
+import moveFiles from '../../../helpers/files/move-files.js';
+import spawnTask from './spawn.js';
+import validateDotplot from './validate.js';
+import updateStatus from '../../../helpers/status/update-status.js';
 
 /* This task will
 **  1. Create a working directory
@@ -56,4 +56,4 @@ const createDotplot = (req, res) => (
   })
 );
 
-module.exports = createDotplot;
+export default createDotplot;

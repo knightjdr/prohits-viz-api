@@ -1,13 +1,13 @@
-const checkUserAuth = require('../helpers/third-party/check-user-auth');
+import checkUserAuth from '../helpers/third-party/check-user-auth.js';
 
-const forbidden = (res) => {
+export const forbidden = (res) => {
   res.status(403);
   res.end();
 };
 
 const urlRE = new RegExp(/third-party/);
 
-const isRequestAuthorized = (req, sessions, sessionID) => (
+export const isRequestAuthorized = (req, sessions, sessionID) => (
   req.method === 'GET'
   || (
     req.method === 'POST'
@@ -22,7 +22,7 @@ const isRequestAuthorized = (req, sessions, sessionID) => (
 /* This middleware checks to see if the endpoint is being accessed by
 ** a user connected to prohits-viz.org. It uses their socket ID to confirm.
 ** API endpoints at /api/third-pary are validated using their apikey. */
-const isOriginAuthorized = async (req, res, next) => {
+export const isOriginAuthorized = async (req, res, next) => {
   const sessionID = req.get('session');
   const sessions = req.app.get('sessions');
   if (isRequestAuthorized(req, sessions, sessionID)) {
@@ -30,10 +30,4 @@ const isOriginAuthorized = async (req, res, next) => {
   } else {
     forbidden(res);
   }
-};
-
-module.exports = {
-  forbidden,
-  isOriginAuthorized,
-  isRequestAuthorized,
 };

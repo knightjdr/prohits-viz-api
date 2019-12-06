@@ -1,9 +1,8 @@
-const criteria = require('./criteria');
+import annotations from './annotations';
+import criteria from './criteria';
 
 jest.mock('./criteria');
 criteria.isNumber.mockReturnValue(12);
-
-const annotations = require('./annotations');
 
 describe('Validate annotations object', () => {
   it('should return null when null', () => {

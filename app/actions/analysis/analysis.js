@@ -1,5 +1,5 @@
-const dotplot = require('./dotplot/create');
-const gprofiler = require('./gprofiler/gprofiler');
+import dotplot from './dotplot/create.js';
+import gprofiler from './gprofiler/gprofiler.js';
 
 const analysis = (req, res) => {
   const { type } = req.params;
@@ -17,4 +17,4 @@ const analysis = (req, res) => {
   }
 };
 
-module.exports = analysis;
+export default analysis;

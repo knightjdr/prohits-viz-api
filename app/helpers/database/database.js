@@ -1,4 +1,4 @@
-const init = require('./init');
+import init from './init.js';
 
 const database = {
   client: null,
@@ -17,4 +17,4 @@ const database = {
   },
 };
 
-module.exports = database;
+export default database;

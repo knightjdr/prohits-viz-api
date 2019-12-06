@@ -1,4 +1,4 @@
-const validate = require('./validate-type');
+import validate from './validate-type';
 
 describe('Validate array', () => {
   it('should return a valid array', () => {

@@ -1,7 +1,7 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
+import fs from 'fs';
 
-const deleteDirs = require('./delete-dir');
+import deleteDirs from './delete-dir';
 
 // Must mock file system after requires are complete.
 mockFS({

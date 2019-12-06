@@ -5,4 +5,4 @@ const isObject = value => (
   && value !== null
 );
 
-module.exports = isObject;
+export default isObject;

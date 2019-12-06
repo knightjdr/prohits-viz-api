@@ -1,8 +1,8 @@
-const addBackground = require('./add-background');
-const addSources = require('./add-sources');
-const { accepted, defaultGprofilerSettings } = require('./default-settings');
+import addBackground from './add-background.js';
+import addSources from './add-sources.js';
+import { accepted, defaultGprofilerSettings } from './default-settings.js';
 
-const validate = require('../../../../utils/validate-type');
+import validate from '../../../../utils/validate-type.js';
 
 const validateAgainstArray = (value, arr, defaultValue) => (
   arr.includes(value) ? value : defaultValue
@@ -47,4 +47,4 @@ const validateGprofiler = (body) => {
   };
 };
 
-module.exports = validateGprofiler;
+export default validateGprofiler;

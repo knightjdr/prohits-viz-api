@@ -1,6 +1,7 @@
-const addMongoDate = require('./add-mongo-date');
-const idToDate = require('./id-to-date');
-const { ObjectID } = require('mongodb');
+import { ObjectID } from 'mongodb';
+
+import addMongoDate from './add-mongo-date';
+import idToDate from './id-to-date';
 
 // mock idToDate
 jest.mock('./id-to-date');

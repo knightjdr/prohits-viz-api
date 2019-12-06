@@ -1,7 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const config = require('../../../config/config');
-const shouldResolve = require('./should-resolve');
+import config from '../../../config/config.js';
+import shouldResolve from './should-resolve.js';
 
 const exists = tasks => (
   new Promise((resolve) => {
@@ -19,4 +19,4 @@ const exists = tasks => (
   })
 );
 
-module.exports = exists;
+export default exists;

@@ -1,4 +1,5 @@
-const writefile = require('../files/write-file');
+import createStatus from './create-status';
+import writefile from '../files/write-file';
 
 jest.mock('../files/write-file');
 
@@ -7,8 +8,6 @@ const DATE_TO_USE = new Date();
 const origDate = Date;
 global.Date = jest.fn(() => DATE_TO_USE);
 global.Date.toISOString = origDate.toISOString;
-
-const createStatus = require('./create-status');
 
 const body = {
   analysisType: 'dotplot',

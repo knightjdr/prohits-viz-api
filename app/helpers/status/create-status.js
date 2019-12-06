@@ -1,4 +1,4 @@
-const writeFile = require('../files/write-file');
+import writeFile from '../files/write-file.js';
 
 const createStatus = async (workDir, body, primaryFile) => {
   try {
@@ -16,4 +16,4 @@ const createStatus = async (workDir, body, primaryFile) => {
   }
 };
 
-module.exports = createStatus;
+export default createStatus;

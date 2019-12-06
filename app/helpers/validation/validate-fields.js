@@ -13,4 +13,4 @@ const validateFields = (fields, data, validator) => (
   }, {})
 );
 
-module.exports = validateFields;
+export default validateFields;

@@ -1,4 +1,4 @@
-const parseBackground = require('./parse-background');
+import parseBackground from './parse-background';
 
 describe('Parse pasted text', () => {
   it('should convert text to lowercase string, ignoring commas, newlines, quotes and newlines', () => {

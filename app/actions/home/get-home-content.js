@@ -1,5 +1,5 @@
-const addMongoDate = require('../../utils/add-mongo-date');
-const find = require('../../helpers/database/find');
+import addMongoDate from '../../utils/add-mongo-date.js';
+import find from '../../helpers/database/find.js';
 
 const parseDocuments = documents => ({
   news: addMongoDate.arr(documents[0]),
@@ -23,4 +23,4 @@ const getHomeContent = async (req, res) => {
   }
 };
 
-module.exports = getHomeContent;
+export default getHomeContent;

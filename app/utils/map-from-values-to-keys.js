@@ -5,4 +5,4 @@ const mapFromValuesToKeys = obj => (
   }), {})
 );
 
-module.exports = mapFromValuesToKeys;
+export default mapFromValuesToKeys;

@@ -1,6 +1,6 @@
-const archive = require('./archive');
-const config = require('../../../config/config');
-const stat = require('./stat');
+import archive from './archive.js';
+import config from '../../../config/config.js';
+import stat from './stat.js';
 
 const downloadFolder = (req, res) => {
   const { folder } = req.params;
@@ -13,4 +13,4 @@ const downloadFolder = (req, res) => {
     });
 };
 
-module.exports = downloadFolder;
+export default downloadFolder;

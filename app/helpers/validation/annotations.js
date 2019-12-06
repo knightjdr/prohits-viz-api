@@ -1,4 +1,4 @@
-const criteria = require('./criteria');
+import criteria from './criteria.js';
 
 const defaults = {
   fontSize: 12,
@@ -38,4 +38,4 @@ const annotations = (data) => {
   return null;
 };
 
-module.exports = annotations;
+export default annotations;

@@ -1,7 +1,7 @@
-const arrSortByKey = require('../../../utils/arr-sort-by-key');
-const exists = require('./task-exists');
-const status = require('./task-status');
-const updateStatus = require('./update-status');
+import arrSortByKey from '../../../utils/arr-sort-by-key';
+import exists from './task-exists';
+import status from './task-status';
+import updateStatus from './update-status';
 
 jest.mock('../../../utils/arr-sort-by-key');
 arrSortByKey.mockReturnValue([

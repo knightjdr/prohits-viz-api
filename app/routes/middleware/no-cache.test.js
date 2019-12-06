@@ -1,4 +1,4 @@
-const noCache = require('./no-cache');
+import noCache from './no-cache';
 
 const next = jest.fn();
 const res = {

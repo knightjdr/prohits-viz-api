@@ -1,17 +1,17 @@
-const bodyparser = require('body-parser');
-const compression = require('compression');
-const express = require('express');
-const http = require('http');
+import bodyparser from 'body-parser';
+import compression from 'compression';
+import express from 'express';
+import http from 'http';
 
-const clearFolders = require('./helpers/clear/clear-folders');
-const config = require('./config/config');
-const configureCORS = require('./config/configure-cors');
-const configureSocket = require('./config/configure-socket');
-const database = require('./helpers/database/database');
-const logger = require('./helpers/logging/logger');
-const setResponseHeaders = require('./config/set-response-headers');
-const router = require('./routes/router');
-const { isOriginAuthorized } = require('./config/authorized-origin');
+import clearFolders from './helpers/clear/clear-folders.js';
+import config from './config/config.js';
+import configureCORS from './config/configure-cors.js';
+import configureSocket from './config/configure-socket.js';
+import database from './helpers/database/database.js';
+import logger from './helpers/logging/logger.js';
+import setResponseHeaders from './config/set-response-headers.js';
+import router from './routes/router.js';
+import { isOriginAuthorized } from './config/authorized-origin.js';
 
 const initApp = () => {
   const app = express();

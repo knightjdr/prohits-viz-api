@@ -1,4 +1,4 @@
-const validColor = require('./valid-color');
+import validColor from './valid-color.js';
 
 const defaults = {
   color: '#000000',
@@ -38,4 +38,4 @@ const markers = (data) => {
   return null;
 };
 
-module.exports = markers;
+export default markers;

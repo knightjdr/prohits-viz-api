@@ -1,9 +1,9 @@
-const addPath = require('./add-path');
-const config = require('../../config/config');
-const filterOutFoldersToIgnore = require('./filter-folders');
-const getOldFiles = require('./get-old-files');
-const listFiles = require('../../helpers/files/list-files');
-const removeFiles = require('./remove');
+import addPath from './add-path.js';
+import config from '../../config/config.js';
+import filterOutFoldersToIgnore from './filter-folders.js';
+import getOldFiles from './get-old-files.js';
+import listFiles from '../../helpers/files/list-files.js';
+import removeFiles from './remove.js';
 
 const clearFolders = async () => {
   const files = await Promise.all([
@@ -17,4 +17,4 @@ const clearFolders = async () => {
   await removeFiles(filesToRemove);
 };
 
-module.exports = clearFolders;
+export default clearFolders;

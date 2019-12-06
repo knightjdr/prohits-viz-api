@@ -1,7 +1,7 @@
-const writeFile = require('../files/write-file');
+import writeFile from '../files/write-file.js';
 
 const writeDataFile = async (workDir, data) => {
   await writeFile(`${workDir}/data.json`, JSON.stringify(data));
 };
 
-module.exports = writeDataFile;
+export default writeDataFile;

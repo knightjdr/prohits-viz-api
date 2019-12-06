@@ -1,5 +1,5 @@
-const config = require('../../config/config');
-const database = require('./database');
+import config from '../../config/config.js';
+import database from './database.js';
 
 const find = async (collection, queryObject = {}, returnObject = {}, sorted = {}, limit = 0) => {
   try {
@@ -14,4 +14,4 @@ const find = async (collection, queryObject = {}, returnObject = {}, sorted = {}
   }
 };
 
-module.exports = find;
+export default find;

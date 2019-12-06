@@ -1,5 +1,5 @@
-const validateDotplot = require('./dotplot');
-const validateHeatmap = require('./heatmap');
+import validateDotplot from './dotplot.js';
+import validateHeatmap from './heatmap.js';
 
 const validateImageType = {
   dotplot: validateDotplot,
@@ -10,4 +10,4 @@ const getValidator = imageType => (
   validateImageType[imageType] ? validateImageType[imageType] : () => {}
 );
 
-module.exports = getValidator;
+export default getValidator;

@@ -1,4 +1,4 @@
-const removeDuplicates = require('./remove-duplicates');
+import removeDuplicates from './remove-duplicates';
 
 describe('Remove array duplicates', () => {
   it('should return an array of unique items', () => {

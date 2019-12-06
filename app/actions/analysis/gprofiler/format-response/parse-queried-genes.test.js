@@ -1,4 +1,4 @@
-const parseQueriedGenes = require('./parse-queried-genes');
+import parseQueriedGenes from './parse-queried-genes';
 
 describe('Parse gene names queried at g:Profiler', () => {
   it('should return an array of genes in the query order', () => {

@@ -1,4 +1,4 @@
-const addSources = require('./add-sources');
+import addSources from './add-sources';
 
 describe('Add Gprofiler annotatation sources', () => {
   it('should add requested sources and unspecified', () => {

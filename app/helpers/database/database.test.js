@@ -1,5 +1,5 @@
-const database = require('./database');
-const init = require('./init');
+import database from './database';
+import init from './init';
 
 // mock init
 jest.mock('./init');

@@ -1,10 +1,11 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
+import fs from 'fs';
 
-const deleteDirs = require('../../../helpers/files/delete-dir');
-const getWorkDir = require('../../../helpers/files/create-work-dir');
-const spawnTask = require('./spawn');
-const validateDotplot = require('./validate');
+import createDotplot from './create';
+import deleteDirs from '../../../helpers/files/delete-dir';
+import getWorkDir from '../../../helpers/files/create-work-dir';
+import spawnTask from './spawn';
+import validateDotplot from './validate';
 
 jest.mock('../../../helpers/files/delete-dir');
 deleteDirs.mockResolvedValue();
@@ -15,8 +16,6 @@ jest.mock('./validate');
 validateDotplot.mockReturnValue({
   anaylsisType: 'dotplot',
 });
-
-const createDotplot = require('./create');
 
 // Mock date
 const DATE_TO_USE = new Date();

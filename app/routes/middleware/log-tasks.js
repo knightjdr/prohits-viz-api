@@ -1,5 +1,5 @@
-const insert = require('../../helpers/database/insert');
-const urlDetails = require('../../utils/url-details');
+import insert from '../../helpers/database/insert.js';
+import urlDetails from '../../utils/url-details.js';
 
 const calculateFileSize = (files) => {
   let fileSize = 0;
@@ -36,4 +36,4 @@ const logTask = (req, res, next) => {
   next();
 };
 
-module.exports = logTask;
+export default logTask;

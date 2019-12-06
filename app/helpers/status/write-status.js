@@ -1,5 +1,5 @@
-const readfile = require('../files/read-file');
-const writefile = require('../files/write-file');
+import readfile from '../files/read-file.js';
+import writefile from '../files/write-file.js';
 
 const writeStatus = async (workDir, status, files, primaryFile) => {
   try {
@@ -18,4 +18,4 @@ const writeStatus = async (workDir, status, files, primaryFile) => {
   }
 };
 
-module.exports = writeStatus;
+export default writeStatus;

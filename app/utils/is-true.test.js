@@ -1,4 +1,4 @@
-const isTrue = require('./is-true');
+import isTrue from './is-true';
 
 describe('isTrue', () => {
   it('should return true for "true"', () => {

@@ -1,6 +1,6 @@
-const addMongoDate = require('../../utils/add-mongo-date');
-const findOne = require('../../helpers/database/find-one');
-const getArticle = require('./get-article');
+import addMongoDate from '../../utils/add-mongo-date';
+import findOne from '../../helpers/database/find-one';
+import getArticle from './get-article';
 
 jest.mock('../../utils/add-mongo-date');
 jest.mock('../../helpers/database/find-one');

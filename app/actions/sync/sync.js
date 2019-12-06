@@ -1,8 +1,8 @@
-const createDirectories = require('../../helpers/files/create-dirs');
-const spawnProcess = require('./spawn');
-const validate = require('../../helpers/validation/validate');
-const writeDataFile = require('../../helpers/export/write-data-file');
-const createWorkDir = require('../../helpers/files/create-work-dir');
+import createDirectories from '../../helpers/files/create-dirs.js';
+import spawnProcess from './spawn.js';
+import validate from '../../helpers/validation/validate.js';
+import writeDataFile from '../../helpers/export/write-data-file.js';
+import createWorkDir from '../../helpers/files/create-work-dir.js';
 
 const sync = async (req, res) => {
   const { socket } = res.locals;
@@ -22,4 +22,4 @@ const sync = async (req, res) => {
   }
 };
 
-module.exports = sync;
+export default sync;

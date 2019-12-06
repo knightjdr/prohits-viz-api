@@ -4,4 +4,4 @@ const getSocket = (req, res, next) => {
   next();
 };
 
-module.exports = getSocket;
+export default getSocket;

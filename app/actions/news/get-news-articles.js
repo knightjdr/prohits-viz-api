@@ -1,5 +1,5 @@
-const addMongoDate = require('../../utils/add-mongo-date');
-const find = require('../../helpers/database/find');
+import addMongoDate from '../../utils/add-mongo-date.js';
+import find from '../../helpers/database/find.js';
 
 const getNewsArticles = async (req, res) => {
   try {
@@ -11,4 +11,4 @@ const getNewsArticles = async (req, res) => {
   }
 };
 
-module.exports = getNewsArticles;
+export default getNewsArticles;

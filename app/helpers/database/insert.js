@@ -1,5 +1,5 @@
-const config = require('../../config/config');
-const database = require('./database');
+import config from '../../config/config.js';
+import database from './database.js';
 
 const insert = async (collection, insertObject = {}) => {
   try {
@@ -12,4 +12,4 @@ const insert = async (collection, insertObject = {}) => {
   }
 };
 
-module.exports = insert;
+export default insert;

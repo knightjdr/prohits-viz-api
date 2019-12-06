@@ -1,4 +1,6 @@
-const { ObjectID } = require('mongodb');
+import mongodb from 'mongodb';
+
+const { ObjectID } = mongodb;
 
 const getTimestamp = id => (
   typeof id === 'string'
@@ -11,4 +13,4 @@ const idToDate = id => (
   ObjectID.isValid(id) ? getTimestamp(id) : null
 );
 
-module.exports = idToDate;
+export default idToDate;

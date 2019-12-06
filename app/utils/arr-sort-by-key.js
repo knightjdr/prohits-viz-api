@@ -1,5 +1,5 @@
-const deepCopy = require('./deep-copy');
-const customSort = require('./sort');
+import deepCopy from './deep-copy.js';
+import customSort from './sort.js';
 
 const validateArguments = (arr, key) => (
   Array.isArray(arr) &&
@@ -24,4 +24,5 @@ const arrSortByKey = (arr, key, dir = 'asc', type = 'string') => {
   ));
   return sortArray;
 };
-module.exports = arrSortByKey;
+
+export default arrSortByKey;

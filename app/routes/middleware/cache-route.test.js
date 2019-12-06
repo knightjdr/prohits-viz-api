@@ -1,6 +1,6 @@
-const mcache = require('memory-cache');
+import mcache from 'memory-cache';
 
-const cacheRoute = require('./cache-route');
+import cacheRoute from './cache-route';
 
 jest.mock('memory-cache', () => ({
   get: jest.fn(),

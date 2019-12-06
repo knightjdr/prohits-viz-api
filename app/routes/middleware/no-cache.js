@@ -5,4 +5,4 @@ const nocache = (req, res, next) => {
   next();
 };
 
-module.exports = nocache;
+export default nocache;

@@ -1,4 +1,4 @@
-const archiver = require('archiver');
+import archiver from 'archiver';
 
 const archive = (folder, res) => (
   new Promise((resolve, reject) => {
@@ -16,4 +16,4 @@ const archive = (folder, res) => (
   })
 );
 
-module.exports = archive;
+export default archive;

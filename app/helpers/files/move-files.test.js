@@ -1,11 +1,12 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
+import fs from 'fs';
+
+
+import moveFiles from './move-files';
 
 jest.mock('../../config/config', () => ({
   samplefile: 'sample-files/analysis-file.txt',
 }));
-
-const moveFiles = require('./move-files');
 
 // Must mock file system after requires are complete.
 mockFS({

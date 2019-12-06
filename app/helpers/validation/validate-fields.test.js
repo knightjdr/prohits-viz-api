@@ -1,4 +1,4 @@
-const iterator = require('./iterator');
+import iterator from './iterator';
 
 const validator = jest.fn();
 validator.mockReturnValueOnce(20);

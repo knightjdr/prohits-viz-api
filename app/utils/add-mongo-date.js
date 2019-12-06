@@ -1,4 +1,4 @@
-const idToDate = require('./id-to-date');
+import idToDate from './id-to-date.js';
 
 const createDate = id => (
   id ? idToDate(id) : null
@@ -33,4 +33,4 @@ const addMongoDate = {
   obj: obj => addToObject(obj),
 };
 
-module.exports = addMongoDate;
+export default addMongoDate;

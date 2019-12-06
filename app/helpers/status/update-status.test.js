@@ -1,5 +1,7 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
+import fs from 'fs';
+
+import updateStatus from './update-status';
 
 // Mock date
 const DATE_TO_USE = new Date();
@@ -7,8 +9,6 @@ const origDate = Date;
 global.Date = jest.fn(() => DATE_TO_USE);
 global.Date.now = origDate.now;
 global.Date.toISOString = origDate.toISOString;
-
-const updateStatus = require('./update-status');
 
 const status = {
   analysis: 'dotplot',

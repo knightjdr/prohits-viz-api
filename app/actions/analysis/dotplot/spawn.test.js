@@ -1,6 +1,7 @@
-const mockSpawn = require('mock-spawn');
+import mockSpawn from 'mock-spawn';
 
-const flags = require('./spawn-flags');
+import flags from './spawn-flags';
+import spawnProcess from './spawn';
 
 jest.mock('./spawn-flags');
 flags.mockReturnValue(['-arg1']);
@@ -8,8 +9,6 @@ flags.mockReturnValue(['-arg1']);
 // Mock spawn.
 const testSpawn = mockSpawn();
 require('child_process').spawn = testSpawn;
-
-const spawnProcess = require('./spawn');
 
 const form = {
   field: 1,

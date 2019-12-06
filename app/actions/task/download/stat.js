@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const stat = (file, res) => (
   new Promise((resolve) => {
@@ -14,4 +14,4 @@ const stat = (file, res) => (
   })
 );
 
-module.exports = stat;
+export default stat;

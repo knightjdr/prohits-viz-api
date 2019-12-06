@@ -1,8 +1,7 @@
-const validHex = require('../../utils/valid-hex');
+import validColor from './valid-color';
+import validHex from '../../utils/valid-hex';
 
 jest.mock('../../utils/valid-hex');
-
-const validColor = require('./valid-color');
 
 describe('Valid image color', () => {
   it('should return default when color is not valid', () => {

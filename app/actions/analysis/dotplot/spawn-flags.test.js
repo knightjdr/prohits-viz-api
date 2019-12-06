@@ -1,4 +1,4 @@
-const flags = require('./spawn-flags');
+import flags from './spawn-flags';
 
 const obj = {
   flag1: 'a',

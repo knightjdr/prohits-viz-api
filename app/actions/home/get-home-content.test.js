@@ -1,6 +1,6 @@
-const addMongoDate = require('../../utils/add-mongo-date');
-const find = require('../../helpers/database/find');
-const getHomeContent = require('./get-home-content');
+import addMongoDate from '../../utils/add-mongo-date';
+import find from '../../helpers/database/find';
+import getHomeContent from './get-home-content';
 
 jest.mock('../../utils/add-mongo-date');
 jest.mock('../../helpers/database/find');

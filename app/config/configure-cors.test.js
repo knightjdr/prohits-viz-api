@@ -1,5 +1,5 @@
-const cors = require('cors');
-const configureCORS = require('./configure-cors');
+import cors from 'cors';
+import configureCORS from './configure-cors';
 
 jest.mock('cors');
 

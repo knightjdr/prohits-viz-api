@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 const isExpired = (stat) => {
   const currTime = new Date();
@@ -33,4 +33,4 @@ const getOldFiles = async (files) => {
   return reduceToExpiredFiles(stats, files);
 };
 
-module.exports = getOldFiles;
+export default getOldFiles;

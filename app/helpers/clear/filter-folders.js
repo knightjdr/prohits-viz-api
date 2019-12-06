@@ -1,4 +1,4 @@
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 const filterOutFoldersToIgnore = files => (
   files.filter(file => (
@@ -6,4 +6,4 @@ const filterOutFoldersToIgnore = files => (
   ))
 );
 
-module.exports = filterOutFoldersToIgnore;
+export default filterOutFoldersToIgnore;

@@ -1,10 +1,10 @@
-const createDotplot = require('./dotplot/create');
-const gprofiler = require('./gprofiler/gprofiler');
+import createDotplot from './dotplot/create';
+import gprofiler from './gprofiler/gprofiler';
+
+import analysis from './analysis';
 
 jest.mock('./dotplot/create');
 jest.mock('./gprofiler/gprofiler');
-
-const analysis = require('./analysis');
 
 const res = {
   end: jest.fn(),

@@ -1,6 +1,8 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
-const nanoid = require('nanoid');
+import mockFS from 'mock-fs';
+import fs from 'fs';
+import nanoid from 'nanoid';
+
+import createWorkDir from './create-work-dir';
 
 jest.mock('../../config/config', () => ({
   workDir: 'tmp/',
@@ -8,12 +10,9 @@ jest.mock('../../config/config', () => ({
 jest.mock('nanoid');
 nanoid.mockReturnValue('id');
 
-const createWorkDir = require('./create-work-dir');
-
 afterAll(() => {
   mockFS.restore();
 });
-
 
 describe('Working directory generation', () => {
   describe('when succesfully generated', () => {

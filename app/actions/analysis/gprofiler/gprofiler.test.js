@@ -1,7 +1,7 @@
-const emitAction = require('./emit-action');
-const fetch = require('../../../utils/fetch');
-const gprofiler = require('./gprofiler');
-const validateGprofilerOptions = require('./validation/validate');
+import emitAction from './emit-action';
+import fetch from '../../../utils/fetch';
+import gprofiler from './gprofiler';
+import validateGprofilerOptions from './validation/validate';
 
 jest.mock('./emit-action');
 jest.mock('../../../utils/fetch');

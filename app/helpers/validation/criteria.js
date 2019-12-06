@@ -12,4 +12,4 @@ const criteria = {
   ),
 };
 
-module.exports = criteria;
+export default criteria;

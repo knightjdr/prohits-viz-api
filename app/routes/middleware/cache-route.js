@@ -1,6 +1,6 @@
-const mcache = require('memory-cache');
+import mcache from 'memory-cache';
 
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 const defineCacheKey = req => (
   `__express__${req.originalUrl || req.url}`
@@ -34,4 +34,4 @@ const cache = (req, res, next) => {
   sendOrGenerateContent(res, next, cachedContent);
 };
 
-module.exports = cache;
+export default cache;

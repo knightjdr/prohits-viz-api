@@ -1,4 +1,4 @@
-const parseResults = require('./parse-results');
+import parseResults from './parse-results';
 
 describe('Parse g:Profiler results', () => {
   it('should return an array mapping results to object with correct fields', () => {

@@ -11,4 +11,4 @@ const columns = (data) => {
   return new Error('Invalid column array');
 };
 
-module.exports = columns;
+export default columns;

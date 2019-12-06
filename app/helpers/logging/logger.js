@@ -1,6 +1,6 @@
-const winston = require('winston');
+import winston from 'winston';
 
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 // set env and log directory
 const env = process.env.NODE_ENV || 'development';
@@ -43,4 +43,4 @@ if (env === 'development') {
   });
 }
 
-module.exports = Logger;
+export default Logger;

@@ -3,4 +3,4 @@ const validHex = (hex) => {
   return regex.test(hex);
 };
 
-module.exports = validHex;
+export default validHex;

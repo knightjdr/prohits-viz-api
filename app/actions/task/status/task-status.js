@@ -1,7 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const config = require('../../../config/config');
-const shouldResolve = require('./should-resolve');
+import config from '../../../config/config.js';
+import shouldResolve from './should-resolve.js';
 
 const status = tasks => (
   new Promise((resolve) => {
@@ -36,4 +36,4 @@ const status = tasks => (
   })
 );
 
-module.exports = status;
+export default status;

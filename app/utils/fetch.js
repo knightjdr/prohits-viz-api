@@ -47,4 +47,4 @@ const fetchWrapper = async (url, options = {}) => {
   }
 };
 
-module.exports = fetchWrapper;
+export default fetchWrapper;

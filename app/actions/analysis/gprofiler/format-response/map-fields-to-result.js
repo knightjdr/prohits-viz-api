@@ -15,4 +15,4 @@ const mapFieldsToResult = result => (
   }), {})
 );
 
-module.exports = mapFieldsToResult;
+export default mapFieldsToResult;

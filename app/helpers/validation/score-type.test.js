@@ -1,8 +1,8 @@
+import scoreType from './score-type';
+
 jest.mock('./parameters', () => ({
   scoreTypes: ['lte', 'gte'],
 }));
-
-const scoreType = require('./score-type');
 
 describe('Validate score type', () => {
   it('should return default when null', () => {

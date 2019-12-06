@@ -1,13 +1,12 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
+import fs from 'fs';
 
-const validate = require('./validate');
-const createWorkDir = require('../../../helpers/files/create-work-dir');
+import createWorkDir from '../../../helpers/files/create-work-dir';
+import handleVizFile from './handle-viz-file';
+import validate from './validate';
 
 jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('./validate');
-
-const handleVizFile = require('./handle-viz-file');
 
 const mockedFileSystem = {
   tmp: {

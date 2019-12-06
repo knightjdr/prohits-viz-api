@@ -1,6 +1,6 @@
-const criteria = require('../criteria');
-const validateHeatmap = require('./heatmap');
-const { settings } = require('../default-values');
+import criteria from '../criteria.js';
+import validateHeatmap from './heatmap.js';
+import { settings } from '../default-values.js';
 
 const validateDotplot = (type, value, defaultSettings = settings.dotplot) => {
   const validatedResult = validateHeatmap(type, value);
@@ -23,4 +23,4 @@ const validateDotplot = (type, value, defaultSettings = settings.dotplot) => {
   return validatedResult;
 };
 
-module.exports = validateDotplot;
+export default validateDotplot;

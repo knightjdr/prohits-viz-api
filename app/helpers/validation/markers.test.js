@@ -1,9 +1,8 @@
-const validColor = require('./valid-color');
+import markers from './markers';
+import validColor from './valid-color';
 
 jest.mock('./valid-color');
 validColor.mockReturnValue('#000000');
-
-const markers = require('./markers');
 
 describe('Validate markers object', () => {
   it('should return null when null', () => {

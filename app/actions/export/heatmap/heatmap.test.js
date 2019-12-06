@@ -1,9 +1,10 @@
-const createDirectories = require('../../../helpers/files/create-dirs');
-const spawnProcess = require('./spawn');
-const validate = require('../../../helpers/validation/validate');
-const createWorkDir = require('../../../helpers/files/create-work-dir');
-const writeDataFile = require('../../../helpers/export/write-data-file');
-const writeDownloadFile = require('../../../helpers/export/write-download-file');
+import createDirectories from '../../../helpers/files/create-dirs';
+import createWorkDir from '../../../helpers/files/create-work-dir';
+import heatmap from './heatmap';
+import spawnProcess from './spawn';
+import validate from '../../../helpers/validation/validate';
+import writeDataFile from '../../../helpers/export/write-data-file';
+import writeDownloadFile from '../../../helpers/export/write-download-file';
 
 jest.mock('../../../helpers/files/create-dirs');
 createDirectories.mockResolvedValue();
@@ -15,8 +16,6 @@ jest.mock('../../../helpers/export/write-data-file');
 writeDataFile.mockResolvedValue();
 jest.mock('../../../helpers/export/write-download-file');
 writeDownloadFile.mockResolvedValue();
-
-const heatmap = require('./heatmap');
 
 const req = {
   body: {

@@ -3,4 +3,4 @@ const messages = {
   notSupported: 'The requested method is not supported',
 };
 
-module.exports = messages;
+export default messages;

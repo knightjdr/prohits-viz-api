@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const filterFiles = (files, ext) => (
   ext ? files.filter(file => file.endsWith(ext)) : files
@@ -17,4 +17,4 @@ const listFiles = (dir, fileExt = '') => (
   })
 );
 
-module.exports = listFiles;
+export default listFiles;

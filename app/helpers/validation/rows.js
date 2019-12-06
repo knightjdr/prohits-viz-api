@@ -4,9 +4,7 @@ dotplots:
 
 rows = [
   {
-    data: [
-      { ratio: 1, score: 0, value: 50 },
-    ],
+    data: [{ ratio: 1, score: 0, value: 50 }],
     name: 'name',
   },
 ];
@@ -15,9 +13,7 @@ heatmaps:
 
 rows = [
   {
-    data: [
-      { value: 50 },
-    ],
+    data: [{ value: 50 }],
     name: 'name',
   },
 ];
@@ -27,29 +23,19 @@ assuming other will conform to the formats used.
 */
 const rows = (imageType, rowData) => {
   if (
-    rowData
-    && Array.isArray(rowData)
-    && rowData.length > 0
-    && rowData[0] // Ensures not null as null is an object.
-    && typeof rowData[0] === 'object'
-    && rowData[0].name
-    && typeof rowData[0].name === 'string'
-    && rowData[0].data
-    && Array.isArray(rowData[0].data)
-    && rowData[0].data[0]
-    && typeof rowData[0].data[0] === 'object'
-    && rowData[0].data[0].value
+    rowData?.[0]?.name
+    && rowData?.[0]?.data?.[0]?.value
     && (
-      imageType === 'heatmap' ||
-      (
-        Object.prototype.hasOwnProperty.call(rowData[0].data[0], 'ratio') &&
-        Object.prototype.hasOwnProperty.call(rowData[0].data[0], 'score')
+      imageType === 'heatmap'
+      || (
+        rowData?.[0]?.data?.[0].ratio
+        && rowData?.[0]?.data?.[0].score
       )
     )
   ) {
     return rowData;
   }
-  return new Error('Invalid row array');
+  throw new Error('Invalid row array');
 };
 
-module.exports = rows;
+export default rows;

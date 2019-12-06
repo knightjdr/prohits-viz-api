@@ -1,4 +1,4 @@
-const formatResponse = require('./format-response/format-response');
+import formatResponse from './format-response/format-response.js';
 
 const emitAction = (socket, analysisName, error, response) => {
   const action = {
@@ -14,4 +14,4 @@ const emitAction = (socket, analysisName, error, response) => {
   socket.emit('action', action);
 };
 
-module.exports = emitAction;
+export default emitAction;

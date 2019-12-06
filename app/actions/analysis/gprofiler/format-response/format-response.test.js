@@ -1,4 +1,4 @@
-const formatResponse = require('./format-response');
+import formatResponse from './format-response';
 
 describe('Format response from g:Profiler', () => {
   it('should parse and format results', () => {

@@ -1,13 +1,13 @@
-const mockSpawn = require('mock-spawn');
-const rimraf = require('rimraf');
+import mockSpawn from 'mock-spawn';
+import rimraf from 'rimraf';
+
+import spawnProcess from './spawn';
 
 jest.mock('rimraf');
 
 // Mock spawn.
 const testSpawn = mockSpawn();
 require('child_process').spawn = testSpawn;
-
-const spawnProcess = require('./spawn');
 
 const socket = {
   emit: jest.fn(),

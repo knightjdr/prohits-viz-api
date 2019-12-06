@@ -12,4 +12,4 @@ const flags = obj => (
   }, [])
 );
 
-module.exports = flags;
+export default flags;

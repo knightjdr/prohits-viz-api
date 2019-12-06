@@ -1,16 +1,16 @@
-const multer = require('multer');
+import multer from 'multer';
 
-const config = require('../config/config');
-const getSocket = require('./middleware/get-socket');
-const logTasks = require('./middleware/log-tasks');
-const messages = require('./route-messages');
-const noCacheClient = require('./middleware/no-cache');
+import config from '../config/config.js';
+import getSocket from './middleware/get-socket.js';
+import logTasks from './middleware/log-tasks.js';
+import messages from './route-messages.js';
+import noCacheClient from './middleware/no-cache.js';
 
-const analysis = require('../actions/analysis/analysis');
-const exportImage = require('../actions/export/export');
-const handleVizFile = require('../actions/third-party/viz/handle-viz-file');
-const sync = require('../actions/sync/sync');
-const updateStatus = require('../actions/task/status/update-status');
+import analysis from '../actions/analysis/analysis.js';
+import exportImage from '../actions/export/export.js';
+import handleVizFile from '../actions/third-party/viz/handle-viz-file.js';
+import sync from '../actions/sync/sync.js';
+import updateStatus from '../actions/task/status/update-status.js';
 
 const upload = multer({ dest: config.upload });
 
@@ -26,4 +26,4 @@ const post = (router) => {
   });
 };
 
-module.exports = post;
+export default post;

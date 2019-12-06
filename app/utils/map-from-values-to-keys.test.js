@@ -1,4 +1,4 @@
-const mapFromValuesToKeys = require('./map-from-values-to-keys');
+import mapFromValuesToKeys from './map-from-values-to-keys';
 
 describe('Map an objects values to keys', () => {
   it('should map values to keys', () => {

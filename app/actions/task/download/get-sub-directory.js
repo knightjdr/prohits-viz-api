@@ -18,4 +18,4 @@ const getSubDirectory = (filename) => {
   }
 };
 
-module.exports = getSubDirectory;
+export default getSubDirectory;

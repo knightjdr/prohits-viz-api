@@ -1,5 +1,5 @@
-const criteria = require('../criteria');
-const { settings } = require('../default-values');
+import criteria from '../criteria.js';
+import { settings } from '../default-values.js';
 
 const validateHeatmap = (type, value, defaultSettings = settings.heatmap) => {
   switch (type) {

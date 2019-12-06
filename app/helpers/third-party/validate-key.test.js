@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 
-const validate = require('./validate-key');
+import validate from './validate-key';
 
 describe('Validate password', () => {
   it('should validate when password matches hash', async () => {

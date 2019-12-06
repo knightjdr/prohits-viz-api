@@ -1,7 +1,7 @@
-const fs = require('fs');
-const mockFS = require('mock-fs');
+import fs from 'fs';
+import mockFS from 'mock-fs';
 
-const writeDownloadFile = require('./write-download-file');
+import writeDownloadFile from './write-download-file';
 
 mockFS({
   tmp: { workDir: {} },

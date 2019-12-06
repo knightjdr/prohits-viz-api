@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 
-const get = require('./routes-get');
-const messages = require('./route-messages');
-const post = require('./routes-post');
+import get from './routes-get.js';
+import messages from './route-messages.js';
+import post from './routes-post.js';
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.use((req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

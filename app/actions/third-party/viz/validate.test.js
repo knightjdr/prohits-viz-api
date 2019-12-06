@@ -1,4 +1,4 @@
-const ValidateJson = require('./validate');
+import ValidateJson from './validate';
 
 describe('Validate Json', () => {
   it('should return error for invalid JSON', () => {

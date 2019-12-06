@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const mkdir = dir => (
   new Promise((resolve, reject) => {
@@ -12,4 +12,4 @@ const mkdir = dir => (
   })
 );
 
-module.exports = mkdir;
+export default mkdir;

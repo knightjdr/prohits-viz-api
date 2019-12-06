@@ -1,4 +1,4 @@
-const validHex = require('./valid-hex');
+import validHex from './valid-hex';
 
 describe('Valid hex color', () => {
   it('should return true for valid 6 digit hex colors', () => {

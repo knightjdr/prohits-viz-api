@@ -1,4 +1,4 @@
-const addPath = require('./add-path');
+import addPath from './add-path';
 
 describe('Add path', () => {
   it('should add path to file names and merge into an array', () => {

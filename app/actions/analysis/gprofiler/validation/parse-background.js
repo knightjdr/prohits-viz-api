@@ -1,4 +1,4 @@
-const removeDuplicates = require('../../../../utils/remove-duplicates');
+import removeDuplicates from '../../../../utils/remove-duplicates.js';
 
 const reQuotes = new RegExp(/['"]+/g);
 const reSeparator = new RegExp(/[\s,]+/);
@@ -8,4 +8,4 @@ const parseBackground = (text) => {
   return removeDuplicates(arr.map(string => string.toLowerCase().replace(reQuotes, '')));
 };
 
-module.exports = parseBackground;
+export default parseBackground;

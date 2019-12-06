@@ -1,4 +1,4 @@
-const heatmap = require('./heatmap/heatmap');
+import heatmap from './heatmap/heatmap.js';
 
 const exportContent = (req, res) => {
   const { type } = req.params;
@@ -16,4 +16,4 @@ const exportContent = (req, res) => {
   }
 };
 
-module.exports = exportContent;
+export default exportContent;

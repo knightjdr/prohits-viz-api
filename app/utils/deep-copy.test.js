@@ -1,5 +1,6 @@
-const deepCopy = require('./deep-copy');
-const md5 = require('md5');
+import md5 from 'md5';
+
+import deepCopy from './deep-copy';
 
 const testValues = {
   arr: [1, 'a', null],

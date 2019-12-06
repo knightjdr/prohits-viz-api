@@ -1,6 +1,7 @@
-const exists = require('../../helpers/download/exists');
-const readFile = require('./read-file');
-const readStream = require('../../helpers/download/read-stream');
+import downloadFile from './download-file';
+import exists from '../../helpers/download/exists';
+import readFile from './read-file';
+import readStream from '../../helpers/download/read-stream';
 
 jest.mock('../../config/config', () => ({
   workDir: 'tmp/',
@@ -11,8 +12,6 @@ jest.mock('./read-file');
 readFile.mockResolvedValue('svg/file.svg');
 jest.mock('../../helpers/download/read-stream');
 readStream.mockResolvedValue();
-
-const downloadFile = require('./download-file');
 
 const req = {
   params: { folder: 'folder' },

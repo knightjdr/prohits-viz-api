@@ -1,4 +1,4 @@
-const colorSchemes = ['blue', 'blueRed', 'blueYellow', 'green', 'greyscale', 'red', 'yellowB'];
+export const colorSchemes = ['blue', 'blueRed', 'blueYellow', 'green', 'greyscale', 'red', 'yellowB'];
 
 const common = {
   heatmap: {
@@ -13,7 +13,9 @@ const common = {
   },
 };
 
-const settings = {
+export const scoreTypes = ['gte', 'lte'];
+
+export const settings = {
   dotplot: {
     ...common.heatmap,
     edgeColor: 'blueBlack',
@@ -26,12 +28,4 @@ const settings = {
     ...common.heatmap,
     imageType: 'heatmap',
   },
-};
-
-const scoreTypes = ['gte', 'lte'];
-
-module.exports = {
-  colorSchemes,
-  scoreTypes,
-  settings,
 };

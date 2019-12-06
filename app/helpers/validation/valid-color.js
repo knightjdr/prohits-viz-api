@@ -1,7 +1,7 @@
-const validHex = require('../../utils/valid-hex');
+import validHex from '../../utils/valid-hex.js';
 
 const validColor = (color, defaultSetting) => (
   validHex(color) ? color : defaultSetting
 );
 
-module.exports = validColor;
+export default validColor;

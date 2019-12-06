@@ -3,4 +3,4 @@ const addPath = (config, files) => ([
   ...files[1].map(file => `${config.upload}${file}`),
 ]);
 
-module.exports = addPath;
+export default addPath;

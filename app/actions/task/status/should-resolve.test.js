@@ -1,4 +1,4 @@
-const shouldResolve = require('./should-resolve');
+import shouldResolve from './should-resolve';
 
 const resolve = jest.fn();
 

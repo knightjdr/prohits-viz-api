@@ -1,6 +1,6 @@
-const mockFS = require('mock-fs');
+import mockFS from 'mock-fs';
 
-const taskExists = require('./task-exists');
+import taskExists from './task-exists';
 
 jest.mock('../../../config/config', () => ({
   workDir: 'tmp/',

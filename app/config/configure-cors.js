@@ -1,4 +1,4 @@
-const cors = require('cors');
+import cors from 'cors';
 
 const headers = ['Accept', 'Apikey', 'Authorization', 'Content-Type', 'Session'];
 
@@ -11,4 +11,4 @@ const configureCORS = () => (
   })
 );
 
-module.exports = configureCORS;
+export default configureCORS;

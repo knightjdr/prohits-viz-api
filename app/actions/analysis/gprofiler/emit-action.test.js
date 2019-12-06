@@ -1,5 +1,5 @@
-const emitAction = require('./emit-action');
-const formatResponse = require('./format-response/format-response');
+import emitAction from './emit-action';
+import formatResponse from './format-response/format-response';
 
 jest.mock('./format-response/format-response');
 

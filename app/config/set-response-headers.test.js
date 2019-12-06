@@ -1,4 +1,4 @@
-const setResponseHeaders = require('./set-response-headers');
+import setResponseHeaders from './set-response-headers';
 
 const next = jest.fn();
 const res = {

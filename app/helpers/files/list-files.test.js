@@ -1,5 +1,5 @@
-const mockFS = require('mock-fs');
-const listFiles = require('./list-files');
+import mockFS from 'mock-fs';
+import listFiles from './list-files';
 
 // Must mock file system after requires are complete.
 mockFS({

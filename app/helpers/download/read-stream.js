@@ -1,7 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const extToMimeType = require('./ext-to-mime-type');
-const removeFile = require('../files/remove-file');
+import extToMimeType from './ext-to-mime-type.js';
+import removeFile from '../files/remove-file.js';
 
 const removeFileOnCompletion = (workdir, shouldRemoveFile) => {
   if (shouldRemoveFile) {
@@ -26,4 +26,4 @@ const readStream = (workdir, file, res, shouldRemoveFile = false) => (
   })
 );
 
-module.exports = readStream;
+export default readStream;

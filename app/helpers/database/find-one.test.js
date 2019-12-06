@@ -1,7 +1,7 @@
-const mongodb = require('mongo-mock');
+import mongodb from 'mongo-mock';
 
-const database = require('./database');
-const findOne = require('./find-one');
+import database from './database';
+import findOne from './find-one';
 
 jest.mock('../../config/config', () => (
   {

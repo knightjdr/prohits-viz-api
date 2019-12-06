@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const exists = (file, res) => (
   new Promise((resolve) => {
@@ -14,4 +14,4 @@ const exists = (file, res) => (
   })
 );
 
-module.exports = exists;
+export default exists;

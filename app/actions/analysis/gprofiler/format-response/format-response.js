@@ -1,5 +1,5 @@
-const parseQueriedGenes = require('./parse-queried-genes');
-const parseResults = require('./parse-results');
+import parseQueriedGenes from './parse-queried-genes.js';
+import parseResults from './parse-results.js';
 
 const formatResponse = (response) => {
   const queriedGenes = parseQueriedGenes(response.data.meta.genes_metadata);
@@ -11,4 +11,4 @@ const formatResponse = (response) => {
   };
 };
 
-module.exports = formatResponse;
+export default formatResponse;

@@ -1,4 +1,4 @@
-const defaultValues = require('./default-values');
+import defaultValues from './default-values.js';
 
 const { colorSchemes } = defaultValues;
 
@@ -6,4 +6,4 @@ const color = (data, defaultSetting) => (
   data && colorSchemes.includes(data) ? data : defaultSetting
 );
 
-module.exports = color;
+export default color;

@@ -1,4 +1,4 @@
-const extToMimeType = require('./ext-to-mime-type');
+import extToMimeType from './ext-to-mime-type';
 
 describe('Name of the group', () => {
   it('should return pdf mimetype', () => {

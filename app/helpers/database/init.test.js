@@ -1,5 +1,6 @@
-const init = require('./init');
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
+
+import init from './init';
 
 const err = new Error('err');
 

@@ -1,7 +1,7 @@
-const convertToExponential = require('../../../../utils/convert-to-exponential');
-const mapFieldsToResult = require('./map-fields-to-result');
-const mapIntersectionToGenes = require('./map-intersections-to-genes');
-const { createSourceLink } = require('./create-source-link');
+import convertToExponential from '../../../../utils/convert-to-exponential.js';
+import mapFieldsToResult from './map-fields-to-result.js';
+import mapIntersectionToGenes from './map-intersections-to-genes.js';
+import { createSourceLink } from './create-source-link.js';
 
 const parseResult = (result, genes) => {
   const parsedResult = mapFieldsToResult(result);
@@ -17,4 +17,4 @@ const parseResults = (results, genes) => (
   results.map(result => parseResult(result, genes))
 );
 
-module.exports = parseResults;
+export default parseResults;

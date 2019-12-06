@@ -1,40 +1,45 @@
-/* eslint global-require: "off" */
-const fs = require('fs');
+import fs from 'fs';
+import mockFS from 'mock-fs';
+
+import Logger from './logger';
+
+process.env.NODE_ENV = 'production';
 
 // expected messages
 const messages = {
   output: {
-    combined: /\d+\/\d+\/\d+, \d+:\d+:\d+ \wM - error: test\n\d+\/\d+\/\d+, \d+:\d+:\d+ \wM - info: test/,
-    error: /\d+\/\d+\/\d+, \d+:\d+:\d+ \wM - error: test/,
+    combined: /\d+-\d+-\d+, \d+:\d+:\d+ [apm.]+ - error: test\n\d+-\d+-\d+, \d+:\d+:\d+ [apm.]+ - info: test/,
+    error: /\d+-\d+-\d+, \d+:\d+:\d+ [apm.]+ - error: test/,
   },
 };
 
 // need a short delay after logging before checking tests
 const promiseDelay = () => (
   new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 500);
+    setTimeout(() => { resolve(); }, 500);
   })
 );
 
+mockFS({
+  logs: {},
+});
+
 afterAll(() => {
-  fs.unlinkSync('logs/test-combined.log');
-  fs.unlinkSync('logs/test-error.log');
+  mockFS.restore();
+});
+
+afterAll(() => {
+  mockFS.restore();
 });
 
 describe('Logging', () => {
   describe('in production', () => {
-    let Logger;
-
     beforeAll(() => {
       jest.mock('../../config/config', () => (
         {
           logPrefix: 'test-',
         }
       ));
-      process.env.NODE_ENV = 'production';
-      Logger = require('./logger');
       Logger.error('test');
       Logger.info('test');
     });

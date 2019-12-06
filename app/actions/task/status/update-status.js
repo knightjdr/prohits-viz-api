@@ -1,6 +1,6 @@
-const arrSortByKey = require('../../../utils/arr-sort-by-key');
-const exists = require('./task-exists');
-const status = require('./task-status');
+import arrSortByKey from '../../../utils/arr-sort-by-key.js';
+import exists from './task-exists.js';
+import status from './task-status.js';
 
 /* Get status of specified tasks. First checks
 ** to make sure task folder exists, then grabs the
@@ -21,4 +21,4 @@ const updateStatus = (req, res) => {
     });
 };
 
-module.exports = updateStatus;
+export default updateStatus;

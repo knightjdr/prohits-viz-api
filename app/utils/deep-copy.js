@@ -5,4 +5,4 @@ const deepCopy = (arr) => {
   return JSON.parse(JSON.stringify(arr));
 };
 
-module.exports = deepCopy;
+export default deepCopy;

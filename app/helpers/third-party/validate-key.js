@@ -1,6 +1,6 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
-const isObject = require('../../utils/is-object');
+import isObject from '../../utils/is-object.js';
 
 const validateKey = (match, password) => {
   if (!match || !isObject(match)) {
@@ -19,4 +19,4 @@ const validateKey = (match, password) => {
   return calculatedHash === hash;
 };
 
-module.exports = validateKey;
+export default validateKey;

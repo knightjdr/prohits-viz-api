@@ -1,6 +1,6 @@
-const idToDate = require('./id-to-date');
-const { ObjectID } = require('mongodb');
+import { ObjectID } from 'mongodb';
 
+import idToDate from './id-to-date';
 
 describe('convert mongoDB _id to date', () => {
   it('should return null when date is invalid', () => {

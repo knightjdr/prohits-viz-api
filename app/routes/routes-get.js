@@ -1,13 +1,13 @@
-const cacheAPI = require('./middleware/cache-route');
-const messages = require('./route-messages');
-const noCacheClient = require('./middleware/no-cache');
+import cacheAPI from './middleware/cache-route.js';
+import messages from './route-messages.js';
+import noCacheClient from './middleware/no-cache.js';
 
-const downloadFile = require('../actions/file/download-file');
-const downloadFolder = require('../actions/task/download/download-folder');
-const downloadTaskFile = require('../actions/task/download/download-task-file');
-const getArticle = require('../actions/news/get-article');
-const getHomeContent = require('../actions/home/get-home-content');
-const getNewsArticles = require('../actions/news/get-news-articles');
+import downloadFile from '../actions/file/download-file.js';
+import downloadFolder from '../actions/task/download/download-folder.js';
+import downloadTaskFile from '../actions/task/download/download-task-file.js';
+import getArticle from '../actions/news/get-article.js';
+import getHomeContent from '../actions/home/get-home-content.js';
+import getNewsArticles from '../actions/news/get-news-articles.js';
 
 const get = (router) => {
   router.get('/file/:folder', downloadFile);
@@ -21,4 +21,4 @@ const get = (router) => {
   });
 };
 
-module.exports = get;
+export default get;

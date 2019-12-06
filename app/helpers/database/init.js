@@ -1,5 +1,8 @@
-const { MongoClient } = require('mongodb');
-const config = require('../../config/config');
+import mongodb from 'mongodb';
+
+import config from '../../config/config.js';
+
+const { MongoClient } = mongodb;
 
 const initializeDatabase = async () => {
   const dbParams = `${config.database.user}:${config.database.pw}@localhost:27017/${config.database.name}`;
@@ -11,4 +14,4 @@ const initializeDatabase = async () => {
   };
 };
 
-module.exports = initializeDatabase;
+export default initializeDatabase;

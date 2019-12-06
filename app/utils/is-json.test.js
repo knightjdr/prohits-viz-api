@@ -1,4 +1,4 @@
-const isJson = require('./is-json');
+import isJson from './is-json';
 
 describe('IsJson', () => {
   it('should return json for valid json string', () => {

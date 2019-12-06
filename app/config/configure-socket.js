@@ -1,4 +1,4 @@
-const socketIo = require('socket.io');
+import socketIo from 'socket.io';
 
 const addSession = (app, id) => {
   app.set('sessions', [...app.get('sessions'), id]);
@@ -30,4 +30,4 @@ const configureSocket = (app, server) => {
   app.set('socketio', io);
 };
 
-module.exports = configureSocket;
+export default configureSocket;

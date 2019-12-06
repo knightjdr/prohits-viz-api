@@ -1,4 +1,4 @@
-const rimraf = require('rimraf');
+import rimraf from 'rimraf';
 
 const removeFile = file => (
   new Promise((resolve, reject) => {
@@ -11,4 +11,4 @@ const removeFile = file => (
   })
 );
 
-module.exports = removeFile;
+export default removeFile;

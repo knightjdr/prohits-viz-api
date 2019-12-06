@@ -1,5 +1,5 @@
-const { defaultGprofilerSettings } = require('./default-settings');
-const validateGprofiler = require('./validate');
+import { defaultGprofilerSettings } from './default-settings';
+import validateGprofiler from './validate';
 
 describe('Validate Gprofiler fetch options', () => {
   it('should validate acceptable parameters', () => {

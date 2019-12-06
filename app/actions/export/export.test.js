@@ -1,8 +1,7 @@
-const heatmap = require('./heatmap/heatmap');
+import exportImage from './export';
+import heatmap from './heatmap/heatmap';
 
 jest.mock('./heatmap/heatmap');
-
-const exportImage = require('./export');
 
 const res = {
   end: jest.fn(),

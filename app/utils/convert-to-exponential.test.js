@@ -1,4 +1,4 @@
-const convertToExponential = require('./convert-to-exponential');
+import convertToExponential from './convert-to-exponential';
 
 describe('Convert a number to exponential form', () => {
   it('should convert to three decimals by default', () => {

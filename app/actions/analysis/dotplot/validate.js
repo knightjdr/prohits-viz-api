@@ -1,4 +1,4 @@
-const isTrue = require('../../../utils/is-true');
+import isTrue from '../../../utils/is-true.js';
 
 const acceptedFields = [
   'abundance',
@@ -94,4 +94,4 @@ const validate = (form, files) => {
   return validated;
 };
 
-module.exports = validate;
+export default validate;

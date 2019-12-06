@@ -1,7 +1,7 @@
-const fs = require('fs');
-const nanoid = require('nanoid');
+import fs from 'fs';
+import nanoid from 'nanoid';
 
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 const createWorkDir = () => (
   new Promise((resolve, reject) => {
@@ -17,4 +17,4 @@ const createWorkDir = () => (
   })
 );
 
-module.exports = createWorkDir;
+export default createWorkDir;

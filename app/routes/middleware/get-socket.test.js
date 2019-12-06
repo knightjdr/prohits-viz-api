@@ -1,4 +1,4 @@
-const getSocket = require('./get-socket');
+import getSocket from './get-socket';
 
 describe('Get socket', () => {
   it('should add object to res locals', () => {

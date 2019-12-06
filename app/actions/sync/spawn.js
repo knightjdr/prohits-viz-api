@@ -1,6 +1,6 @@
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
-const removeFile = require('../../helpers/files/remove-file');
+import removeFile from '../../helpers/files/remove-file.js';
 
 const emitAction = (socket, snapshotID, url) => {
   socket.emit('action', { snapshotID, syncedImage: url, type: 'MINIMAP_SYNCHED' });
@@ -43,4 +43,4 @@ const spawnProcess = (socket, workingDir, snapshotID) => (
   })
 );
 
-module.exports = spawnProcess;
+export default spawnProcess;

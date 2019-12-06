@@ -1,4 +1,4 @@
-const urlDetails = require('./url-details');
+import urlDetails from './url-details';
 
 describe('URL details', () => {
   it('should return url object when referrer available', () => {

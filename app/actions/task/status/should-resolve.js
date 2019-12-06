@@ -4,4 +4,4 @@ const shouldResolve = (curr, total, resolveTasks, resolve) => {
   }
 };
 
-module.exports = shouldResolve;
+export default shouldResolve;

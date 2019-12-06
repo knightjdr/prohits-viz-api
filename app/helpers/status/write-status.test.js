@@ -1,10 +1,10 @@
-const readfile = require('../files/read-file');
-const writefile = require('../files/write-file');
+import readfile from '../files/read-file';
+import writefile from '../files/write-file';
+
+import writeStatus from './write-status';
 
 jest.mock('../files/read-file');
 jest.mock('../files/write-file');
-
-const writeStatus = require('./write-status');
 
 const json = '{"primaryFile": "dotplot", "status": "running"}';
 

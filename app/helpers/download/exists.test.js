@@ -1,6 +1,6 @@
-const mockFS = require('mock-fs');
+import mockFS from 'mock-fs';
 
-const exists = require('./exists');
+import exists from './exists';
 
 // Must mock file system after requires are complete.
 mockFS({

@@ -1,7 +1,7 @@
-const fs = require('fs');
-const mockFS = require('mock-fs');
+import fs from 'fs';
+import mockFS from 'mock-fs';
 
-const remove = require('./remove');
+import remove from './remove';
 
 const mockedFileSystem = {
   tmp: {

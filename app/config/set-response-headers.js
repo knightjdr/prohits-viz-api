@@ -5,4 +5,4 @@ const setResponseHeaders = (req, res, next) => {
   next();
 };
 
-module.exports = setResponseHeaders;
+export default setResponseHeaders;

@@ -4,4 +4,4 @@ const mapIntersectionToGenes = (intersections, genes) => (
   ), [])
 );
 
-module.exports = mapIntersectionToGenes;
+export default mapIntersectionToGenes;

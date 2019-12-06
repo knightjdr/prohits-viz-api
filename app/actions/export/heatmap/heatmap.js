@@ -1,9 +1,9 @@
-const createDirectories = require('../../../helpers/files/create-dirs');
-const spawnProcess = require('./spawn');
-const validate = require('../../../helpers/validation/validate');
-const createWorkDir = require('../../../helpers/files/create-work-dir');
-const writeDataFile = require('../../../helpers/export/write-data-file');
-const writeDownloadFile = require('../../../helpers/export/write-download-file');
+import createDirectories from '../../../helpers/files/create-dirs.js';
+import spawnProcess from './spawn.js';
+import validate from '../../../helpers/validation/validate.js';
+import createWorkDir from '../../../helpers/files/create-work-dir.js';
+import writeDataFile from '../../../helpers/export/write-data-file.js';
+import writeDownloadFile from '../../../helpers/export/write-download-file.js';
 
 /* Generate a heatmap or dotplot for a data set. First, a working directory
 ** is created, and then sub directories for storing generated images, a file
@@ -35,4 +35,4 @@ const heatmap = (req, res) => {
   }
 };
 
-module.exports = heatmap;
+export default heatmap;
