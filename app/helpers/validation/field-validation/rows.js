@@ -1,3 +1,5 @@
+import isNumber from '../../../utils/is-number.js';
+
 /* A row array should be of the form:
 
 dotplots:
@@ -24,17 +26,18 @@ assuming other will conform to the formats used.
 const validateRows = (imageType, rowData) => {
   if (
     rowData?.[0]?.name
-    && rowData?.[0]?.data?.[0]?.value
+    && isNumber(rowData?.[0]?.data?.[0]?.value)
     && (
       imageType === 'heatmap'
       || (
-        rowData?.[0]?.data?.[0].ratio
-        && rowData?.[0]?.data?.[0].score
+        isNumber(rowData?.[0]?.data?.[0].ratio)
+        && isNumber(rowData?.[0]?.data?.[0].score)
       )
     )
   ) {
     return rowData;
   }
+
   throw new Error('Invalid row array');
 };
 
