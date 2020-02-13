@@ -7,7 +7,7 @@ import { settings } from '../default-values.js';
 const validateDotplot = (type, value, defaultSettings = settings.dotplot) => {
   const validatedResult = validateHeatmap(type, value, defaultSettings);
 
-  if (!validatedResult) {
+  if (validatedResult === null) {
     switch (type) {
       case 'edgeColor':
         return validateColor(value, defaultSettings.edgeColor);

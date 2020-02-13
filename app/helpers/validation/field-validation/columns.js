@@ -1,5 +1,17 @@
+export const validateColumnOrder = (data) => {
+  if (
+    Array.isArray(data)
+    && data.length > 0
+    && data.every(datum => typeof datum === 'number')
+  ) {
+    return data;
+  }
+
+  throw new Error('Invalid column order array');
+};
+
 /* Columns should be an array of strings or numbers */
-const validateColumns = (data) => {
+export const validateColumns = (data) => {
   if (
     Array.isArray(data)
     && data.length > 0
@@ -8,7 +20,5 @@ const validateColumns = (data) => {
     return data;
   }
 
-  throw new Error('Invalid column array');
+  throw new Error('Invalid column DB array');
 };
-
-export default validateColumns;

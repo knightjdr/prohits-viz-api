@@ -2,12 +2,12 @@ import validateDotplot from './dotplot';
 
 describe('Dotplot validation', () => {
   it('should validate common heat map field', () => {
-    const rows = [
+    const rowDB = [
       { data: [{ ratio: 0.5, score: 0.01, value: 0.5 }], name: 'a' },
       { data: [{ ratio: 1, score: 0.05, value: 0.8 }], name: 'b' },
     ];
-    const expected = rows;
-    expect(validateDotplot('rows', rows)).toEqual(expected);
+    const expected = rowDB;
+    expect(validateDotplot('rowDB', rowDB)).toEqual(expected);
   });
 
   describe('edge color', () => {

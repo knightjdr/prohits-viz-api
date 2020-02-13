@@ -2,12 +2,14 @@ const commonFields = {
   heatmap: [
     'abundanceCap',
     'annotations',
-    'columns',
+    'columnDB',
+    'columnOrder',
     'fillColor',
     'invertColor',
     'markers',
     'minAbundance',
-    'rows',
+    'rowDB',
+    'rowOrder',
   ],
 };
 

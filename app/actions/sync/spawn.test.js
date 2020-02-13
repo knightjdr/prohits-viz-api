@@ -1,11 +1,15 @@
 import mockSpawn from 'mock-spawn';
-import rimraf from 'rimraf';
 
+import removeFile from '../../helpers/files/remove-file.js';
 import spawnProcess from './spawn';
 
-jest.mock('rimraf');
+jest.mock('../../helpers/files/remove-file.js');
+jest.mock('fs', () => ({
+  promises: {
+    readFile: () => 'dGVzdA==',
+  },
+}));
 
-// Mock spawn.
 const testSpawn = mockSpawn();
 require('child_process').spawn = testSpawn;
 
@@ -21,13 +25,14 @@ describe('Spawning the sync process', () => {
       await spawnProcess(socket, 'testdir/', 'id');
     });
 
+
     it('should call socket emit with url written to stdout', () => {
-      expect(socket.emit).toHaveBeenCalledWith('action', { snapshotID: 'id', syncedImage: 'url', type: 'MINIMAP_SYNCHED' });
+      const uri = 'data:image/png;base64,dGVzdA==';
+      expect(socket.emit).toHaveBeenCalledWith('action', { snapshotID: 'id', syncedImage: uri, type: 'MINIMAP_SYNCHED' });
     });
 
-    it('should call rimraf to remove testdir', () => {
-      expect(rimraf).toHaveBeenCalled();
-      expect(rimraf.mock.calls[0][0]).toBe('testdir/');
+    it('should call removeFile to remove testdir', () => {
+      expect(removeFile).toHaveBeenCalledWith('testdir/');
     });
   });
 

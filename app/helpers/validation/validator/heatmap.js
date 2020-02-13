@@ -1,10 +1,10 @@
 import criteria from '../field-validation/criteria.js';
 import validateAnnotations from '../field-validation/annotations.js';
 import validateColor from '../field-validation/color.js';
-import validateColumns from '../field-validation/columns.js';
 import validateMarkers from '../field-validation/markers.js';
-import validateRows from '../field-validation/rows.js';
 import { settings } from '../default-values.js';
+import { validateColumnOrder, validateColumns } from '../field-validation/columns.js';
+import { validateRowOrder, validateRows } from '../field-validation/rows.js';
 
 const validateHeatmap = (type, value, defaultSettings = settings.heatmap) => {
   switch (type) {
@@ -12,8 +12,10 @@ const validateHeatmap = (type, value, defaultSettings = settings.heatmap) => {
       return criteria.isNumber(value, defaultSettings.abundanceCap);
     case 'annotations':
       return validateAnnotations(value);
-    case 'columns':
+    case 'columnDB':
       return validateColumns(value);
+    case 'columnOrder':
+      return validateColumnOrder(value);
     case 'fillColor':
       return validateColor(value, defaultSettings.fillColor);
     case 'invertColor':
@@ -22,8 +24,10 @@ const validateHeatmap = (type, value, defaultSettings = settings.heatmap) => {
       return validateMarkers(value);
     case 'minAbundance':
       return criteria.isNumber(value, defaultSettings.minAbundance);
-    case 'rows':
+    case 'rowDB':
       return validateRows(defaultSettings.imageType, value);
+    case 'rowOrder':
+      return validateRowOrder(value);
     default:
       return null;
   }

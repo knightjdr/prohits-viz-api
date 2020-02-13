@@ -13,7 +13,8 @@ describe('Dotplot/Heatmap validation interface', () => {
           },
         },
       },
-      columns: ['a', 'b', 'c'],
+      columnDB: ['a', 'b', 'c'],
+      columnOrder: [0, 1, 2],
       edgeColor: 'blue',
       fillColor: 'red',
       invertColor: true,
@@ -30,10 +31,11 @@ describe('Dotplot/Heatmap validation interface', () => {
       },
       minAbundance: 5,
       primaryFilter: 0.01,
-      rows: [
+      rowDB: [
         { data: [{ ratio: 0.5, score: 0.01, value: 0.5 }], name: 'a' },
         { data: [{ ratio: 1, score: 0.05, value: 0.8 }], name: 'b' },
       ],
+      rowOrder: [0, 1],
       scoreType: 'lte',
       secondaryFilter: 0.05,
       xLabel: 'x',

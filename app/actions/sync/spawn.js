@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs';
 import { spawn } from 'child_process';
 
 import removeFile from '../../helpers/files/remove-file.js';
@@ -9,32 +10,23 @@ const emitAction = (socket, snapshotID, url) => {
 const initializeSpawn = workingDir => (
   spawn(
     'pvsync',
-    ['-json', 'data.json'],
+    ['--file', 'data.json'],
     { cwd: workingDir },
   )
 );
-
-const uri = {
-  data: '',
-  appendData: function append(data) {
-    this.data += data.toString();
-  },
-};
 
 const spawnProcess = (socket, workingDir, snapshotID) => (
   new Promise((resolve, reject) => {
     const syncProcess = initializeSpawn(workingDir);
 
-    syncProcess.stdout.on('data', (data) => {
-      uri.appendData(data);
-    });
     syncProcess.on('error', (err) => {
       reject(err);
     });
-    syncProcess.on('exit', (err) => {
+    syncProcess.on('exit', async (err) => {
       if (!err) {
-        emitAction(socket, snapshotID, uri.data);
-        removeFile(workingDir);
+        const uri = await fs.readFile(`${workingDir}/minimap/minimap.png`);
+        emitAction(socket, snapshotID, `data:image/png;base64,${uri.toString('base64')}`);
+        await removeFile(workingDir);
         resolve();
       } else {
         reject(err);

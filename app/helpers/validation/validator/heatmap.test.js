@@ -29,10 +29,16 @@ describe('Heatmap validation', () => {
     expect(validateHeatmap('annotations', annotations)).toEqual(expected);
   });
 
-  it('should validate columns', () => {
-    const columns = ['a', 'b', 'c'];
-    const expected = columns;
-    expect(validateHeatmap('columns', columns)).toEqual(expected);
+  it('should validate column DB', () => {
+    const columnDB = ['a', 'b', 'c'];
+    const expected = columnDB;
+    expect(validateHeatmap('columnDB', columnDB)).toEqual(expected);
+  });
+
+  it('should validate column order', () => {
+    const columnOrder = [1, 2, 3];
+    const expected = columnOrder;
+    expect(validateHeatmap('columnOrder', columnOrder)).toEqual(expected);
   });
 
   describe('fill color', () => {
@@ -91,13 +97,19 @@ describe('Heatmap validation', () => {
     });
   });
 
-  it('should validate rows', () => {
-    const rows = [
+  it('should validate row DB', () => {
+    const rowDB = [
       { data: [{ value: 0.5 }], name: 'a' },
       { data: [{ value: 0.8 }], name: 'b' },
     ];
-    const expected = rows;
-    expect(validateHeatmap('rows', rows)).toEqual(expected);
+    const expected = rowDB;
+    expect(validateHeatmap('rowDB', rowDB)).toEqual(expected);
+  });
+
+  it('should validate row order', () => {
+    const rowOrder = [1, 2, 3];
+    const expected = rowOrder;
+    expect(validateHeatmap('rowOrder', rowOrder)).toEqual(expected);
   });
 
   it('should return null for unrecognized field', () => {

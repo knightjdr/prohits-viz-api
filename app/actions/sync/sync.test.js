@@ -1,3 +1,4 @@
+import constructJSON from './construct-json';
 import createDirectories from '../../helpers/files/create-dirs';
 import createWorkDir from '../../helpers/files/create-work-dir';
 import spawnProcess from './spawn';
@@ -5,6 +6,7 @@ import sync from './sync';
 import validate from '../../helpers/validation/validate';
 import writeDataFile from '../../helpers/export/write-data-file';
 
+jest.mock('./construct-json');
 jest.mock('../../helpers/files/create-dirs');
 createDirectories.mockResolvedValue();
 jest.mock('./spawn');
@@ -37,6 +39,7 @@ describe('Syncing minimap', () => {
     beforeAll(async () => {
       res.send.mockClear();
       validate.mockReturnValue('data');
+      constructJSON.mockReturnValue('data');
       createWorkDir.mockResolvedValue('workdir');
       sync(req, res);
       await sleep(200);
@@ -67,6 +70,7 @@ describe('Syncing minimap', () => {
     beforeAll(async () => {
       res.send.mockClear();
       validate.mockReturnValue({ data: 'data' });
+      constructJSON.mockReturnValue({ data: 'data' });
       createWorkDir.mockRejectedValue();
       sync(req, res);
       await sleep(200);

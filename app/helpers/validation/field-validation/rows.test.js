@@ -1,8 +1,8 @@
-import validateRows from './rows';
-
-const err = new Error('Invalid row array');
+import { validateRowOrder, validateRows } from './rows';
 
 describe('Validate rows object', () => {
+  const err = new Error('Invalid row DB array');
+
   it('should return error when falsy', () => {
     const data = undefined;
     expect(() => { validateRows('heatmap', data); }).toThrowError(err);
@@ -83,5 +83,34 @@ describe('Validate rows object', () => {
       const data = [{ data: [{ ratio: 0.5, score: 0.01, value: 1 }], name: 'a' }];
       expect(validateRows('dotplot', data)).toEqual(data);
     });
+  });
+});
+
+describe('Validate row order', () => {
+  const err = new Error('Invalid row order array');
+
+  it('should return error when falsy', () => {
+    const data = undefined;
+    expect(() => { validateRowOrder(data); }).toThrowError(err);
+  });
+
+  it('should return error when not an array', () => {
+    const data = {};
+    expect(() => { validateRowOrder(data); }).toThrowError(err);
+  });
+
+  it('should return error when array is empty', () => {
+    const data = [];
+    expect(() => { validateRowOrder(data); }).toThrowError(err);
+  });
+
+  it('should return error when array elements are not all numbers', () => {
+    const data = ['a', 'b', 2];
+    expect(() => { validateRowOrder(data); }).toThrowError(err);
+  });
+
+  it('should array when valid', () => {
+    const data = [1, 2, 3];
+    expect(validateRowOrder(data)).toEqual(data);
   });
 });

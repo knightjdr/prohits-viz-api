@@ -23,7 +23,7 @@ rows = [
 I only test the first row and data items for performance reasons,
 assuming other will conform to the formats used.
 */
-const validateRows = (imageType, rowData) => {
+export const validateRows = (imageType, rowData) => {
   if (
     rowData?.[0]?.name
     && isNumber(rowData?.[0]?.data?.[0]?.value)
@@ -38,7 +38,17 @@ const validateRows = (imageType, rowData) => {
     return rowData;
   }
 
-  throw new Error('Invalid row array');
+  throw new Error('Invalid row DB array');
 };
 
-export default validateRows;
+export const validateRowOrder = (data) => {
+  if (
+    Array.isArray(data)
+    && data.length > 0
+    && data.every(datum => typeof datum === 'number')
+  ) {
+    return data;
+  }
+
+  throw new Error('Invalid row order array');
+};
