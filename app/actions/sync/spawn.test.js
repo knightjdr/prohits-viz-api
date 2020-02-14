@@ -1,7 +1,7 @@
 import mockSpawn from 'mock-spawn';
 
 import removeFile from '../../helpers/files/remove-file.js';
-import spawnProcess from './spawn';
+import spawnProcess from './spawn.js';
 
 jest.mock('../../helpers/files/remove-file.js');
 jest.mock('fs', () => ({

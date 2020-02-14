@@ -1,28 +1,30 @@
-import path from 'path';
 import { spawn } from 'child_process';
 
-// Spawn Golang task to generate image for saving.
-const spawnProcess = (socket, workingDir, outputType) => (
+const spawnProcess = (socket, options) => (
   new Promise((resolve, reject) => {
     const syncProcess = spawn(
       'pvexport',
       [
-        '-json',
+        '--file',
         'data.json',
-        '-type',
-        outputType,
+        '--font',
+        options.font,
+        '--format',
+        options.format,
+        '--imageType',
+        options.imageType,
       ],
       {
-        cwd: workingDir,
+        cwd: options.workingDir,
       },
     );
+
     syncProcess.on('error', (err) => {
       reject(err);
     });
     syncProcess.on('exit', (err) => {
       if (!err) {
-        const task = path.basename(workingDir);
-        socket.emit('action', { task, type: 'SAVED_IMAGE' });
+        socket.emit('action', { file: options.targetFile, type: 'DOWNLOAD_EXPORT_IMAGE' });
         resolve();
       }
       reject(err);

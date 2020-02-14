@@ -1,5 +1,5 @@
-import exportImage from './export';
-import heatmap from './heatmap/heatmap';
+import exportImage from './export.js';
+import heatmap from './heatmap/heatmap.js';
 
 jest.mock('./heatmap/heatmap');
 
@@ -9,10 +9,10 @@ const res = {
 };
 
 describe('Exporting image', () => {
-  it('should call heatmap function when request param is "dotpot"', () => {
+  it('should call heatmap function when request param is "dotplot"', () => {
     heatmap.mockClear();
     const req = {
-      params: { type: 'dotplot' },
+      body: { imageType: 'dotplot' },
     };
     exportImage(req, res);
     expect(heatmap).toHaveBeenCalledWith(req, res);
@@ -21,7 +21,7 @@ describe('Exporting image', () => {
   it('should call heatmap function when request param is "heatmap"', () => {
     heatmap.mockClear();
     const req = {
-      params: { type: 'heatmap' },
+      body: { imageType: 'heatmap' },
     };
     exportImage(req, res);
     expect(heatmap).toHaveBeenCalledWith(req, res);
@@ -33,7 +33,7 @@ describe('Exporting image', () => {
       res.end.mockClear();
       res.status.mockClear();
       const req = {
-        params: { type: 'unkown' },
+        body: { imageType: 'unknown' },
       };
       exportImage(req, res);
     });

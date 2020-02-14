@@ -1,8 +1,8 @@
 import heatmap from './heatmap/heatmap.js';
 
 const exportContent = (req, res) => {
-  const { type } = req.params;
-  switch (type) {
+  const { imageType } = req.body;
+  switch (imageType) {
     case 'dotplot':
       heatmap(req, res);
       break;

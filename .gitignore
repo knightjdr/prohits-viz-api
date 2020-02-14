@@ -69,3 +69,4 @@ tmp/
 # download folders
 scripts/interactors/downloads
 /files
+app/files

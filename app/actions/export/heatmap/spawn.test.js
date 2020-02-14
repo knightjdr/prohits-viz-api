@@ -1,6 +1,6 @@
 import mockSpawn from 'mock-spawn';
 
-import spawnProcess from './spawn';
+import spawnProcess from './spawn.js';
 
 // Mock spawn.
 const testSpawn = mockSpawn();
@@ -12,24 +12,28 @@ const socket = {
 
 describe('Spawning the export process', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       socket.emit.mockClear();
       testSpawn.setDefault(testSpawn.simple(0));
-      spawnProcess(socket, 'tmp/workDir', 'svg')
-        .then(() => {
-          done();
-        });
+      const options = {
+        font: 'font.ttf',
+        format: 'svg',
+        imageType: 'heatmap',
+        targetFile: 'workDir/svg/heatmap.svg',
+        workingDir: 'workDir',
+      };
+      await spawnProcess(socket, options);
     });
 
-    it('should call socket emit with task path ', () => {
-      expect(socket.emit).toHaveBeenCalledWith('action', { task: 'workDir', type: 'SAVED_IMAGE' });
+    it('should call socket emit with download file', () => {
+      expect(socket.emit).toHaveBeenCalledWith('action', { file: 'workDir/svg/heatmap.svg', type: 'DOWNLOAD_EXPORT_IMAGE' });
     });
   });
 
   it('should reject with an error on exit', () => {
     const err = new Error('error');
     testSpawn.setDefault(testSpawn.simple(err));
-    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toEqual(err);
+    return expect(spawnProcess(socket, {})).rejects.toEqual(err);
   });
 
   it('should reject with a runtime panic error', () => {
@@ -38,6 +42,6 @@ describe('Spawning the export process', () => {
       this.emit('error', err);
       setTimeout(() => cb(8), 10);
     });
-    return expect(spawnProcess(socket, 'tmp/workDir', 'svg')).rejects.toEqual(err);
+    return expect(spawnProcess(socket, {})).rejects.toEqual(err);
   });
 });

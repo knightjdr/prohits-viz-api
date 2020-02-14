@@ -1,112 +1,97 @@
-import createDirectories from '../../../helpers/files/create-dirs';
-import createWorkDir from '../../../helpers/files/create-work-dir';
-import heatmap from './heatmap';
-import spawnProcess from './spawn';
-import validate from '../../../helpers/validation/validate';
-import writeDataFile from '../../../helpers/export/write-data-file';
-import writeDownloadFile from '../../../helpers/export/write-download-file';
+import constructJSON from '../../../helpers/export/construct-json.js';
+import createWorkDir from '../../../helpers/files/create-work-dir.js';
+import heatmap from './heatmap.js';
+import spawnProcess from './spawn.js';
+import validate from '../../../helpers/validation/validate.js';
+import writeDataFile from '../../../helpers/export/write-data-file.js';
 
-jest.mock('../../../helpers/files/create-dirs');
-createDirectories.mockResolvedValue();
+jest.mock('../../../config/config.js', () => ({ exportFont: 'font.ttf' }));
+jest.mock('../../../helpers/export/construct-json.js');
+jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('./spawn');
 spawnProcess.mockResolvedValue();
 jest.mock('../../../helpers/validation/validate');
-jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('../../../helpers/export/write-data-file');
 writeDataFile.mockResolvedValue();
-jest.mock('../../../helpers/export/write-download-file');
-writeDownloadFile.mockResolvedValue();
 
 const req = {
   body: {
+    format: 'png',
     imageType: 'dotplot',
-    outputType: 'png',
   },
 };
 const res = {
-  end: jest.fn(),
   locals: {
     socket: { emit: jest.fn() },
   },
   send: jest.fn(),
-  status: jest.fn(),
 };
-
-const sleep = ms => (
-  new Promise(resolve => setTimeout(resolve, ms))
-);
 
 describe('Exporting heatmap', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
-      res.end.mockClear();
-      validate.mockReturnValue({ data: { imageType: 'dotplot' } });
-      createWorkDir.mockResolvedValue('workdir');
-      heatmap(req, res);
-      await sleep(200);
-      done();
+    beforeAll(async () => {
+      res.send.mockClear();
+      validate.mockReturnValue({ imageType: 'dotplot' });
+      constructJSON.mockReturnValue({ imageType: 'dotplot' });
+      createWorkDir.mockResolvedValue('tmp/workdir');
+      await heatmap(req, res);
     });
 
     it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalled();
     });
 
-    it('should create working directory', () => {
+    it('should create working directory name', () => {
       expect(createWorkDir).toHaveBeenCalled();
     });
 
-    it('should create output directories', () => {
-      expect(createDirectories).toHaveBeenCalledWith('workdir', ['svg', 'png']);
-    });
-
-    it('should write request body to file', () => {
-      expect(writeDataFile).toHaveBeenCalledWith('workdir', { imageType: 'dotplot' });
-    });
-
-    it('should write download instructions to file', () => {
-      expect(writeDownloadFile).toHaveBeenCalledWith('workdir', 'dotplot', 'png');
+    it('should write export data to file', () => {
+      expect(writeDataFile).toHaveBeenCalledWith('tmp/workdir', { imageType: 'dotplot' });
     });
 
     it('should spawn child process', () => {
-      expect(spawnProcess).toHaveBeenCalledWith(res.locals.socket, 'workdir', 'png');
+      const options = {
+        font: 'font.ttf',
+        format: 'png',
+        imageType: 'dotplot',
+        targetFile: 'workdir/png/dotplot.png',
+        workingDir: 'tmp/workdir',
+      };
+      expect(spawnProcess).toHaveBeenCalledWith(res.locals.socket, options);
     });
   });
 
   describe('when there is promise rejection', () => {
-    beforeAll(async (done) => {
-      res.end.mockClear();
-      validate.mockReturnValue({ data: 'data' });
+    beforeAll(async () => {
+      res.locals.socket.emit.mockClear();
+      res.send.mockClear();
+      validate.mockReturnValue({});
+      constructJSON.mockReturnValue({});
       createWorkDir.mockRejectedValue();
-      heatmap(req, res);
-      await sleep(200);
-      done();
+      await heatmap(req, res);
     });
 
     it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalled();
     });
 
     it('should emit error event to socket', () => {
-      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { type: 'SAVE_ERROR' });
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { type: 'EXPORT_ERROR' });
     });
   });
 
   describe('when there is a validation error', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
+      res.locals.socket.emit.mockClear();
       res.send.mockClear();
-      res.status.mockClear();
-      validate.mockReturnValue({ err: new Error('test error') });
-      heatmap(req, res);
-      await sleep(200);
-      done();
-    });
-
-    it('should set status code', () => {
-      expect(res.status).toHaveBeenCalledWith(400);
+      validate.mockImplementation(() => {
+        throw new Error('test error');
+      });
+      await heatmap(req, res);
     });
 
     it('should send error response', () => {
-      expect(res.send).toHaveBeenCalledWith({ message: 'Error: test error' });
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { type: 'EXPORT_ERROR' });
     });
   });
 });

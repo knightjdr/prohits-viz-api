@@ -1,14 +1,11 @@
-import constructJSON from './construct-json';
-import createDirectories from '../../helpers/files/create-dirs';
-import createWorkDir from '../../helpers/files/create-work-dir';
-import spawnProcess from './spawn';
-import sync from './sync';
-import validate from '../../helpers/validation/validate';
-import writeDataFile from '../../helpers/export/write-data-file';
+import constructJSON from '../../helpers/export/construct-json.js';
+import createWorkDir from '../../helpers/files/create-work-dir.js';
+import spawnProcess from './spawn.js';
+import sync from './sync.js';
+import validate from '../../helpers/validation/validate.js';
+import writeDataFile from '../../helpers/export/write-data-file.js';
 
-jest.mock('./construct-json');
-jest.mock('../../helpers/files/create-dirs');
-createDirectories.mockResolvedValue();
+jest.mock('../../helpers/export/construct-json');
 jest.mock('./spawn');
 spawnProcess.mockResolvedValue();
 jest.mock('../../helpers/validation/validate');
@@ -51,10 +48,6 @@ describe('Syncing minimap', () => {
 
     it('should create working directory', () => {
       expect(createWorkDir).toHaveBeenCalled();
-    });
-
-    it('should create output directories', () => {
-      expect(createDirectories).toHaveBeenCalledWith('workdir', ['minimap']);
     });
 
     it('should write request body to file', () => {

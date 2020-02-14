@@ -5,8 +5,6 @@ const extToMimeType = (fileName) => {
   switch (ext) {
     case 'json':
       return 'application/json';
-    case 'pdf':
-      return 'application/pdf';
     case 'png':
       return 'image/png';
     case 'svg':

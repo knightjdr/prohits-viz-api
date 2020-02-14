@@ -1,9 +1,6 @@
-import extToMimeType from './ext-to-mime-type';
+import extToMimeType from './ext-to-mime-type.js';
 
 describe('Name of the group', () => {
-  it('should return pdf mimetype', () => {
-    expect(extToMimeType('path/file.pdf')).toBe('application/pdf');
-  });
 
   it('should return png mimetype', () => {
     expect(extToMimeType('path/file.png')).toBe('image/png');

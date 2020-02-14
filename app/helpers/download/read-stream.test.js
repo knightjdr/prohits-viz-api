@@ -1,17 +1,20 @@
 import mockFS from 'mock-fs';
-import rimraf from 'rimraf';
 import stream from 'stream';
 
-import extToMimeType from './ext-to-mime-type';
-import readStream from './read-stream';
+import extToMimeType from './ext-to-mime-type.js';
+import readStream, { removeFileOnCompletion } from './read-stream.js';
+import removeFile from '../files/remove-file.js';
 
+jest.mock('../../config/config.js', () => ({ workDir: 'tmp/' }));
 jest.mock('./ext-to-mime-type');
 extToMimeType.mockReturnValue('svg');
-jest.mock('rimraf');
+jest.mock('../files/remove-file.js');
 
 mockFS({
   tmp: {
-    'file.svg': 'file content',
+    aaaaaa: {
+      'file.svg': 'file content',
+    },
   },
 });
 
@@ -27,13 +30,32 @@ afterAll(() => {
   mockFS.restore();
 });
 
+describe('Remove file', () => {
+  it('should remove file', async () => {
+    removeFile.mockClear();
+    const file = 'tmp/aaaaaaa/svg/file.svg';
+    const shouldRemoveFile = true;
+    await removeFileOnCompletion(file, shouldRemoveFile);
+    expect(removeFile).toHaveBeenCalledWith('tmp/aaaaaaa');
+  });
+
+  it('should not remove file', async () => {
+    removeFile.mockClear();
+    const file = 'tmp/aaaaaaa/svg/file.svg';
+    const shouldRemoveFile = false;
+    await removeFileOnCompletion(file, shouldRemoveFile);
+    expect(removeFile).not.toHaveBeenCalled();
+  });
+});
+
 describe('Streaming a file to response', () => {
   describe('when successful', () => {
     describe('and not deleting working directory', () => {
       beforeAll(async () => {
+        removeFile.mockClear();
         res.end.mockClear();
         res.setHeader.mockClear();
-        await readStream('tmp', 'file.svg', res);
+        await readStream('tmp/aaaaaa/file.svg', res);
       });
 
       it('should set content-type to mime type', () => {
@@ -45,19 +67,20 @@ describe('Streaming a file to response', () => {
       });
 
       it('should not delete working directory', () => {
-        expect(rimraf).not.toHaveBeenCalled();
+        expect(removeFile).not.toHaveBeenCalled();
       });
     });
 
     describe('and deleting working directory', () => {
       beforeAll(async () => {
+        removeFile.mockClear();
         res.end.mockClear();
         res.setHeader.mockClear();
-        await readStream('tmp', 'file.svg', res, true);
+        await readStream('tmp/aaaaaa/file.svg', res, true);
       });
 
       it('should delete working directory', () => {
-        expect(rimraf).toHaveBeenCalledWith('tmp', expect.anything());
+        expect(removeFile).toHaveBeenCalledWith('tmp/aaaaaa');
       });
     });
   });
@@ -68,7 +91,7 @@ describe('Streaming a file to response', () => {
     beforeAll(async (done) => {
       res.end.mockClear();
       res.setHeader.mockClear();
-      readStream('tmp', 'missing.svg', res)
+      readStream('tmp/aaaaaa/missing.svg', res)
         .catch((err) => {
           error = err;
           done();
@@ -84,7 +107,7 @@ describe('Streaming a file to response', () => {
     });
 
     it('should return error', () => {
-      expect(error.toString()).toBe('Error: Could not read: missing.svg');
+      expect(error.toString()).toBe('Error: Could not read: tmp/aaaaaa/missing.svg');
     });
   });
 });

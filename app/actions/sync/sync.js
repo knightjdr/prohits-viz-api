@@ -1,5 +1,4 @@
-import constructJSON from './construct-json.js';
-import createDirectories from '../../helpers/files/create-dirs.js';
+import constructJSON from '../../helpers/export/construct-json.js';
 import spawnProcess from './spawn.js';
 import validate from '../../helpers/validation/validate.js';
 import writeDataFile from '../../helpers/export/write-data-file.js';
@@ -14,10 +13,7 @@ const sync = async (req, res) => {
     const validated = validate(req.body.imageType, req.body);
     const json = constructJSON(validated);
     const workingDir = await createWorkDir();
-    await Promise.all([
-      createDirectories(workingDir, ['minimap']),
-      writeDataFile(workingDir, json),
-    ]);
+    await writeDataFile(workingDir, json);
     await spawnProcess(socket, workingDir, snapshotID);
   } catch (error) {
     socket.emit('action', { snapshotID, type: 'SYNC_ERROR' });

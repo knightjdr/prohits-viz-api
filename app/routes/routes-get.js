@@ -10,7 +10,7 @@ import getHomeContent from '../actions/home/get-home-content.js';
 import getNewsArticles from '../actions/news/get-news-articles.js';
 
 const get = (router) => {
-  router.get('/file/:folder', downloadFile);
+  router.get('/file/:file', downloadFile);
   router.get('/home/', noCacheClient, cacheAPI, getHomeContent);
   router.get('/news/', noCacheClient, cacheAPI, getNewsArticles);
   router.get('/news/:headline', noCacheClient, cacheAPI, getArticle);

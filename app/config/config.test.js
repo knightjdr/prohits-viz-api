@@ -1,4 +1,4 @@
-import config from './config';
+import config from './config.js';
 
 describe('dev config', () => {
   test('load config based on environment', () => {
