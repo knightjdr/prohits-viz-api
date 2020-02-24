@@ -1,4 +1,21 @@
-const commonFields = {
+export const requiredFields = {
+  dotplot: [
+    'abundanceCap',
+    'annotations',
+    'columnDB',
+    'columnOrder',
+    'fillColor',
+    'invertColor',
+    'markers',
+    'minAbundance',
+    'rowDB',
+    'rowOrder',
+
+    'edgeColor',
+    'primaryFilter',
+    'scoreType',
+    'secondaryFilter',
+  ],
   heatmap: [
     'abundanceCap',
     'annotations',
@@ -10,19 +27,6 @@ const commonFields = {
     'minAbundance',
     'rowDB',
     'rowOrder',
-  ],
-};
-
-export const requiredFields = {
-  dotplot: [
-    ...commonFields.heatmap,
-    'edgeColor',
-    'primaryFilter',
-    'scoreType',
-    'secondaryFilter',
-  ],
-  heatmap: [
-    ...commonFields.heatmap,
   ],
 };
 

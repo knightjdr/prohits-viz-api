@@ -1,4 +1,4 @@
-import { validateRowOrder, validateRows } from './rows';
+import { validateRowOrder, validateRows } from './rows.js';
 
 describe('Validate rows object', () => {
   const err = new Error('Invalid row DB array');

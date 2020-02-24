@@ -1,9 +1,9 @@
-import validateDotplot from './dotplot.js';
-import validateHeatmap from './heatmap.js';
+import validateCorrelation from './validators/correlation.js';
+import validateDotplot from './validators/dotplot.js';
 
 const validateImageType = {
+  correlation: validateCorrelation,
   dotplot: validateDotplot,
-  heatmap: validateHeatmap,
 };
 
 const getValidator = imageType => (

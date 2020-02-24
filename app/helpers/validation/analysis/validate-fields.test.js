@@ -1,4 +1,4 @@
-import validateFields from './validate-fields';
+import validateFields from './validate-fields.js';
 
 const validator = jest.fn();
 validator.mockReturnValueOnce(20);

@@ -1,4 +1,4 @@
-import validateAnnotations from './annotations';
+import validateAnnotations from './annotations.js';
 
 describe('Validate annotations object', () => {
   it('should return valid annotation object', () => {

@@ -1,44 +1,12 @@
-import isTrue from '../../../utils/is-true.js';
+import validate from '../../../helpers/validation/analysis/validate.js';
 
-const acceptedFields = [
-  'abundance',
-  'abundanceCap',
-  'analysisType',
-  'condition',
-  'conditionClustering',
-  'conditionList',
-  'biclusteringApprox',
-  'clustering',
-  'clusteringMethod',
-  'clusteringOptimize',
-  'control',
-  'distance',
-  'edgeColor',
-  'fillColor',
-  'logBase',
-  'minAbundance',
-  'normalization',
-  'normalizationReadout',
-  'pdf',
-  'png',
-  'readout',
-  'readoutClustering',
-  'readoutLength',
-  'readoutList',
-  'primaryFilter',
-  'score',
-  'scoreType',
-  'secondaryFilter',
-  'writeDistance',
-  'writeDotplot',
-  'writeHeatmap',
-];
 
-const validate = (form, files) => {
-  let validated = { ...form };
+const validateDotplot = (form, files = []) => {
+  const validated = validate('dotplot', form, files);
+  return validated;
 
   // Clear control column if not required.
-  if (validated.control && !isTrue(validated.ctrlSub)) {
+  /* if (validated.control && !isTrue(validated.ctrlSub)) {
     validated.control = '';
   }
 
@@ -89,9 +57,7 @@ const validate = (form, files) => {
   // Add files as comma separated list.
   validated.fileList = files.map(file => `files/${file.originalname}`).join(',');
 
-  // Add field to create dotplot.
-  validated.writeDotplot = 'true';
-  return validated;
+  return validated; */
 };
 
-export default validate;
+export default validateDotplot;

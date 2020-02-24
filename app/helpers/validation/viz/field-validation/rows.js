@@ -1,4 +1,4 @@
-import isNumber from '../../../utils/is-number.js';
+import isNumber from '../../../../utils/is-number.js';
 
 /* A row array should be of the form:
 

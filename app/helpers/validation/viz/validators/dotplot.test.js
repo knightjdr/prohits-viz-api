@@ -1,4 +1,4 @@
-import validateDotplot from './dotplot';
+import validateDotplot from './dotplot.js';
 
 describe('Dotplot validation', () => {
   it('should validate common heat map field', () => {

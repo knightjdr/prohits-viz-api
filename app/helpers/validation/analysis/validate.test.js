@@ -1,4 +1,4 @@
-import validate from './validate';
+import validate from './validate.js';
 
 describe('Dotplot/Heatmap validation interface', () => {
   it('should return valid object', () => {

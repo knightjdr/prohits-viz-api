@@ -1,4 +1,4 @@
-import validateOptionalFields from './validate-optional-fields';
+import validateOptionalFields from './validate-optional-fields.js';
 
 describe('Validate optional fields', () => {
   it('should return optional fields that exist', () => {

@@ -1,8 +1,4 @@
-import validateScoreType from './score-type';
-
-jest.mock('../default-values', () => ({
-  scoreTypes: ['lte', 'gte'],
-}));
+import validateScoreType from './score-type.js';
 
 describe('Validate score type', () => {
   it('should return default when null', () => {

@@ -1,6 +1,6 @@
-import isInRange from '../../../utils/is-in-range.js';
-import isObject from '../../../utils/is-object.js';
-import isValidColor from './is-valid-color.js';
+import isInRange from '../../../../utils/is-in-range.js';
+import isObject from '../../../../utils/is-object.js';
+import isValidColor from '../../field-validation/is-valid-color.js';
 
 const defaults = {
   color: '#000000',

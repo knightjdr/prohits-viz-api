@@ -1,4 +1,4 @@
-import validateHeatmap from './heatmap';
+import validateHeatmap from './heatmap.js';
 
 describe('Heatmap validation', () => {
   describe('abundance cap', () => {

@@ -1,7 +1,7 @@
-import isValidColor from './is-valid-color';
-import validateMarkers from './markers';
+import isValidColor from '../../field-validation/is-valid-color.js';
+import validateMarkers from './markers.js';
 
-jest.mock('./is-valid-color');
+jest.mock('../../field-validation/is-valid-color.js');
 isValidColor.mockReturnValue('#000000');
 
 describe('Validate markers object', () => {

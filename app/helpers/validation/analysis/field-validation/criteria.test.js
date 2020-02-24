@@ -1,4 +1,4 @@
-import criteria from './criteria';
+import criteria from './criteria.js';
 
 describe('Validate criteria', () => {
   describe('for booleans', () => {

@@ -1,4 +1,4 @@
-import getValidator from './validator/get-validator.js';
+import getValidator from './get-validator.js';
 import validateFields from './validate-fields.js';
 import validateOptionalFields from './validate-optional-fields.js';
 import { optionalFields, requiredFields } from './fields.js';

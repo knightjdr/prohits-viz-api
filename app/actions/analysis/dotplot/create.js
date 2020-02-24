@@ -19,10 +19,20 @@ import updateStatus from '../../../helpers/status/update-status.js';
 **  5a. Emit a response via socket that the user should check their task status.
 **  5b. Delete the input file folder after the task is complete.
 ** */
-const createDotplot = (req, res) => (
-  new Promise((resolve) => {
+const createDotplot = async (req, res) => {
+  try {
     const { socket } = res.locals;
     const validatedForm = validateDotplot(req.body, req.files);
+    console.log(validatedForm);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.end();
+  }
+};
+  /* new Promise((resolve) => {
+    const { socket } = res.locals;
+    
     const subDirs = ['files'];
     let taskID;
     let workDir;
@@ -53,7 +63,6 @@ const createDotplot = (req, res) => (
         res.end();
         resolve();
       });
-  })
-);
+  }) */
 
 export default createDotplot;

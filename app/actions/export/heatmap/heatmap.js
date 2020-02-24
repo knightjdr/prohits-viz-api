@@ -2,7 +2,7 @@ import config from '../../../config/config.js';
 import constructJSON from '../../../helpers/export/construct-json.js';
 import createWorkDir from '../../../helpers/files/create-work-dir.js';
 import spawnProcess from './spawn.js';
-import validate from '../../../helpers/validation/validate.js';
+import validate from '../../../helpers/validation/viz/validate.js';
 import writeDataFile from '../../../helpers/export/write-data-file.js';
 
 const heatmap = async (req, res) => {

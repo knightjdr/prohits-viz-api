@@ -1,6 +1,6 @@
 import criteria from './criteria.js';
-import isInRange from '../../../utils/is-in-range.js';
-import isObject from '../../../utils/is-object.js';
+import isInRange from '../../../../utils/is-in-range.js';
+import isObject from '../../../../utils/is-object.js';
 
 const defaults = {
   fontSize: 12,
