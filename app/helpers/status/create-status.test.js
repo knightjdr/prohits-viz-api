@@ -9,10 +9,6 @@ const origDate = Date;
 global.Date = jest.fn(() => DATE_TO_USE);
 global.Date.toISOString = origDate.toISOString;
 
-const body = {
-  analysisType: 'dotplot',
-};
-
 afterEach(() => {
   global.Date = origDate;
 });
@@ -21,7 +17,7 @@ describe('Create status file', () => {
   describe('successfully', () => {
     beforeAll(async () => {
       writefile.mockResolvedValueOnce();
-      await createStatus('workDir', body);
+      await createStatus('workDir', 'dotplot');
     });
 
     it('should call write file', () => {
@@ -38,7 +34,7 @@ describe('Create status file', () => {
   describe('successfully with primaryFile different from analysisType', () => {
     beforeAll(async () => {
       writefile.mockResolvedValueOnce();
-      await createStatus('workDir', body, 'otherFile');
+      await createStatus('workDir', 'dotplot', 'otherFile');
     });
 
     it('should call write file', () => {
@@ -55,6 +51,6 @@ describe('Create status file', () => {
   it('should throw error when writing status file throws error', async () => {
     const expectedError = new Error('Could not create status file for task workDir');
     writefile.mockRejectedValueOnce();
-    await expect(createStatus('workDir', body)).rejects.toThrowError(expectedError);
+    await expect(createStatus('workDir', 'dotplot')).rejects.toThrowError(expectedError);
   });
 });

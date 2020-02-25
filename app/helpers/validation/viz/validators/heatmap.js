@@ -1,7 +1,7 @@
 import criteria from '../field-validation/criteria.js';
 import settings from './default-values.js';
 import validateAnnotations from '../field-validation/annotations.js';
-import validateColor from '../../field-validation/color.js';
+import validateColor from '../field-validation/color.js';
 import validateMarkers from '../field-validation/markers.js';
 import { validateColumnOrder, validateColumns } from '../field-validation/columns.js';
 import { validateRowOrder, validateRows } from '../field-validation/rows.js';

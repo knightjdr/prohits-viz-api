@@ -1,8 +1,8 @@
 import criteria from '../field-validation/criteria.js';
 import settings from './default-values.js';
-import validateColor from '../../field-validation/color.js';
+import validateColor from '../field-validation/color.js';
 import validateHeatmap from './heatmap.js';
-import validateScoreType from '../../field-validation/score-type.js';
+import validateScoreType from '../field-validation/score-type.js';
 
 const validateDotplot = (type, value, defaultSettings = settings.dotplot) => {
   const validatedResult = validateHeatmap(type, value, defaultSettings);

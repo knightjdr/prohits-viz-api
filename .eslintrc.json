@@ -7,6 +7,12 @@
   "rules": {
     "function-paren-newline": "off",
     "no-underscore-dangle": "off",
-    "import/extensions": ["error", "ignorePackages"]
+    "import/extensions": ["error", "ignorePackages"],
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ]
   }
 }

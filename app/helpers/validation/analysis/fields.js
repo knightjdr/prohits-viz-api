@@ -12,6 +12,7 @@ const common = [
   'readout',
   'readoutLength',
   'readoutLengthNorm',
+  'sampleFile',
   'score',
   'scoreType',
   'png',
@@ -20,6 +21,7 @@ const common = [
 const fields = {
   correlation: [
     ...common,
+    'clustering',
     'clusteringMethod',
     'clusteringOptimize',
     'conditionAbundanceFilter',

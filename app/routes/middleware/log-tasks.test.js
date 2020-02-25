@@ -1,5 +1,5 @@
-import insert from '../../helpers/database/insert';
-import logTasks from './log-tasks';
+import insert from '../../helpers/database/insert.js';
+import logTasks from './log-tasks.js';
 
 jest.mock('../../helpers/database/insert');
 jest.mock('../../utils/url-details', () => () => ({ host: 'test.org' }));
@@ -18,7 +18,7 @@ afterAll(() => {
 
 describe('Log tasks', () => {
   describe('with file', () => {
-    describe('with type', () => {
+    describe('with tool', () => {
       beforeAll(() => {
         insert.mockClear();
         next.mockClear();
@@ -26,7 +26,7 @@ describe('Log tasks', () => {
           files: [
             { originalname: 'file1.txt', size: 1000 },
           ],
-          params: { type: 'dotplot' },
+          params: { tool: 'dotplot' },
           path: '/analysis/dotplot',
         };
         logTasks(req, {}, next);
@@ -39,7 +39,7 @@ describe('Log tasks', () => {
           fileSize: 1000,
           origin: 'test.org',
           path: '/analysis/dotplot',
-          type: 'dotplot',
+          tool: 'dotplot',
         };
         expect(insert).toHaveBeenCalledWith('tracking', document);
       });
@@ -71,7 +71,7 @@ describe('Log tasks', () => {
           fileSize: 1000,
           origin: 'test.org',
           path: '/analysis/dotplot',
-          type: '',
+          tool: '',
         };
         expect(insert).toHaveBeenCalledWith('tracking', document);
       });
@@ -91,7 +91,7 @@ describe('Log tasks', () => {
         files: [
           { originalname: 'samplefile.txt', size: 0 },
         ],
-        params: { type: 'dotplot' },
+        params: { tool: 'dotplot' },
         path: '/analysis/dotplot',
       };
       logTasks(req, {}, next);
@@ -104,7 +104,7 @@ describe('Log tasks', () => {
         fileSize: 0,
         origin: 'test.org',
         path: '/analysis/dotplot',
-        type: 'dotplot',
+        tool: 'dotplot',
       };
       expect(insert).toHaveBeenCalledWith('tracking', document);
     });
@@ -125,7 +125,7 @@ describe('Log tasks', () => {
           { originalname: 'file1.txt', size: 1000 },
           { originalname: 'file2.txt', size: 1000 },
         ],
-        params: { type: 'dotplot' },
+        params: { tool: 'dotplot' },
         path: '/analysis/dotplot',
       };
       logTasks(req, {}, next);
@@ -138,7 +138,7 @@ describe('Log tasks', () => {
         fileSize: 2000,
         origin: 'test.org',
         path: '/analysis/dotplot',
-        type: 'dotplot',
+        tool: 'dotplot',
       };
       expect(insert).toHaveBeenCalledWith('tracking', document);
     });

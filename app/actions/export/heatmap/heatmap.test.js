@@ -2,7 +2,7 @@ import constructJSON from '../../../helpers/export/construct-json.js';
 import createWorkDir from '../../../helpers/files/create-work-dir.js';
 import heatmap from './heatmap.js';
 import spawnProcess from './spawn.js';
-import validate from '../../../helpers/validation/validate.js';
+import validate from '../../../helpers/validation/viz/validate.js';
 import writeDataFile from '../../../helpers/export/write-data-file.js';
 
 jest.mock('../../../config/config.js', () => ({ exportFont: 'font.ttf' }));
@@ -10,7 +10,7 @@ jest.mock('../../../helpers/export/construct-json.js');
 jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('./spawn');
 spawnProcess.mockResolvedValue();
-jest.mock('../../../helpers/validation/validate');
+jest.mock('../../../helpers/validation/viz/validate');
 jest.mock('../../../helpers/export/write-data-file');
 writeDataFile.mockResolvedValue();
 

@@ -1,11 +1,11 @@
 import writeFile from '../files/write-file.js';
 
-const createStatus = async (workDir, body, primaryFile) => {
+const createStatus = async (workDir, tool, primaryFile) => {
   try {
     const status = {
-      analysis: body.analysisType,
+      analysis: tool,
       date: new Date().toISOString(),
-      primaryFile: primaryFile || body.analysisType,
+      primaryFile: primaryFile || tool,
       status: 'running',
     };
     const fileContent = JSON.stringify(status, null, 2);

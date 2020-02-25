@@ -1,38 +1,80 @@
 import criteria from './criteria.js';
 
 describe('Validate criteria', () => {
-  describe('for booleans', () => {
-    it('should validate and return boolean', () => {
-      expect(criteria.isBoolean(true, false)).toBeTruthy();
-      expect(criteria.isBoolean(false, true)).toBeFalsy();
+  describe('booleans', () => {
+    it('should validate truthy values', () => {
+      const expected = [true, true];
+
+      expect(criteria.isBoolean(true)).toEqual(expected);
+      expect(criteria.isBoolean('true')).toEqual(expected);
     });
 
-    it('should return default arg when value is not a boolean', () => {
-      expect(criteria.isBoolean(undefined, false)).toBeFalsy();
+    it('should validate falsy values', () => {
+      const expected = [true, false];
+
+      expect(criteria.isBoolean(false)).toEqual(expected);
+      expect(criteria.isBoolean('false')).toEqual(expected);
+    });
+
+    it('should invalidate other values', () => {
+      const expected = [false, null];
+
+      expect(criteria.isBoolean('a')).toEqual(expected);
+      expect(criteria.isBoolean(1)).toEqual(expected);
     });
   });
 
-  describe('for numbers', () => {
-    it('should validate and return number', () => {
-      expect(criteria.isNumber(Number.MIN_SAFE_INTEGER, 1000)).toBe(Number.MIN_SAFE_INTEGER);
-      expect(criteria.isNumber(0, 1000)).toBe(0);
-      expect(criteria.isNumber(10, 1000)).toBe(10);
-      expect(criteria.isNumber(Number.MAX_SAFE_INTEGER, 1000)).toBe(Number.MAX_SAFE_INTEGER);
+  describe('numbers', () => {
+    it('should validate typeof number', () => {
+      const expected = [true, 1];
+
+      expect(criteria.isNumber(1)).toEqual(expected);
     });
 
-    it('should return default arg when value is not a number', () => {
-      expect(criteria.isNumber(undefined, 1000)).toBe(1000);
+    it('should validate string that converts to number', () => {
+      const expected = [true, 1];
+
+      expect(criteria.isNumber('1')).toEqual(expected);
+    });
+
+    it('should invalidate other values', () => {
+      const expected = [false, null];
+
+      expect(criteria.isNumber('a')).toEqual(expected);
     });
   });
 
-  describe('for strings', () => {
-    it('should validate and return string', () => {
-      expect(criteria.isString('a', 'b')).toBe('a');
-      expect(criteria.isString('aaaaaaaaaaaaa', 'b')).toBe('aaaaaaaaaaaaa');
+  describe('string', () => {
+    it('should validate string', () => {
+      const expected = [true, 'a'];
+
+      expect(criteria.isString('a')).toEqual(expected);
     });
 
-    it('should return default arg when value is not a string', () => {
-      expect(criteria.isString(undefined, 'b')).toBe('b');
+    it('should invalidate other values', () => {
+      const expected = [false, null];
+
+      expect(criteria.isString(1)).toEqual(expected);
+    });
+  });
+
+  describe('required string', () => {
+    it('should validate string', () => {
+      const expected = [true, 'a'];
+
+      expect(criteria.requiredString('a')).toEqual(expected);
+    });
+
+    it('should invalidate empty string', () => {
+      const expected = [false, null];
+
+      expect(criteria.requiredString('')).toEqual(expected);
+    });
+
+    it('should invalidate other values', () => {
+      const expected = [false, null];
+
+      expect(criteria.requiredString(1)).toEqual(expected);
     });
   });
 });

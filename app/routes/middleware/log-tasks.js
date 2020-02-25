@@ -26,7 +26,7 @@ const creatDocument = (req) => {
     fileSize,
     origin: urlDetails(req).host,
     path,
-    type: params && params.type ? params.type : '',
+    tool: params && params.tool ? params.tool : '',
   };
 };
 
