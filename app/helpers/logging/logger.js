@@ -14,21 +14,23 @@ const tsOptions = {
 };
 const tsFormat = () => (new Date()).toLocaleTimeString('en-CA', tsOptions);
 
-const Logger = new (winston.Logger)({
+const Logger = new (winston.createLogger)({
   exitOnError: false,
+  format: winston.format.combine(
+    winston.format.timestamp({format: 'YYYY-MM-DD, HH:mm:ss'}),
+    winston.format.printf(info => {
+      return `${info.timestamp} - ${info.level}: ${info.message}`;
+    })
+  ),
   transports: [
     new winston.transports.File({
       filename: `${logDir}/${config.logPrefix}error.log`,
-      json: false,
       level: 'error',
       name: 'error-file',
-      timestamp: tsFormat,
     }),
     new winston.transports.File({
       filename: `${logDir}/${config.logPrefix}combined.log`,
-      json: false,
       name: 'log-file',
-      timestamp: tsFormat,
     }),
   ],
 });

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import mockFS from 'mock-fs';
 
-import Logger from './logger';
+import Logger from './logger.js';
 
 jest.mock('../../config/config', () => (
   {
@@ -12,8 +12,8 @@ jest.mock('../../config/config', () => (
 // expected messages
 const messages = {
   output: {
-    combined: /\d+-\d+-\d+, \d+:\d+:\d+ [apm.]+ - error: test\n\d+-\d+-\d+, \d+:\d+:\d+ [apm.]+ - info: test/,
-    error: /\d+-\d+-\d+, \d+:\d+:\d+ [apm.]+ - error: test/,
+    combined: /\d+-\d+-\d+, \d+:\d+:\d+ - error: test\n\d+-\d+-\d+, \d+:\d+:\d+ - info: test/,
+    error: /\d+-\d+-\d+, \d+:\d+:\d+ - error: test/,
   },
 };
 

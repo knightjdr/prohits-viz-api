@@ -13,8 +13,8 @@ const checkCharactersDefined = (a, b) => {
 
 const checkNumbersDefined = (a, b) => {
   if (
-    (!isNumber(a) || a == null) &&
-    (!isNumber(b) || b == null)
+    (!isNumber(a) || a == null)
+    && (!isNumber(b) || b == null)
   ) {
     return 0;
   } if (!isNumber(a) || a == null) {
@@ -30,7 +30,7 @@ const compareCharacters = (a, b) => {
   const nameB = String(b).toLowerCase();
   if (nameA < nameB) {
     return -1;
-  } else if (nameA > nameB) {
+  } if (nameA > nameB) {
     return 1;
   }
   return 0;
