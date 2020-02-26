@@ -39,7 +39,7 @@ const Logger = new (winston.createLogger)({
 if (env === 'development') {
   Logger.remove('error-file');
   Logger.remove('log-file');
-  Logger.add(winston.transports.Console, {
+  Logger.add(new winston.transports.Console, {
     colorize: true,
     timestamp: tsFormat,
   });
