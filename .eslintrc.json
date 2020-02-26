@@ -5,7 +5,7 @@
   "extends": "airbnb-base",
   "parser": "babel-eslint",
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
     "function-paren-newline": "off",
     "no-underscore-dangle": "off",
     "import/extensions": ["error", "ignorePackages"],

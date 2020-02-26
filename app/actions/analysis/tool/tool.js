@@ -39,7 +39,7 @@ const runToolAnalysis = async (req, res) => {
       const workDir = await getWorkDir();
       const taskID = path.basename(workDir);
 
-      res.send({ id: taskID });
+      res.send({ id: taskID, tool });
 
       await Promise.all([
         createDirs(workDir, ['files']),
@@ -57,7 +57,14 @@ const runToolAnalysis = async (req, res) => {
         deleteDirs(workDir, ['files']),
       ]);
 
-      socket.emit('action', { id: taskID, type: 'TASK_COMPLETE', ...status });
+      socket.emit(
+        'action',
+        {
+          id: taskID,
+          status,
+          type: 'UPDATE_TASK_STATUS',
+        },
+      );
     }
   } catch (error) {
     res.status(500);

@@ -1,5 +1,5 @@
-import createStatus from './create-status';
-import writefile from '../files/write-file';
+import createStatus from './create-status.js';
+import writefile from '../files/write-file.js';
 
 jest.mock('../files/write-file');
 
@@ -22,10 +22,10 @@ describe('Create status file', () => {
 
     it('should call write file', () => {
       const expectedStatus = JSON.stringify({
-        analysis: 'dotplot',
         date: new Date().toISOString(),
         primaryFile: 'dotplot',
         status: 'running',
+        tool: 'dotplot',
       }, null, 2);
       expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
     });
@@ -39,10 +39,10 @@ describe('Create status file', () => {
 
     it('should call write file', () => {
       const expectedStatus = JSON.stringify({
-        analysis: 'dotplot',
         date: new Date().toISOString(),
         primaryFile: 'otherFile',
         status: 'running',
+        tool: 'dotplot',
       }, null, 2);
       expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
     });

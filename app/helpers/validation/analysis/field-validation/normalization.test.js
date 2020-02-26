@@ -45,4 +45,3 @@ describe('Validate normalization settings', () => {
     expect(validateNormalizationSetting(settings, errors)).toEqual(expected);
   });
 });
-

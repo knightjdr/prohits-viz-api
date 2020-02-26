@@ -112,7 +112,7 @@ describe('Run analysis', () => {
     });
 
     it('should send response', () => {
-      expect(res.send).toHaveBeenCalledWith({ id: 'taskID' });
+      expect(res.send).toHaveBeenCalledWith({ id: 'taskID', tool: 'dotplot' });
     });
 
     it('should create subdirectory for files', async (done) => {
@@ -153,11 +153,11 @@ describe('Run analysis', () => {
 
     it('should update status file to indicate completion', async (done) => {
       const expected = {
-        analysis: 'dotplot',
         date: new Date().toISOString(),
         files: ['log', 'dotplot'],
         primaryFile: 'dotplot',
         status: 'complete',
+        tool: 'dotplot',
       };
       fs.readFile('tmp/taskID/status.json', 'utf8', (err, file) => {
         expect(JSON.parse(file)).toEqual(expected);
@@ -167,13 +167,15 @@ describe('Run analysis', () => {
 
     it('socket should emit action with status', () => {
       const expected = {
-        analysis: 'dotplot',
-        date: new Date().toISOString(),
-        files: ['log', 'dotplot'],
         id: 'taskID',
-        primaryFile: 'dotplot',
-        status: 'complete',
-        type: 'TASK_COMPLETE',
+        status: {
+          date: new Date().toISOString(),
+          files: ['log', 'dotplot'],
+          primaryFile: 'dotplot',
+          status: 'complete',
+          tool: 'dotplot',
+        },
+        type: 'UPDATE_TASK_STATUS',
       };
       expect(res.locals.socket.emit).toHaveBeenCalledWith('action', expected);
     });
@@ -205,4 +207,3 @@ describe('Run analysis', () => {
     });
   });
 });
-

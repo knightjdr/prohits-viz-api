@@ -1,4 +1,4 @@
-import criteria from '../field-validation/criteria.js';
+import criteria from './criteria.js';
 
 const validateMinCondition = (value) => {
   const [validNumber, validatedValue] = criteria.isNumber(value);

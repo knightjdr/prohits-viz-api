@@ -11,9 +11,9 @@ global.Date.now = origDate.now;
 global.Date.toISOString = origDate.toISOString;
 
 const status = {
-  analysis: 'dotplot',
   date: new Date().toISOString(),
   status: 'running',
+  tool: 'dotplot',
 };
 mockFS({
   tmp: {
@@ -50,7 +50,6 @@ describe('Update status file', () => {
     it('should update status file', async (done) => {
       fs.readFile('tmp/workDir1/status.json', 'utf8', (err, data) => {
         const expectedStatus = {
-          analysis: 'dotplot',
           date: new Date().toISOString(),
           status: 'complete',
           files: [
@@ -59,6 +58,7 @@ describe('Update status file', () => {
             'file1',
             'file2',
           ],
+          tool: 'dotplot',
         };
         expect(JSON.parse(data)).toEqual(expectedStatus);
         done();
@@ -67,7 +67,6 @@ describe('Update status file', () => {
 
     it('should return status object', () => {
       const expected = {
-        analysis: 'dotplot',
         date: new Date().toISOString(),
         status: 'complete',
         files: [
@@ -76,6 +75,7 @@ describe('Update status file', () => {
           'file1',
           'file2',
         ],
+        tool: 'dotplot',
       };
       expect(statusDetails).toEqual(expected);
     });
@@ -91,7 +91,6 @@ describe('Update status file', () => {
     it('should update status file with an error when interactive folder is missing', async (done) => {
       fs.readFile('tmp/workDir2/status.json', 'utf8', (err, data) => {
         const expectedStatus = {
-          analysis: 'dotplot',
           date: new Date().toISOString(),
           primaryFile: 'error',
           status: 'error',
@@ -99,6 +98,7 @@ describe('Update status file', () => {
             'error',
             'log',
           ],
+          tool: 'dotplot',
         };
         expect(JSON.parse(data)).toEqual(expectedStatus);
         done();
@@ -107,7 +107,6 @@ describe('Update status file', () => {
 
     it('should return status object', () => {
       const expected = {
-        analysis: 'dotplot',
         date: new Date().toISOString(),
         primaryFile: 'error',
         status: 'error',
@@ -115,6 +114,7 @@ describe('Update status file', () => {
           'error',
           'log',
         ],
+        tool: 'dotplot',
       };
       expect(statusDetails).toEqual(expected);
     });
