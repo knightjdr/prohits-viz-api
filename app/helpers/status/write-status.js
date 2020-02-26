@@ -13,6 +13,7 @@ const writeStatus = async (workDir, status, files, primaryFile) => {
     };
     const content = JSON.stringify(newStatus, null, 2);
     await writefile(`${workDir}/status.json`, content);
+    return newStatus;
   } catch (error) {
     throw new Error('Could not update status file');
   }

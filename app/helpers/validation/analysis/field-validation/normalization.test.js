@@ -39,7 +39,7 @@ describe('Validate normalization settings', () => {
 
     const expected = [
       { normalization: 'readout', normalizationReadout: '' },
-      { normalizationReadout: 'missing column name' },
+      { normalizationReadout: 'missing readout name' },
     ];
 
     expect(validateNormalizationSetting(settings, errors)).toEqual(expected);

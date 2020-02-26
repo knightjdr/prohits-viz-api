@@ -13,7 +13,7 @@ export const validateNormalizationSetting = (currentValues, currentErrors) => {
   const validated = { ...currentValues };
 
   if (validated.normalization === 'readout' && !validated.normalizationReadout) {
-    errors.normalizationReadout = 'missing column name';
+    errors.normalizationReadout = 'missing readout name';
   }
 
   return [validated, errors];

@@ -47,7 +47,7 @@ describe('Validate common analysis fields', () => {
     });
   });
 
-  it('should invalidate acceptable fields', () => {
+  it('should invalidate unacceptable fields', () => {
     const form = {
       abundance: '',
       condition: '',
@@ -91,5 +91,9 @@ describe('Validate common analysis fields', () => {
     Object.entries(form).forEach(([key, value]) => {
       expect(validateCommon(key, value)).toEqual({ error: expected[key] });
     });
+  });
+
+  it('should return null for unknown field', () => {
+    expect(validateCommon('unknown', '1')).toBeNull();
   });
 });

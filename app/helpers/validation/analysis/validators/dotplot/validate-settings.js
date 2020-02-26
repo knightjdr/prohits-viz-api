@@ -23,11 +23,11 @@ export const validateClustering = (currentValues, currentErrors) => {
 
   const parseList = (text) => {
     const arr = text.trim().split(reSeparator).filter(string => string);
-    return removeDuplicates(arr.map(string => string.toLowerCase().replace(reQuotes, '')));
+    return removeDuplicates(arr.map(string => string.replace(reQuotes, '')));
   };
 
   if (validated.clustering === 'none' && validated.conditionClustering !== ' conditions') {
-    if (validated.conditionList === '') {
+    if (validated.conditionList === '' || validated.conditionList === []) {
       errors.conditionList = 'missing conditions for ordering';
     } if (typeof validated.conditionList === 'string') {
       validated.conditionList = parseList(validated.conditionList);
@@ -35,7 +35,7 @@ export const validateClustering = (currentValues, currentErrors) => {
   }
 
   if (validated.clustering === 'none' && validated.readoutClustering !== ' readouts') {
-    if (validated.readoutList === '') {
+    if (validated.readoutList === '' || validated.readoutList === []) {
       errors.readoutList = 'missing readouts for ordering';
     } if (typeof validated.readoutList === 'string') {
       validated.readoutList = parseList(validated.readoutList);

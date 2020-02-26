@@ -15,10 +15,10 @@ const updateStatus = async (workDir) => {
     files = stripExt(statusFiles, files);
     const interactiveFiles = await listFiles(`${workDir}/interactive`, '.json');
     files = stripExt(interactiveFiles, files);
-    await writeStatus(workDir, status, files);
+    return writeStatus(workDir, status, files);
   } catch (error) {
     status = 'error';
-    await writeStatus(workDir, status, files, 'error');
+    return writeStatus(workDir, status, files, 'error');
   }
 };
 

@@ -152,7 +152,7 @@ describe('Run analysis', () => {
     });
 
     it('should update status file to indicate completion', async (done) => {
-      const expectedContents = {
+      const expected = {
         analysis: 'dotplot',
         date: new Date().toISOString(),
         files: ['log', 'dotplot'],
@@ -160,13 +160,22 @@ describe('Run analysis', () => {
         status: 'complete',
       };
       fs.readFile('tmp/taskID/status.json', 'utf8', (err, file) => {
-        expect(JSON.parse(file)).toEqual(expectedContents);
+        expect(JSON.parse(file)).toEqual(expected);
         done();
       });
     });
 
-    it('socket should emit action', () => {
-      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', { id: 'taskID', type: 'TASK_COMPLETE' });
+    it('socket should emit action with status', () => {
+      const expected = {
+        analysis: 'dotplot',
+        date: new Date().toISOString(),
+        files: ['log', 'dotplot'],
+        id: 'taskID',
+        primaryFile: 'dotplot',
+        status: 'complete',
+        type: 'TASK_COMPLETE',
+      };
+      expect(res.locals.socket.emit).toHaveBeenCalledWith('action', expected);
     });
   });
 

@@ -1,7 +1,7 @@
 import mockFS from 'mock-fs';
 import fs from 'fs';
 
-import updateStatus from './update-status';
+import updateStatus from './update-status.js';
 
 // Mock date
 const DATE_TO_USE = new Date();
@@ -41,8 +41,10 @@ afterAll(() => {
 
 describe('Update status file', () => {
   describe('successfully', () => {
+    let statusDetails;
+
     beforeAll(async () => {
-      await updateStatus('tmp/workDir1');
+      statusDetails = await updateStatus('tmp/workDir1');
     });
 
     it('should update status file', async (done) => {
@@ -62,11 +64,28 @@ describe('Update status file', () => {
         done();
       });
     });
+
+    it('should return status object', () => {
+      const expected = {
+        analysis: 'dotplot',
+        date: new Date().toISOString(),
+        status: 'complete',
+        files: [
+          'error',
+          'log',
+          'file1',
+          'file2',
+        ],
+      };
+      expect(statusDetails).toEqual(expected);
+    });
   });
 
   describe('unsuccessfully', () => {
+    let statusDetails;
+
     beforeAll(async () => {
-      await updateStatus('tmp/workDir2');
+      statusDetails = await updateStatus('tmp/workDir2');
     });
 
     it('should update status file with an error when interactive folder is missing', async (done) => {
@@ -84,6 +103,20 @@ describe('Update status file', () => {
         expect(JSON.parse(data)).toEqual(expectedStatus);
         done();
       });
+    });
+
+    it('should return status object', () => {
+      const expected = {
+        analysis: 'dotplot',
+        date: new Date().toISOString(),
+        primaryFile: 'error',
+        status: 'error',
+        files: [
+          'error',
+          'log',
+        ],
+      };
+      expect(statusDetails).toEqual(expected);
     });
   });
 });

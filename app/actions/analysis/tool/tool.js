@@ -52,12 +52,12 @@ const runToolAnalysis = async (req, res) => {
       ]);
 
       await spawnTask(workDir);
-      await Promise.all([
+      const [status] = await Promise.all([
         updateStatus(workDir),
         deleteDirs(workDir, ['files']),
       ]);
 
-      socket.emit('action', { id: taskID, type: 'TASK_COMPLETE' });
+      socket.emit('action', { id: taskID, type: 'TASK_COMPLETE', ...status });
     }
   } catch (error) {
     res.status(500);
