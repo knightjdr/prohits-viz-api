@@ -10,7 +10,6 @@ import exportImage from '../actions/export/export.js';
 import handleVizFile from '../actions/third-party/viz/handle-viz-file.js';
 import sync from '../actions/sync/sync.js';
 import toolAnalysis from '../actions/analysis/tool/tool.js';
-import updateStatus from '../actions/task/status/update-status.js';
 import vizAnalysis from '../actions/analysis/viz/analysis.js';
 
 const upload = multer({ dest: config.upload });
@@ -20,7 +19,6 @@ const post = (router) => {
   router.post('/analysis/:tool', upload.array('file'), getSocket, logTasks, toolAnalysis);
   router.post('/export/', getSocket, exportImage);
   router.post('/sync/:snapshotID', noCacheClient, getSocket, sync);
-  router.post('/task/', updateStatus);
   router.post('/third-party/viz', logTasks, handleVizFile);
   router.post('*', (req, res) => {
     res.status(404).send({ message: messages.invalidRoute });

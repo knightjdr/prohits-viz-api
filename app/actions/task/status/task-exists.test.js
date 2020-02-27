@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 
-import taskExists from './task-exists';
+import taskExists from './task-exists.js';
 
 jest.mock('../../../config/config', () => ({
   workDir: 'tmp/',
@@ -18,18 +18,10 @@ afterAll(() => {
 });
 
 describe('Task exists', () => {
-  let tasks;
+  it('should resolve with task folders that exist', async () => {
+    const actual = await taskExists(['test1', 'test2']);
 
-  beforeAll(async (done) => {
-    taskExists(['test1', 'test2'])
-      .then((resolvedTasks) => {
-        tasks = resolvedTasks;
-        done();
-      });
-  });
-
-  it('should resolve with task folders that exist', () => {
     const expected = ['test1'];
-    expect(tasks).toEqual(expected);
+    expect(actual).toEqual(expected);
   });
 });

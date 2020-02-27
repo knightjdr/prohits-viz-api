@@ -1,39 +1,24 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 
 import config from '../../../config/config.js';
-import shouldResolve from './should-resolve.js';
 
-const status = tasks => (
-  new Promise((resolve) => {
-    if (tasks.length === 0) {
-      resolve({ list: [], status: [] });
-    } else {
-      const taskStatus = {
-        list: [],
-        status: [],
+const getStatus = async (tasks) => {
+  if (tasks.length === 0) {
+    return {};
+  }
+
+  const settled = await Promise.allSettled(
+    tasks.map(async task => fs.readFile(`${config.workDir}${task}/status.json`, 'utf8')),
+  );
+  return settled.reduce((accum, task, index) => {
+    if (task.status === 'fulfilled') {
+      return {
+        ...accum,
+        [tasks[index]]: JSON.parse(task.value),
       };
-      let checked = 0;
-      tasks.forEach((task) => {
-        fs.readFile(`${config.workDir}${task}/status.json`, 'utf8', (err, data) => {
-          taskStatus.list.push(task);
-          if (!err) {
-            taskStatus.status.push({
-              ...JSON.parse(data),
-              id: task,
-            });
-          } else {
-            taskStatus.status.push({
-              date: '-',
-              id: task,
-              status: 'error',
-            });
-          }
-          checked += 1;
-          shouldResolve(checked, tasks.length, taskStatus, resolve);
-        });
-      });
     }
-  })
-);
+    return accum;
+  }, {});
+};
 
-export default status;
+export default getStatus;

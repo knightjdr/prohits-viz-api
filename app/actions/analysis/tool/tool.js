@@ -2,10 +2,10 @@ import path from 'path';
 
 import createDirs from '../../../helpers/files/create-dirs.js';
 import createStatus from '../../../helpers/status/create-status.js';
+import definePrimaryImageFile from './primary-image-file.js';
 import deleteDirs from '../../../helpers/files/delete-dir.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
 import moveFiles from '../../../helpers/files/move-files.js';
-import primaryOutputFile from './primary-output-file.js';
 import spawnTask from './spawn.js';
 import updateStatus from '../../../helpers/status/update-status.js';
 import validate from '../../../helpers/validation/analysis/validate.js';
@@ -43,7 +43,7 @@ const runToolAnalysis = async (req, res) => {
 
       await Promise.all([
         createDirs(workDir, ['files']),
-        createStatus(workDir, tool, primaryOutputFile[tool]),
+        createStatus(workDir, tool, definePrimaryImageFile(tool, validatedForm)),
       ]);
 
       await Promise.all([

@@ -1,22 +1,12 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 
 import config from '../../../config/config.js';
-import shouldResolve from './should-resolve.js';
 
-const exists = tasks => (
-  new Promise((resolve) => {
-    const keepTasks = [];
-    let checked = 0;
-    tasks.forEach((task) => {
-      fs.stat(`${config.workDir}${task}`, (err) => {
-        if (!err) {
-          keepTasks.push(task);
-        }
-        checked += 1;
-        shouldResolve(checked, tasks.length, keepTasks, resolve);
-      });
-    });
-  })
-);
+const exists = async (tasks) => {
+  const settled = await Promise.allSettled(
+    tasks.map(async task => fs.stat(`${config.workDir}${task}`)),
+  );
+  return tasks.filter((task, index) => settled[index].status === 'fulfilled');
+};
 
 export default exists;

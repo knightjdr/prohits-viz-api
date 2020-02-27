@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 
-import taskStatus from './task-status';
+import taskStatus from './task-status.js';
 
 jest.mock('../../../config/config', () => ({
   workDir: 'tmp/',
@@ -24,58 +24,27 @@ afterAll(() => {
 
 describe('Task status', () => {
   describe('no task IDs are requested', () => {
-    let status;
-
-    beforeAll(async (done) => {
-      taskStatus([])
-        .then((resolvedStatus) => {
-          status = resolvedStatus;
-          done();
-        });
-    });
-
-    it('should resolve with an empty list and status', () => {
-      const expected = { list: [], status: [] };
+    it('should resolve with an empty object', async () => {
+      const status = await taskStatus([]);
+      const expected = {};
       expect(status).toEqual(expected);
     });
   });
 
   describe('task IDs are requested', () => {
-    let status;
-
-    beforeAll(async (done) => {
-      taskStatus(['test1', 'test2', 'test3'])
-        .then((resolvedStatus) => {
-          status = resolvedStatus;
-          done();
-        });
-    });
-
-    it('should resolve with a list of tasks', () => {
-      const expected = ['test1', 'test2', 'test3'].sort();
-      expect(status.list.sort()).toEqual(expected);
-    });
-
-    it('should resolve with a list of task status', () => {
-      const expected = [
-        {
+    it('should resolve with updated status for tasks that exist', async () => {
+      const status = await taskStatus(['test1', 'test2', 'test3']);
+      const expected = {
+        test1: {
           date: 'today',
           status: 'running',
-          id: 'test1',
         },
-        {
+        test2: {
           date: 'yesterday',
           status: 'complete',
-          id: 'test2',
         },
-        {
-          date: '-',
-          id: 'test3',
-          status: 'error',
-        },
-      ];
-      const sorted = status.status.sort((a, b) => a.id.localeCompare(b.id));
-      expect(sorted).toEqual(expected);
+      };
+      expect(status).toEqual(expected);
     });
   });
 });
