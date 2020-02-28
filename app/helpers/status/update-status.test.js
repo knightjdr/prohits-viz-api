@@ -51,6 +51,7 @@ describe('Update status file', () => {
       fs.readFile('tmp/workDir1/status.json', 'utf8', (err, data) => {
         const expectedStatus = {
           date: new Date().toISOString(),
+          primaryFile: 'error',
           status: 'complete',
           files: [
             'error',
@@ -68,6 +69,7 @@ describe('Update status file', () => {
     it('should return status object', () => {
       const expected = {
         date: new Date().toISOString(),
+        primaryFile: 'error',
         status: 'complete',
         files: [
           'error',

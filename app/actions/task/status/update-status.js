@@ -9,7 +9,7 @@ const updateStatus = async (req, res) => {
     const { tasks } = req.params;
     const folders = await exists(tasks.split(';'));
     const taskStatus = await status(folders);
-    res.send({ status: taskStatus });
+    res.send({ tasks: taskStatus });
   } catch (error) {
     res.status(500);
     res.end();

@@ -6,7 +6,7 @@ jest.mock('./task-exists');
 jest.mock('./task-status');
 status.mockResolvedValue({
   test1: { date: 1, status: 'complete' },
-  test2: { date: 2,status: 'running' },
+  test2: { date: 2, status: 'running' },
 });
 
 const req = {
@@ -30,9 +30,9 @@ describe('Task information', () => {
 
     it('should send response with status status', () => {
       const expected = {
-        status: {
+        tasks: {
           test1: { date: 1, status: 'complete' },
-          test2: { date: 2,status: 'running' },
+          test2: { date: 2, status: 'running' },
         },
       };
       expect(res.send).toHaveBeenCalledWith(expected);

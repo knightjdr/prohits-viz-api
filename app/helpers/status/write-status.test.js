@@ -9,59 +9,84 @@ jest.mock('../files/write-file');
 const json = '{"primaryFile": "dotplot", "status": "running"}';
 
 describe('Write to status file', () => {
-  describe('when status file exists', () => {
-    const files = ['log'];
-    const status = 'complete';
-    let statusDetails;
+  describe('status file exists', () => {
+    describe('without primaryFile arg', () => {
+      const files = ['dotplot', 'log'];
+      const status = 'complete';
+      let statusDetails;
 
-    beforeAll(async () => {
-      readfile.mockResolvedValueOnce(json);
-      statusDetails = await writeStatus('workDir', status, files);
+      beforeAll(async () => {
+        readfile.mockResolvedValueOnce(json);
+        statusDetails = await writeStatus('workDir', status, files);
+      });
+
+      it('should call read file', () => {
+        expect(readfile).toHaveBeenCalledWith('workDir/status.json');
+      });
+
+      it('should call write file', () => {
+        const expected = JSON.stringify({
+          primaryFile: 'dotplot',
+          status,
+          files,
+        }, null, 2);
+        expect(writefile).toHaveBeenCalledWith('workDir/status.json', expected);
+      });
+
+      it('should return status object', () => {
+        const expected = {
+          primaryFile: 'dotplot',
+          status,
+          files,
+        };
+        expect(statusDetails).toEqual(expected);
+      });
     });
 
-    it('should call read file', () => {
-      expect(readfile).toHaveBeenCalledWith('workDir/status.json');
+    describe('with primaryFile arg', () => {
+      const files = ['error', 'log'];
+      const status = 'complete';
+
+      beforeAll(async () => {
+        readfile.mockResolvedValueOnce(json);
+        await writeStatus('workDir', status, files, 'error');
+      });
+
+      it('should call read file', () => {
+        expect(readfile).toHaveBeenCalledWith('workDir/status.json');
+      });
+
+      it('should call write file', () => {
+        const expectedStatus = JSON.stringify({
+          primaryFile: 'error',
+          status,
+          files,
+        }, null, 2);
+        expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
+      });
     });
 
-    it('should call write file', () => {
-      const expected = JSON.stringify({
-        primaryFile: 'dotplot',
-        status,
-        files,
-      }, null, 2);
-      expect(writefile).toHaveBeenCalledWith('workDir/status.json', expected);
-    });
+    describe('error file exists', () => {
+      const files = ['error', 'log'];
+      const status = 'complete';
 
-    it('should return status object', () => {
-      const expected = {
-        primaryFile: 'dotplot',
-        status,
-        files,
-      };
-      expect(statusDetails).toEqual(expected);
-    });
-  });
+      beforeAll(async () => {
+        readfile.mockResolvedValueOnce(json);
+        await writeStatus('workDir', status, files);
+      });
 
-  describe('when status file but primaryFile arg is defined', () => {
-    const files = ['log'];
-    const status = 'complete';
+      it('should call read file', () => {
+        expect(readfile).toHaveBeenCalledWith('workDir/status.json');
+      });
 
-    beforeAll(async () => {
-      readfile.mockResolvedValueOnce(json);
-      await writeStatus('workDir', status, files, 'error');
-    });
-
-    it('should call read file', () => {
-      expect(readfile).toHaveBeenCalledWith('workDir/status.json');
-    });
-
-    it('should call write file', () => {
-      const expectedStatus = JSON.stringify({
-        primaryFile: 'error',
-        status,
-        files,
-      }, null, 2);
-      expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
+      it('should call write file', () => {
+        const expectedStatus = JSON.stringify({
+          primaryFile: 'error',
+          status,
+          files,
+        }, null, 2);
+        expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
+      });
     });
   });
 
