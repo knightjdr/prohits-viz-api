@@ -11,7 +11,7 @@ import getNewsArticles from '../actions/news/get-news-articles.js';
 import updateStatus from '../actions/task/status/update-status.js';
 
 const get = (router) => {
-  router.get('/file/:file', downloadFile);
+  router.get('/file/:file(*)', downloadFile);
   router.get('/home/', noCacheClient, cacheAPI, getHomeContent);
   router.get('/news/', noCacheClient, cacheAPI, getNewsArticles);
   router.get('/news/:headline', noCacheClient, cacheAPI, getArticle);

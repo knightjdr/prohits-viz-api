@@ -1,8 +1,8 @@
 import gprofiler from './gprofiler/gprofiler.js';
 
 const analysis = (req, res) => {
-  const { type } = req.params;
-  switch (type) {
+  const { tool } = req.params;
+  switch (tool) {
     case 'go':
       gprofiler(req, res);
       break;
