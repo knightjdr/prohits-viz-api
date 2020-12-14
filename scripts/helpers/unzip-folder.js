@@ -1,15 +1,7 @@
 const extract = require('extract-zip');
 
-const unzipFolder = (zip, dest) => (
-  new Promise((resolve, reject) => {
-    extract(zip, { dir: dest }, (err) => {
-      if (!err) {
-        resolve();
-      } else {
-        reject(err);
-      }
-    });
-  })
-);
+const unzipFolder = async (zip, dest) => {
+  await extract(zip, { dir: dest });
+};
 
 module.exports = unzipFolder;

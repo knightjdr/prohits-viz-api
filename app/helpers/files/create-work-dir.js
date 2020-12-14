@@ -1,5 +1,5 @@
 import fs from 'fs';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 
 import config from '../../config/config.js';
 

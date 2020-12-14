@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 import fs from 'fs';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 
 import createWorkDir from './create-work-dir';
 
