@@ -70,3 +70,5 @@ tmp/
 scripts/interactors/downloads
 /files
 app/files
+
+**/*.swp
