@@ -4,11 +4,9 @@ const common = [
   'control',
   'ctrlSub',
   'logBase',
-  'minConditions',
   'mockConditionAbundance',
   'normalization',
   'normalizationReadout',
-  'parsimoniousReadoutFiltering',
   'readout',
   'readoutLength',
   'readoutLengthNorm',
@@ -19,6 +17,14 @@ const common = [
 ];
 
 const fields = {
+  'condition-condition': [
+    ...common,
+    'conditionX',
+    'conditionY',
+    'minAbundance',
+    'primaryFilter',
+    'secondaryFilter',
+  ],
   correlation: [
     ...common,
     'clustering',
@@ -31,6 +37,8 @@ const fields = {
     'distance',
     'fillColor',
     'ignoreSourceTargetMatches',
+    'minConditions',
+    'parsimoniousReadoutFiltering',
     'readoutAbundanceFilter',
     'readoutScoreFilter',
     'useReplicates',
@@ -48,12 +56,21 @@ const fields = {
     'edgeColor',
     'fillColor',
     'minAbundance',
+    'minConditions',
+    'parsimoniousReadoutFiltering',
     'primaryFilter',
     'readoutClustering',
     'readoutList',
     'secondaryFilter',
     'writeDistance',
     'writeHeatmap',
+  ],
+  specificity: [
+    ...common,
+    'minAbundance',
+    'minConditions',
+    'removeContaminants',
+    'specificityMetric',
   ],
 };
 

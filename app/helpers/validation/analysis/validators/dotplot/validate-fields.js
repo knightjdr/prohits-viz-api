@@ -3,9 +3,11 @@ import validateColor from '../../field-validation/color.js';
 import validateCommon, { getFieldValidator } from '../common/validate-fields.js';
 import validateClusteringMethod from '../../field-validation/clustering-method.js';
 import validateClusteringMetric from '../../field-validation/clustering-metric.js';
-import validateClusteringType, { validateConditionClustering, validateReadoutClustering } from '../../field-validation/clustering-type.js';
+import validateClusteringType,
+{ validateConditionClustering, validateReadoutClustering } from '../../field-validation/clustering-type.js';
+import validateMinCondition from '../../field-validation/min-conditions.js';
 
-const validateNoClusteringType = value => (
+const validateNoClusteringType = (value) => (
   criteria.isString(value) || Array.isArray(value)
 );
 
@@ -37,6 +39,10 @@ const validateFields = (type, value) => {
         return validateField(validateColor, 'invalid color');
       case 'minAbundance':
         return validateField(criteria.isNumber, 'should be a number');
+      case 'minConditions':
+        return validateField(validateMinCondition, 'should be a number > 0');
+      case 'parsimoniousReadoutFiltering':
+        return validateField(criteria.isBoolean, 'should be a boolean');
       case 'primaryFilter':
         return validateField(criteria.isNumber, 'should be a number');
       case 'readoutClustering':

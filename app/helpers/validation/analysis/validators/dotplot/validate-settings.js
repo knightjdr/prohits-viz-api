@@ -22,8 +22,8 @@ export const validateClustering = (currentValues, currentErrors) => {
   const reSeparator = new RegExp(/[\s,]+/);
 
   const parseList = (text) => {
-    const arr = text.trim().split(reSeparator).filter(string => string);
-    return removeDuplicates(arr.map(string => string.replace(reQuotes, '')));
+    const arr = text.trim().split(reSeparator).filter((string) => string);
+    return removeDuplicates(arr.map((string) => string.replace(reQuotes, '')));
   };
 
   if (validated.clustering === 'none' && validated.conditionClustering !== 'conditions') {

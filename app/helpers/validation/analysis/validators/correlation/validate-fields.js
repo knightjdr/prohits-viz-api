@@ -5,6 +5,7 @@ import validateClusteringMethod from '../../field-validation/clustering-method.j
 import validateClusteringMetric from '../../field-validation/clustering-metric.js';
 import validateClusteringType from '../../field-validation/clustering-type.js';
 import validateCorrelation from '../../field-validation/correlation.js';
+import validateMinCondition from '../../field-validation/min-conditions.js';
 
 const validateFields = (type, value) => {
   const validatedResult = validateCommon(type, value);
@@ -31,6 +32,10 @@ const validateFields = (type, value) => {
       case 'fillColor':
         return validateField(validateColor, 'invalid color');
       case 'ignoreSourceTargetMatches':
+        return validateField(criteria.isBoolean, 'should be a boolean');
+      case 'minConditions':
+        return validateField(validateMinCondition, 'should be a number > 0');
+      case 'parsimoniousReadoutFiltering':
         return validateField(criteria.isBoolean, 'should be a boolean');
       case 'readoutAbundanceFilter':
         return validateField(criteria.isNumber, 'should be a number');

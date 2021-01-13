@@ -1,10 +1,9 @@
 import criteria from '../../field-validation/criteria.js';
 import validateLogBase from '../../field-validation/log-base.js';
-import validateMinCondition from '../../field-validation/min-conditions.js';
 import validateNormalization from '../../field-validation/normalization.js';
 import validateScoreType from '../../field-validation/score-type.js';
 
-export const getFieldValidator = value => (validator, warning) => {
+export const getFieldValidator = (value) => (validator, warning) => {
   const [valid, validatedValue] = validator(value);
   if (valid) {
     return { value: validatedValue };
@@ -26,16 +25,12 @@ const validateCommon = (type, value) => {
       return validateField(criteria.isBoolean, 'should be a boolean');
     case 'logBase':
       return validateField(validateLogBase, `invalid base: ${value}`);
-    case 'minConditions':
-      return validateField(validateMinCondition, 'should be a number > 0');
     case 'mockConditionAbundance':
       return validateField(criteria.isBoolean, 'should be a boolean');
     case 'normalization':
       return validateField(validateNormalization, 'invalid value');
     case 'normalizationReadout':
       return validateField(criteria.isString, 'invalid value');
-    case 'parsimoniousReadoutFiltering':
-      return validateField(criteria.isBoolean, 'should be a boolean');
     case 'readout':
       return validateField(criteria.requiredString, 'missing column name');
     case 'readoutLength':

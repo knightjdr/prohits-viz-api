@@ -51,6 +51,12 @@ describe('Validate criteria', () => {
       expect(criteria.isString('a')).toEqual(expected);
     });
 
+    it('should validate empty string', () => {
+      const expected = [true, ''];
+
+      expect(criteria.isString('')).toEqual(expected);
+    });
+
     it('should invalidate other values', () => {
       const expected = [false, null];
 
