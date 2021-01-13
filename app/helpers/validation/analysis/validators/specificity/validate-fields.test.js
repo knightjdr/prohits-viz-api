@@ -4,14 +4,12 @@ describe('Validate dotplot analysis fields', () => {
   it('should validate acceptable fields', () => {
     const form = {
       minAbundance: '0',
-      minConditions: '1',
       primaryFilter: '0.01',
       specificityMetric: 'fe',
     };
 
     const expected = {
       minAbundance: 0,
-      minConditions: 1,
       primaryFilter: 0.01,
       specificityMetric: 'fe',
     };
@@ -24,14 +22,12 @@ describe('Validate dotplot analysis fields', () => {
   it('should invalidate unacceptable fields', () => {
     const form = {
       minAbundance: 'a',
-      minConditions: '0',
       primaryFilter: 'a',
       specificityMetric: 'metric',
     };
 
     const expected = {
       minAbundance: 'should be a number',
-      minConditions: 'should be a number > 0',
       primaryFilter: 'should be a number',
       specificityMetric: 'invalid metric: metric',
     };

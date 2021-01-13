@@ -1,6 +1,5 @@
 import criteria from '../../field-validation/criteria.js';
 import validateCommon, { getFieldValidator } from '../common/validate-fields.js';
-import validateMinCondition from '../../field-validation/min-conditions.js';
 
 const acceptedMetrics = ['fe', 'zscore', 'sscore', 'dscore', 'wdscore'];
 
@@ -20,8 +19,6 @@ const validateFields = (type, value) => {
     switch (type) {
       case 'minAbundance':
         return validateField(criteria.isNumber, 'should be a number');
-      case 'minConditions':
-        return validateField(validateMinCondition, 'should be a number > 0');
       case 'primaryFilter':
         return validateField(criteria.isNumber, 'should be a number');
       case 'specificityMetric':

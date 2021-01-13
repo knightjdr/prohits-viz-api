@@ -68,8 +68,6 @@ const fields = {
   specificity: [
     ...common,
     'minAbundance',
-    'minConditions',
-    'removeContaminants',
     'specificityMetric',
   ],
 };
