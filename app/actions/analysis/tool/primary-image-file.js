@@ -1,12 +1,14 @@
 const getPrimaryImageFile = (tool, settings) => {
-  switch (tool) {
-    case 'correlation':
-      return `${settings.readout}-${settings.readout}`;
-    case 'dotplot':
-      return 'dotplot';
-    default:
-      return '';
+  if (tool === 'condition-condition') {
+    return `${settings.condition}-${settings.condition}`;
+  } if (tool === 'correlation') {
+    return `${settings.readout}-${settings.readout}`;
+  } if (tool === 'dotplot') {
+    return 'dotplot';
+  } if (tool === 'specificity') {
+    return 'specificity';
   }
+  return '';
 };
 
 export default getPrimaryImageFile;
