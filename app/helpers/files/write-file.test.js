@@ -1,7 +1,7 @@
 import mockFS from 'mock-fs';
 import fs from 'fs';
 
-import writeFile from './write-file';
+import writeFile from './write-file.js';
 
 // Must mock file system after requires are complete.
 mockFS({});

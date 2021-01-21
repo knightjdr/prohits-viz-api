@@ -1,18 +1,13 @@
 import winston from 'winston';
 
 import config from '../../config/config.js';
+import getTimestamp from '../../utils/get-timestamp.js';
 
 // set env and log directory
 const env = process.env.NODE_ENV || 'development';
 const logDir = 'logs';
 
-// configure timestamp
-const tsOptions = {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-};
-const tsFormat = () => (new Date()).toLocaleTimeString('en-CA', tsOptions);
+const tsFormat = () => getTimestamp();
 
 const Logger = new (winston.createLogger)({
   exitOnError: false,
@@ -26,19 +21,15 @@ const Logger = new (winston.createLogger)({
     new winston.transports.File({
       filename: `${logDir}/${config.logPrefix}error.log`,
       level: 'error',
-      name: 'error-file',
     }),
     new winston.transports.File({
       filename: `${logDir}/${config.logPrefix}combined.log`,
-      name: 'log-file',
     }),
   ],
 });
 
 // In development environment don't log to files, just console.
 if (env === 'development') {
-  Logger.remove('error-file');
-  Logger.remove('log-file');
   Logger.add(new winston.transports.Console, {
     colorize: true,
     timestamp: tsFormat,

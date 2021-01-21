@@ -8,6 +8,7 @@ import noCacheClient from './middleware/no-cache.js';
 
 import exportImage from '../actions/export/export.js';
 import handleVizFile from '../actions/third-party/viz/handle-viz-file.js';
+import logClientError from '../actions/error/index.js';
 import sync from '../actions/sync/sync.js';
 import toolAnalysis from '../actions/analysis/tool/tool.js';
 import vizAnalysis from '../actions/analysis/viz/analysis.js';
@@ -17,6 +18,7 @@ const upload = multer({ dest: config.upload });
 const post = (router) => {
   router.post('/analysis/viz/:tool', getSocket, logTasks, vizAnalysis);
   router.post('/analysis/:tool', upload.array('file'), getSocket, logTasks, toolAnalysis);
+  router.post('/error/', logClientError);
   router.post('/export/', getSocket, exportImage);
   router.post('/sync/:snapshotID', noCacheClient, getSocket, sync);
   router.post('/third-party/viz', logTasks, handleVizFile);
