@@ -1,11 +1,12 @@
 import events from 'events';
-import socketIo from 'socket.io';
+import { Server as SocketIo } from 'socket.io';
 
-import configureSocket from './configure-socket';
+import configureSocket from './configure-socket.js';
 
-jest.mock('socket.io');
-const io = new events.EventEmitter();
-socketIo.mockReturnValue(io);
+const mockIO = new events.EventEmitter();
+jest.mock('socket.io', () => ({
+  Server: jest.fn().mockImplementation(() => mockIO),
+}));
 
 const app = {
   get: function getAppValue(key) {
@@ -19,12 +20,18 @@ const app = {
 describe('Configure socket', () => {
   describe('socket setup', () => {
     beforeAll(() => {
-      socketIo.mockClear();
+      SocketIo.mockClear();
       configureSocket(app, 'server');
     });
 
     it('should setup socket', () => {
-      expect(socketIo).toHaveBeenCalledWith('server', { path: '/ws' });
+      expect(SocketIo).toHaveBeenCalledWith(
+        'server',
+        {
+          cors: { origin: 'http://localhost:3000' },
+          path: '/ws',
+        },
+      );
     });
 
     it('should initialize sessions', () => {
@@ -32,7 +39,7 @@ describe('Configure socket', () => {
     });
 
     it('should define app socket', () => {
-      expect(app.socketio).toEqual(io);
+      expect(app.socketio).toEqual(mockIO);
     });
   });
 
@@ -44,7 +51,7 @@ describe('Configure socket', () => {
       client = new events.EventEmitter();
       client.emit = jest.fn();
       client.id = 'id1';
-      io.emit('connection', client);
+      mockIO.emit('connection', client);
     });
 
     it('should add socket ID to sessions on connection', () => {
@@ -64,7 +71,7 @@ describe('Configure socket', () => {
       app.sessions = [];
       client = new events.EventEmitter();
       client.id = 'id1';
-      io.emit('connection', client);
+      mockIO.emit('connection', client);
     });
 
     it('should add socket ID to sessions on connection', () => {

@@ -1,4 +1,4 @@
-import getSocket from './get-socket';
+import getSocket from './get-socket.js';
 
 describe('Get socket', () => {
   it('should add object to res locals', () => {
@@ -6,7 +6,9 @@ describe('Get socket', () => {
       app: {
         get: () => ({
           sockets: {
-            connected: { id: 'test' },
+            sockets: {
+              get: () => 'test',
+            },
           },
         }),
       },

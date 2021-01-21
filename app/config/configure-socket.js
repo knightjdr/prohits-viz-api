@@ -1,4 +1,4 @@
-import socketIo from 'socket.io';
+import { Server as SocketIo } from 'socket.io';
 
 const addSession = (app, id) => {
   app.set('sessions', [...app.get('sessions'), id]);
@@ -13,8 +13,20 @@ const removeSession = (app, id) => {
   }
 };
 
+const getCORSoptions = () => (
+  process.env.NODE_ENV === 'production'
+    ? { origin: 'https://prohits-viz.org' }
+    : { origin: 'http://localhost:3000' }
+);
+
 const configureSocket = (app, server) => {
-  const io = socketIo(server, { path: '/ws' });
+  const io = new SocketIo(
+    server,
+    {
+      cors: getCORSoptions(),
+      path: '/ws',
+    },
+  );
 
   app.set('sessions', []);
 
