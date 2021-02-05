@@ -1,76 +1,72 @@
 {
-	"columns": {
-		"names": [
-			"ANKRD28",
-			"PPP6R3",
-			"PPP6R2"
-		]
-	},
+	"columnDB": [
+    "ANKRD28",
+    "PPP6R3",
+    "PPP6R2"
+  ],
 	"parameters": {
 		"imageType": "dotplot"
-	},
-	"rows": {
-		"list": [
-			{
-				"data": [
-					{
-						"ratio": 1,
-						"score": 0,
-						"value": 165.46
-					},
-					{
-						"ratio": 0.14,
-						"score": 0,
-						"value": 22.96
-					},
-					{
-						"ratio": 0.16,
-						"score": 0,
-						"value": 25.96
-					}
-				],
-				"name": "PPP6R1"
-			},
-			{
-				"data": [
-					{
-						"ratio": 1,
-						"score": 0,
-						"value": 73.39
-					},
-					{
-						"ratio": 0,
-						"score": 0.92,
-						"value": 0
-					},
-					{
-						"ratio": 0,
-						"score": 0.92,
-						"value": 0
-					}
-				],
-				"name": "PPP1R9B"
-			},
-			{
-				"data": [
-					{
-						"ratio": 1,
-						"score": 0,
-						"value": 137.18
-					},
-					{
-						"ratio": 0.66,
-						"score": 0,
-						"value": 90.18
-					},
-					{
-						"ratio": 0.64,
-						"score": 0,
-						"value": 87.68
-					}
-				],
-				"name": "PPP6C"
-			}
-		]
-	}
+  },
+  "rowDB": [
+    {
+      "data": [
+        {
+          "ratio": 1,
+          "score": 0,
+          "value": 165.46
+        },
+        {
+          "ratio": 0.14,
+          "score": 0,
+          "value": 22.96
+        },
+        {
+          "ratio": 0.16,
+          "score": 0,
+          "value": 25.96
+        }
+      ],
+      "name": "PPP6R1"
+    },
+    {
+      "data": [
+        {
+          "ratio": 1,
+          "score": 0,
+          "value": 73.39
+        },
+        {
+          "ratio": 0,
+          "score": 0.92,
+          "value": 0
+        },
+        {
+          "ratio": 0,
+          "score": 0.92,
+          "value": 0
+        }
+      ],
+      "name": "PPP1R9B"
+    },
+    {
+      "data": [
+        {
+          "ratio": 1,
+          "score": 0,
+          "value": 137.18
+        },
+        {
+          "ratio": 0.66,
+          "score": 0,
+          "value": 90.18
+        },
+        {
+          "ratio": 0.64,
+          "score": 0,
+          "value": 87.68
+        }
+      ],
+      "name": "PPP6C"
+    }
+  ]
 }

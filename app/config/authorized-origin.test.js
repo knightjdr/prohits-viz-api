@@ -1,8 +1,7 @@
-import checkUserAuth from '../helpers/third-party/check-user-auth';
-import { isRequestAuthorized } from './authorized-origin';
+import checkUserAuth from '../helpers/third-party/check-user-auth.js';
+import { isRequestAuthorized } from './authorized-origin.js';
 
 jest.mock('../helpers/third-party/check-user-auth');
-
 
 const req = {
   app: {
@@ -19,7 +18,7 @@ describe('Check if request is authorized', () => {
       ...req,
       method: 'GET',
     };
-    expect(isRequestAuthorized(request)).toBeTruthy();
+    return expect(isRequestAuthorized(request)).resolves.toBeTruthy();
   });
 
   describe('POST requests', () => {
@@ -30,7 +29,7 @@ describe('Check if request is authorized', () => {
       };
       const sessions = ['session-1', 'session-2', 'session-3'];
       const sessionID = 'session-2';
-      expect(isRequestAuthorized(request, sessions, sessionID)).toBeTruthy();
+      return expect(isRequestAuthorized(request, sessions, sessionID)).resolves.toBeTruthy();
     });
 
     it('should not authorize a request with a invalid session ID', () => {
@@ -40,7 +39,7 @@ describe('Check if request is authorized', () => {
       };
       const sessions = ['session-1', 'session-2', 'session-3'];
       const sessionID = 'session-4';
-      expect(isRequestAuthorized(request, sessions, sessionID)).toBeFalsy();
+      return expect(isRequestAuthorized(request, sessions, sessionID)).resolves.toBeFalsy();
     });
   });
 
@@ -53,7 +52,7 @@ describe('Check if request is authorized', () => {
         originalUrl: 'third-party',
       };
       const sessions = [];
-      expect(isRequestAuthorized(request, sessions)).toBeTruthy();
+      return expect(isRequestAuthorized(request, sessions)).resolves.toBeTruthy();
     });
 
     it('should not authorize a third party with invalid credentials', () => {
@@ -64,7 +63,7 @@ describe('Check if request is authorized', () => {
         originalUrl: 'third-party',
       };
       const sessions = [];
-      expect(isRequestAuthorized(request, sessions)).toBeFalsy();
+      return expect(isRequestAuthorized(request, sessions)).resolves.toBeFalsy();
     });
 
     it('should not authorize a third party with an invalid url', () => {
@@ -75,7 +74,7 @@ describe('Check if request is authorized', () => {
         originalUrl: 'some-other-route',
       };
       const sessions = [];
-      expect(isRequestAuthorized(request, sessions)).toBeFalsy();
+      return expect(isRequestAuthorized(request, sessions)).resolves.toBeFalsy();
     });
   });
 
@@ -85,7 +84,7 @@ describe('Check if request is authorized', () => {
       method: 'INSERT',
     };
     const sessions = [];
-    expect(isRequestAuthorized(request, sessions)).toBeFalsy();
+    return expect(isRequestAuthorized(request, sessions)).resolves.toBeFalsy();
   });
 
   it('should not authorize DELETE method', () => {
@@ -94,6 +93,6 @@ describe('Check if request is authorized', () => {
       method: 'DELETE',
     };
     const sessions = [];
-    expect(isRequestAuthorized(request, sessions)).toBeFalsy();
+    return expect(isRequestAuthorized(request, sessions)).resolves.toBeFalsy();
   });
 });

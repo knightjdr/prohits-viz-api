@@ -1,9 +1,9 @@
 import mockFS from 'mock-fs';
 import fs from 'fs';
 
-import createWorkDir from '../../../helpers/files/create-work-dir';
-import handleVizFile from './handle-viz-file';
-import validate from './validate';
+import createWorkDir from '../../../helpers/files/create-work-dir.js';
+import handleVizFile from './handle-viz-file.js';
+import validate from './validate.js';
 
 jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('./validate');
@@ -19,7 +19,6 @@ const req = {
   body: {},
 };
 const res = {
-  end: jest.fn(),
   send: jest.fn(),
   status: jest.fn(),
 };
@@ -30,16 +29,13 @@ afterAll(() => {
 
 describe('Third party viz', () => {
   describe('with validation error', () => {
-    beforeAll(async (done) => {
-      res.end.mockClear();
+    beforeAll(async () => {
+      res.send.mockClear();
       res.status.mockClear();
-      validate.mockReturnValue({
-        err: 'Invalid file format',
+      validate.mockImplementation(() => {
+        throw new Error('error');
       });
-      handleVizFile(req, res)
-        .then(() => {
-          done();
-        });
+      await handleVizFile(req, res);
     });
 
     it('should set response status', () => {
@@ -47,24 +43,19 @@ describe('Third party viz', () => {
     });
 
     it('should send response', () => {
-      expect(res.send).toHaveBeenCalledWith({ message: 'Invalid file format' });
+      expect(res.send).toHaveBeenCalledWith({ message: 'Error: error' });
     });
   });
 
   describe('with validate data', () => {
-    beforeAll(async (done) => {
-      res.end.mockClear();
+    beforeAll(async () => {
+      res.send.mockClear();
       res.status.mockClear();
       validate.mockReturnValue({
-        json: {
-          parameters: { imageType: 'dotplot' },
-        },
+        parameters: { imageType: 'dotplot' },
       });
       createWorkDir.mockResolvedValue('tmp/test1');
-      handleVizFile(req, res)
-        .then(() => {
-          done();
-        });
+      await handleVizFile(req, res);
     });
 
     it('should create interactive subfolder', async (done) => {
@@ -86,27 +77,6 @@ describe('Third party viz', () => {
 
     it('should send response with url', () => {
       expect(res.send).toHaveBeenCalledWith({ url: 'http://localhost:3000/visualization/test1/dotplot' });
-    });
-  });
-
-  describe('unsuccessful submission', () => {
-    beforeAll(async (done) => {
-      res.end.mockClear();
-      res.status.mockClear();
-      validate.mockReturnValue({});
-      createWorkDir.mockRejectedValue();
-      handleVizFile(req, res)
-        .then(() => {
-          done();
-        });
-    });
-
-    it('should set response status', () => {
-      expect(res.status).toHaveBeenCalledWith(500);
-    });
-
-    it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
     });
   });
 });

@@ -7,7 +7,7 @@ export const forbidden = (res) => {
 
 const urlRE = new RegExp(/third-party/);
 
-export const isRequestAuthorized = (req, sessions, sessionID) => (
+export const isRequestAuthorized = async (req, sessions, sessionID) => (
   req.method === 'GET'
   || (
     req.method === 'POST'
@@ -25,7 +25,7 @@ export const isRequestAuthorized = (req, sessions, sessionID) => (
 export const isOriginAuthorized = async (req, res, next) => {
   const sessionID = req.get('session');
   const sessions = req.app.get('sessions');
-  if (isRequestAuthorized(req, sessions, sessionID)) {
+  if (await isRequestAuthorized(req, sessions, sessionID)) {
     next();
   } else {
     forbidden(res);
