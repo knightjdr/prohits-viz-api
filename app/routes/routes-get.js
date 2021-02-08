@@ -2,6 +2,7 @@ import cacheAPI from './middleware/cache-route.js';
 import messages from './route-messages.js';
 import noCacheClient from './middleware/no-cache.js';
 
+import downloadDataFile from '../actions/file/download-data-file.js';
 import downloadFile from '../actions/file/download-file.js';
 import downloadFolder from '../actions/task/download/download-folder.js';
 import downloadTaskFile from '../actions/task/download/download-task-file.js';
@@ -11,6 +12,7 @@ import getNewsArticles from '../actions/news/get-news-articles.js';
 import updateStatus from '../actions/task/status/update-status.js';
 
 const get = (router) => {
+  router.get('/data/:file', downloadDataFile);
   router.get('/file/:file(*)', downloadFile);
   router.get('/home/', noCacheClient, cacheAPI, getHomeContent);
   router.get('/news/', noCacheClient, cacheAPI, getNewsArticles);

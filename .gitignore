@@ -67,6 +67,7 @@ app/config/config.js
 tmp/
 
 # download folders
+scripts/expression/downloads
 scripts/interactors/downloads
 /files
 app/files
