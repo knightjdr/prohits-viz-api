@@ -1,8 +1,7 @@
 import mockFS from 'mock-fs';
 import fs from 'fs';
 
-
-import moveFiles from './move-files';
+import moveFiles from './move-files.js';
 
 jest.mock('../../config/config', () => ({
   samplefile: 'sample-files/analysis-file.txt',
@@ -35,7 +34,7 @@ describe('Move files for analysis', () => {
       const files = [
         { originalname: 'samplefile.txt', path: '' },
       ];
-      await moveFiles(files, 'tmp/workDir', 'true');
+      await moveFiles(files, 'tmp/workDir/files', 'true');
     });
 
     it('should copy sample file to working directory', () => {
@@ -60,7 +59,7 @@ describe('Move files for analysis', () => {
       const files = [
         { originalname: 'samplefile.txt', path: 'tmp/uploads/sample-file.txt' },
       ];
-      await moveFiles(files, 'tmp/workDir');
+      await moveFiles(files, 'tmp/workDir/files');
     });
 
     it('should put user file in working directory', async () => {
@@ -87,7 +86,7 @@ describe('Move files for analysis', () => {
           { originalname: 'userfile1.txt', path: 'tmp/uploads/uploaded-file1.txt' },
           { originalname: 'userfile2.txt', path: 'tmp/uploads/uploaded-file2.txt' },
         ];
-        await moveFiles(files, 'tmp/workDir');
+        await moveFiles(files, 'tmp/workDir/files');
       });
 
       it('should put user file 1 in working directory', async () => {
@@ -112,7 +111,7 @@ describe('Move files for analysis', () => {
       const files = [
         { originalname: 'userfile3.txt', path: 'tmp/uploads/uploaded-file3.txt' },
       ];
-      await expect(moveFiles(files, 'tmp/workDir')).rejects.toThrowError(expectedError);
+      await expect(moveFiles(files, 'tmp/workDir/files')).rejects.toThrowError(expectedError);
     });
   });
 });

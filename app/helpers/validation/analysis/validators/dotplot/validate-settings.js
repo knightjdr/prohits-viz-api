@@ -1,18 +1,7 @@
 import removeDuplicates from '../../../../../utils/remove-duplicates.js';
-import validateControl from '../../field-validation/control.js';
-import validateReadoutLength from '../../field-validation/readout-length.js';
-import { validateNormalizationSetting } from '../../field-validation/normalization.js';
-
-export const validateAbundanceFilters = (currentValues, currentErrors) => {
-  const errors = { ...currentErrors };
-  const validated = { ...currentValues };
-
-  if (validated.abundanceCap <= validated.minAbundance) {
-    errors.abundanceCap = 'should be greater than minimum abundance';
-  }
-
-  return [validated, errors];
-};
+import validateAbundanceFilters from '../../field-validation/abundance-filters.js';
+import validateCommonSettings from '../common/validate-settings.js';
+import validateScoreFilters from '../../field-validation/score-filters.js';
 
 export const validateClustering = (currentValues, currentErrors) => {
   const errors = { ...currentErrors };
@@ -45,34 +34,12 @@ export const validateClustering = (currentValues, currentErrors) => {
   return [validated, errors];
 };
 
-export const validateScoreFilters = (currentValues, currentErrors) => {
-  const errors = { ...currentErrors };
-  const validated = { ...currentValues };
-
-  if (
-    validated.scoreType === 'lte'
-    && validated.secondaryFilter < validated.primaryFilter
-  ) {
-    errors.secondaryFilter = 'should be greater than or equal to primary filter';
-  } if (
-    validated.scoreType === 'gte'
-    && validated.secondaryFilter > validated.primaryFilter
-  ) {
-    errors.secondaryFilter = 'should be less than or equal to primary filter';
-  }
-
-  return [validated, errors];
-};
-
 const validateSettings = (settings) => {
-  const validated = { values: { ...settings } };
+  const validated = validateCommonSettings(settings);
 
   [validated.values, validated.errors] = validateAbundanceFilters(validated.values, validated.errors);
   [validated.values, validated.errors] = validateClustering(validated.values, validated.errors);
-  [validated.values, validated.errors] = validateControl(validated.values, validated.errors);
-  [validated.values, validated.errors] = validateNormalizationSetting(validated.values, validated.errors);
   [validated.values, validated.errors] = validateScoreFilters(validated.values, validated.errors);
-  [validated.values, validated.errors] = validateReadoutLength(validated.values, validated.errors);
 
   return validated;
 };

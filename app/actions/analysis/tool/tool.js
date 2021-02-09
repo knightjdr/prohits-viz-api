@@ -28,13 +28,14 @@ const runToolAnalysis = async (req, res) => {
     const { socket } = res.locals;
     const { tool } = req.params;
 
-    const { values: validatedForm, errors } = validate(tool, req.body, req.files);
+    const { values: validatedForm, errors } = validate(tool, req.body, req.files.file);
     if (Object.keys(errors).length > 0) {
       res.status(422);
       res.send({ errors });
     } else {
       validatedForm.type = tool;
-      validatedForm.files = req.files.map(file => `files/${file.originalname}`);
+      validatedForm.files = req.files.file.map(file => `files/${file.originalname}`);
+      validatedForm.helperFiles = req.files.helperFile?.map(file => `helper-files/${file.originalname}`);
 
       const workDir = await getWorkDir();
       const taskID = path.basename(workDir);
@@ -42,19 +43,20 @@ const runToolAnalysis = async (req, res) => {
       res.send({ id: taskID, tool });
 
       await Promise.all([
-        createDirs(workDir, ['files']),
+        createDirs(workDir, ['files', 'helper-files']),
         createStatus(workDir, tool, definePrimaryImageFile(tool, validatedForm)),
       ]);
 
       await Promise.all([
-        moveFiles(req.files, workDir, validatedForm.sampleFile),
+        moveFiles(req.files.file, `${workDir}/files`, validatedForm.sampleFile),
+        moveFiles(req.files.helperFile, `${workDir}/helper-files`),
         writeFile(`${workDir}/settings.json`, JSON.stringify(validatedForm, null, 2)),
       ]);
 
       await spawnTask(workDir);
       const [status] = await Promise.all([
         updateStatus(workDir),
-        deleteDirs(workDir, ['files']),
+        deleteDirs(workDir, ['files', 'helper-files']),
       ]);
 
       socket.emit(

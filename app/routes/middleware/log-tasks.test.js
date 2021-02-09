@@ -23,9 +23,11 @@ describe('Log tasks', () => {
         insert.mockClear();
         next.mockClear();
         const req = {
-          files: [
-            { originalname: 'file1.txt', size: 1000 },
-          ],
+          files: {
+            file: [
+              { originalname: 'file1.txt', size: 1000 },
+            ],
+          },
           params: { tool: 'dotplot' },
           path: '/analysis/dotplot',
         };
@@ -55,9 +57,11 @@ describe('Log tasks', () => {
         next.mockClear();
         const req = {
           get: () => 'test.org',
-          files: [
-            { originalname: 'file1.txt', size: 1000 },
-          ],
+          files: {
+            file: [
+              { originalname: 'file1.txt', size: 1000 },
+            ],
+          },
           params: undefined,
           path: '/analysis/dotplot',
         };
@@ -88,9 +92,11 @@ describe('Log tasks', () => {
       next.mockClear();
       const req = {
         get: () => 'test.org',
-        files: [
-          { originalname: 'samplefile.txt', size: 0 },
-        ],
+        files: {
+          file: [
+            { originalname: 'samplefile.txt', size: 0 },
+          ],
+        },
         params: { tool: 'dotplot' },
         path: '/analysis/dotplot',
       };
@@ -120,11 +126,13 @@ describe('Log tasks', () => {
       next.mockClear();
       const req = {
         get: () => 'test.org',
-        files: [
-          { originalname: 'samplefile.txt', size: 0 },
-          { originalname: 'file1.txt', size: 1000 },
-          { originalname: 'file2.txt', size: 1000 },
-        ],
+        files: {
+          file: [
+            { originalname: 'samplefile.txt', size: 0 },
+            { originalname: 'file1.txt', size: 1000 },
+            { originalname: 'file2.txt', size: 1000 },
+          ],
+        },
         params: { tool: 'dotplot' },
         path: '/analysis/dotplot',
       };

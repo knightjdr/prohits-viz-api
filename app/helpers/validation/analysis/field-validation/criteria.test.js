@@ -1,6 +1,29 @@
 import criteria from './criteria.js';
 
 describe('Validate criteria', () => {
+  describe('array', () => {
+    it('should validate an array and return stringified form', () => {
+      const value = ['a'];
+      const expected = [true, '["a"]'];
+
+      expect(criteria.isArray(value)).toEqual(expected);
+    });
+
+    it('should validate a stringified array and return actual array', () => {
+      const value = '["a"]';
+      const expected = [true, ['a']];
+
+      expect(criteria.isArray(value)).toEqual(expected);
+    });
+
+    it('should invalidate other values', () => {
+      const expected = [false, null];
+
+      expect(criteria.isBoolean('a')).toEqual(expected);
+      expect(criteria.isBoolean({})).toEqual(expected);
+    });
+  });
+
   describe('booleans', () => {
     it('should validate truthy values', () => {
       const expected = [true, true];

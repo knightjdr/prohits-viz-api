@@ -17,6 +17,7 @@ jest.mock('../../../helpers/validation/analysis/validate');
 const mockedFileSystem = {
   tmp: {
     uploads: {
+      'helper-file.txt': '',
       'temp.txt': '',
     },
     taskID: {
@@ -57,7 +58,9 @@ describe('Run analysis', () => {
     beforeAll(async () => {
       const req = {
         body: {},
-        files: [],
+        files: {
+          file: [],
+        },
         params: { tool: 'dotplot' },
       };
 
@@ -82,12 +85,20 @@ describe('Run analysis', () => {
   describe('successful run', () => {
     const req = {
       body: { sampleFile: 'false' },
-      files: [
-        {
-          originalname: 'file1.txt',
-          path: 'tmp/uploads/temp.txt',
-        },
-      ],
+      files: {
+        file: [
+          {
+            originalname: 'file1.txt',
+            path: 'tmp/uploads/temp.txt',
+          },
+        ],
+        helperFile: [
+          {
+            originalname: 'file2.txt',
+            path: 'tmp/uploads/helper-file.txt',
+          },
+        ],
+      },
       params: { tool: 'dotplot' },
     };
 
@@ -108,7 +119,7 @@ describe('Run analysis', () => {
     });
 
     it('should validate form', () => {
-      expect(validate).toHaveBeenCalledWith('dotplot', req.body, req.files);
+      expect(validate).toHaveBeenCalledWith('dotplot', req.body, req.files.file);
     });
 
     it('should send response', () => {
@@ -117,6 +128,13 @@ describe('Run analysis', () => {
 
     it('should create subdirectory for files', async (done) => {
       fs.stat('tmp/taskID/files/', (err) => {
+        expect(err).toBeNull();
+        done();
+      });
+    });
+
+    it('should create subdirectory for helper files', async (done) => {
+      fs.stat('tmp/taskID/helper-files/', (err) => {
         expect(err).toBeNull();
         done();
       });
@@ -136,8 +154,22 @@ describe('Run analysis', () => {
       });
     });
 
+    it('should move helper file', async (done) => {
+      fs.stat('tmp/uploads/helper-file.txt', (err) => {
+        expect(err).not.toBeNull();
+        done();
+      });
+    });
+
     it('should place upload file in files directory', async (done) => {
       fs.stat('tmp/taskID/files/file1.txt', (err) => {
+        expect(err).toBeNull();
+        done();
+      });
+    });
+
+    it('should place helper file in helper-files directory', async (done) => {
+      fs.stat('tmp/taskID/helper-files/file2.txt', (err) => {
         expect(err).toBeNull();
         done();
       });
@@ -148,7 +180,7 @@ describe('Run analysis', () => {
     });
 
     it('should call delete directories', () => {
-      expect(deleteDirs).toHaveBeenCalledWith('tmp/taskID', ['files']);
+      expect(deleteDirs).toHaveBeenCalledWith('tmp/taskID', ['files', 'helper-files']);
     });
 
     it('should update status file to indicate completion', async (done) => {
@@ -185,7 +217,9 @@ describe('Run analysis', () => {
     beforeAll(async () => {
       const req = {
         body: {},
-        files: [],
+        files: {
+          file: [],
+        },
         params: { tool: 'dotplot' },
       };
 

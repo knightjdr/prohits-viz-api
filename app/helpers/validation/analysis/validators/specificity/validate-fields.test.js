@@ -1,6 +1,6 @@
 import validateSpecificity from './validate-fields.js';
 
-describe('Validate dotplot analysis fields', () => {
+describe('Validate scv analysis fields', () => {
   it('should validate acceptable fields', () => {
     const form = {
       minAbundance: '0',

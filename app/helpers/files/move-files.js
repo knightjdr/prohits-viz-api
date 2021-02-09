@@ -14,10 +14,10 @@ const defineMethodAndPath = (file, useSample) => (
     }
 );
 
-const moveFile = (workdir, file, useSample) => (
+const moveFile = (dest, file, useSample) => (
   new Promise((resolve, reject) => {
     const options = defineMethodAndPath(file, useSample);
-    fs[options.method](options.filePath, `${workdir}/files/${file.originalname}`, (err) => {
+    fs[options.method](options.filePath, `${dest}/${file.originalname}`, (err) => {
       if (err) {
         reject(new Error(`Error moving file ${file.originalname} to task directory`));
       } else {
@@ -30,8 +30,8 @@ const moveFile = (workdir, file, useSample) => (
 /* Transfer files from upload folder to working directory.
 ** If a file is called 'samplefile.txt', use the sample file
 ** instead of the actual input file.path */
-const moveFiles = async (files, workDir, useSample = false) => {
-  const promises = files.map(async file => moveFile(workDir, file, useSample));
+const moveFiles = async (files, dest, useSample = false) => {
+  const promises = files?.map(async file => moveFile(dest, file, useSample));
   return Promise.all(promises);
 };
 
