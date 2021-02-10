@@ -2,9 +2,9 @@ import criteria from './criteria.js';
 
 describe('Validate criteria', () => {
   describe('array', () => {
-    it('should validate an array and return stringified form', () => {
+    it('should validate an array', () => {
       const value = ['a'];
-      const expected = [true, '["a"]'];
+      const expected = [true, ['a']];
 
       expect(criteria.isArray(value)).toEqual(expected);
     });

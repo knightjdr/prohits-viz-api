@@ -3,7 +3,7 @@ import parseIfJSON from '../../../../utils/parse-if-json.js';
 const criteria = {
   isArray: (value) => {
     if (Array.isArray(value)) {
-      return [true, JSON.stringify(value)];
+      return [true, value];
     }
 
     const parsed = parseIfJSON(value);

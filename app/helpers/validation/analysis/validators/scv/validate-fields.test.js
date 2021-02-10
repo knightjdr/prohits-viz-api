@@ -26,10 +26,10 @@ describe('Validate scv analysis fields', () => {
       known: 'interaction',
       minAbundance: 0,
       primaryFilter: 0.01,
-      proteinTissues: '[]',
+      proteinTissues: [],
       readoutIDType: 'entrez',
       readoutMapColumn: '',
-      rnaTissues: '[]',
+      rnaTissues: [],
       specificity: true,
       verticalHeatmap: false,
     };

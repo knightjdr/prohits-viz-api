@@ -11,12 +11,21 @@ export const getFieldValidator = (value) => (validator, warning) => {
   return { error: warning };
 };
 
+export const validateAbundance = (value) => {
+  if (typeof value === 'string') {
+    return criteria.requiredString(value);
+  } if (Array.isArray(value) && value.length > 0) {
+    return [true, value];
+  }
+  return [false, null];
+};
+
 const validateCommon = (type, value) => {
   const validateField = getFieldValidator(value);
 
   switch (type) {
     case 'abundance':
-      return validateField(criteria.requiredString, 'missing column name');
+      return validateField(validateAbundance, 'missing column name');
     case 'condition':
       return validateField(criteria.requiredString, 'missing column name');
     case 'control':
@@ -30,7 +39,9 @@ const validateCommon = (type, value) => {
     case 'normalization':
       return validateField(validateNormalization, 'invalid value');
     case 'normalizationReadout':
-      return validateField(criteria.isString, 'invalid value');
+      return validateField(criteria.isString, 'should be a string');
+    case 'otherAbundance':
+      return validateField(criteria.isArray, 'should be an array');
     case 'readout':
       return validateField(criteria.requiredString, 'missing column name');
     case 'readoutLength':

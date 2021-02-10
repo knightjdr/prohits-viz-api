@@ -1,4 +1,4 @@
-import validateCommon from './validate-fields.js';
+import validateCommon, { validateAbundance } from './validate-fields.js';
 
 describe('Validate common analysis fields', () => {
   it('should validate acceptable fields', () => {
@@ -70,7 +70,7 @@ describe('Validate common analysis fields', () => {
       logBase: 'invalid base: 3',
       mockConditionAbundance: 'should be a boolean',
       normalization: 'invalid value',
-      normalizationReadout: 'invalid value',
+      normalizationReadout: 'should be a string',
       readout: 'missing column name',
       readoutLength: 'missing column name',
       readoutLengthNorm: 'should be a boolean',
@@ -87,5 +87,25 @@ describe('Validate common analysis fields', () => {
 
   it('should return null for unknown field', () => {
     expect(validateCommon('unknown', '1')).toBeNull();
+  });
+
+  describe('abundance', () => {
+    it('should validate string value', () => {
+      const value = 'abundance';
+      const expected = [true, 'abundance'];
+      expect(validateAbundance(value)).toEqual(expected);
+    });
+
+    it('should validate an array', () => {
+      const value = ['abundance'];
+      const expected = [true, ['abundance']];
+      expect(validateAbundance(value)).toEqual(expected);
+    });
+
+    it('should invalidate an object', () => {
+      const value = { abundance: true };
+      const expected = [false, null];
+      expect(validateAbundance(value)).toEqual(expected);
+    });
   });
 });
