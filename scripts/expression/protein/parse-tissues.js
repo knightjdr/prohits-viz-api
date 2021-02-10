@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import readJSON from '../../utils/read-json.js';
 import sortArray from '../../utils/sort-array-strings.js';
 
@@ -11,28 +9,26 @@ const formatCellName = (originalName) => {
   return cellName.replace(mongoKeyRE, '_');
 };
 
-const parseTissues = (infile, outfile, flags) => (
-  new Promise((resolve) => {
-    const tissues = {};
-    const stream = fs.createWriteStream(outfile, { flags });
+const parseTissues = async (infile) => {
+  const expression = {};
+  const tissues = {};
 
-    readJSON(infile)
-      .then((json) => {
-        json.d.results.forEach((sample) => {
-          const { NORMALIZED_INTENSITY, TISSUE_NAME, UNIPROT_ACCESSION } = sample;
-          const cell = formatCellName(TISSUE_NAME);
-          tissues[cell] = true;
-          stream.write(`${UNIPROT_ACCESSION}\t${cell}\t${NORMALIZED_INTENSITY}\n`);
-        });
+  const json = await readJSON(infile);
+  json.d.results.forEach((sample) => {
+    const { NORMALIZED_INTENSITY: intensity, TISSUE_NAME: tissue, UNIPROT_ACCESSION: id } = sample;
+    const cell = formatCellName(tissue);
+    tissues[cell] = true;
 
-        stream.end();
-        stream.on('finish', () => {
-          const tissueArr = Object.keys(tissues);
-          sortArray(tissueArr);
-          resolve(tissueArr);
-        });
-      });
-  })
-);
+    if (!expression[id]) {
+      expression[id] = {};
+    }
+    expression[id][cell] = Number(intensity);
+  });
+
+  const tissueArr = Object.keys(tissues);
+  sortArray(tissueArr);
+
+  return { expression, tissues: tissueArr };
+};
 
 export default parseTissues;

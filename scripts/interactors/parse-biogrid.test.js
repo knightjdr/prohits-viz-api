@@ -1,18 +1,15 @@
-const mockFS = require('mock-fs');
-const fs = require('fs');
+import mockFS from 'mock-fs';
 
-const parseBiogrid = require('./parse-biogrid');
+import parseBiogrid from './parse-biogrid.js';
 
-const infile = `1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17
-x\tx\tx\tx\tx\tx\tx\tA\tB\tx\tx\tx\tx\tx\tx\t9606\t9606
-x\tx\tx\tx\tx\tx\tx\tC\tD\tx\tx\tx\tx\tx\tx\t9606\t9606\n`;
-const expected = `A\tB\tHomo sapiens\tHomo sapiens
-C\tD\tHomo sapiens\tHomo sapiens\n`;
-const taxon = {
-  9606: 'Homo sapiens',
-  10000: 'Misc species',
-};
+const createTabs = () => '\t'.repeat(33);
 
+const infile = `interaction ID\tentrez ID A\tentrez IDB${createTabs()}species A\tspecies B
+1\t111\t222${createTabs()}9606\t9606
+2\t333\t444${createTabs()}9606\t9606
+2\t111\t444${createTabs()}9606\t1000
+2\t222\t444${createTabs()}1000\t9606
+2\t111\t333${createTabs()}9606\t9606\n`;
 
 const mockedFileSystem = {
   'biogridFile.txt': infile,
@@ -24,19 +21,15 @@ afterAll(() => {
 });
 
 describe('Parse biogrid', () => {
-  let species;
+  it('should parse biogrid file', async () => {
+    const interactions = await parseBiogrid('./biogridFile.txt');
 
-  beforeAll(async (done) => {
-    species = await parseBiogrid(taxon, './biogridFile.txt', './parsed.txt');
-    done();
-  });
-
-  it('should parse biogrid file', () => {
-    const data = fs.readFileSync('./parsed.txt', 'utf8');
-    expect(data).toEqual(expected);
-  });
-
-  it('should return a list of species', () => {
-    expect(species).toEqual({ 'Homo sapiens': 1 });
+    const expected = {
+      111: { 222: 1, 333: 1 },
+      222: { 111: 1 },
+      333: { 111: 1, 444: 1 },
+      444: { 333: 1 },
+    };
+    expect(interactions).toEqual(expected);
   });
 });

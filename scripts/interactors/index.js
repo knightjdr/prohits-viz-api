@@ -1,41 +1,19 @@
 /* eslint no-console: 0 */
 
-const download = require('./download');
-const parseBiogrid = require('./parse-biogrid');
-const parseIntact = require('./parse-intact');
-const parseTaxonomy = require('./parse-taxonomy');
-const sortArray = require('../helpers/sort-array-strings');
-const writeArray = require('../helpers/write-array');
-
-let species;
-let taxon;
+import download from './download.js';
+import parseBiogrid from './parse-biogrid.js';
+import parseIntact from './parse-intact.js';
+import writeInteractions from './write-interactions.js';
 
 const biogridFile = './downloads/biogrid.tab';
 const intactFile = './downloads/intact.tab';
-const outFile = '../../files/interactions.txt';
+const outFile = '../../files/interactions.json';
 
-download()
-  .then(() => parseTaxonomy())
-  .then((results) => {
-    taxon = results;
-    return parseBiogrid(taxon, biogridFile, outFile);
-  })
-  .then((results) => {
-    species = results;
-    return parseIntact(taxon, intactFile, outFile);
-  })
-  .then((results) => {
-    species = {
-      ...species,
-      ...results,
-    };
-    const speciesArr = Object.keys(species);
-    sortArray(speciesArr);
-    return writeArray(speciesArr, '../../files/interactor-species.js', 'species');
-  })
-  .then(() => {
-    console.log('complete');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+const main = async () => {
+  await download();
+  const biogrid = await parseBiogrid(biogridFile);
+  const intact = await parseIntact(intactFile);
+  await writeInteractions({ biogrid, intact }, outFile);
+};
+
+main();

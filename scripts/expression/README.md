@@ -11,9 +11,9 @@ node index.js
 
 ## Output
 
-It will output txt files with expression data and it will output two js files with lists of all cells and tissues, for either protein or RNA. Files with be output to the `files` folder beneath the api root directory.
+It will output json files with expression data and files just listing cells and tissues, for either protein or RNA. Files with be output to the `files` folder beneath the api root directory.
 
-* protein-expression.txt
+* protein-expression.json (indexed by Uniprot acc)
 * protein-tissues.json
-* rna-expression.txt
+* rna-expression.json (indexed by ENSEMBLG)
 * rna-tissues.json

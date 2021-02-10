@@ -1,14 +1,11 @@
 import mockFS from 'mock-fs';
-import fs from 'fs';
 
 import parseTissues from './parse-tissues.js';
 
 const infile = `1\t2\t3\t4\t5
 1\tA\tcellA\t20\t
+1\tA\tcellB\t30\t
 2\tB\tcellB\t40\t`;
-
-const expected = `1\tcellA\t20
-2\tcellB\t40\n`;
 
 const mockedFileSystem = {
   'tissue.txt': infile,
@@ -20,19 +17,22 @@ afterAll(() => {
 });
 
 describe('Parse tissues', () => {
-  let tissues;
+  let data;
 
-  beforeAll(async (done) => {
-    tissues = await parseTissues('./tissue.txt', './parsed.txt', 'w');
-    done();
+  beforeAll(async () => {
+    data = await parseTissues('./tissue.txt');
   });
 
-  it('should parse tissue file', () => {
-    const data = fs.readFileSync('./parsed.txt', 'utf8');
-    expect(data).toEqual(expected);
+  it('should return expression data', () => {
+    const expected = {
+      1: { cellA: 20, cellB: 30 },
+      2: { cellB: 40 },
+    };
+    expect(data.expression).toEqual(expected);
   });
 
-  it('should return a list of cells', () => {
-    expect(tissues).toEqual(['cellA', 'cellB']);
+  it('should return tissue array', () => {
+    const expected = ['cellA', 'cellB'];
+    expect(data.tissues).toEqual(expected);
   });
 });

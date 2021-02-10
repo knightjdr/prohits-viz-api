@@ -3,10 +3,10 @@ import readline from 'readline';
 
 import sortArray from '../../utils/sort-array-strings.js';
 
-const parseTissues = (infile, outfile, flags) => (
+const parseTissues = infile => (
   new Promise((resolve, reject) => {
+    const expression = {};
     const tissues = {};
-    const stream = fs.createWriteStream(outfile, { flags });
 
     let isHeader = true;
     const lineReader = readline.createInterface({
@@ -16,17 +16,18 @@ const parseTissues = (infile, outfile, flags) => (
       if (!isHeader) {
         const [ensg, , cell, tpm] = line.split('\t');
         tissues[cell] = true;
-        stream.write(`${ensg}\t${cell}\t${tpm}\n`);
+
+        if (!expression[ensg]) {
+          expression[ensg] = {};
+        }
+        expression[ensg][cell] = Number(tpm);
       }
       isHeader = false;
     });
     lineReader.on('close', () => {
-      stream.end();
-      stream.on('finish', () => {
-        const tissueArr = Object.keys(tissues);
-        sortArray(tissueArr);
-        resolve(tissueArr);
-      });
+      const tissueArr = Object.keys(tissues);
+      sortArray(tissueArr);
+      resolve({ expression, tissues: tissueArr });
     });
     lineReader.on('error', (err) => {
       reject(err);

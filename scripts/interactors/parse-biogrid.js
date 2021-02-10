@@ -1,12 +1,11 @@
 /* eslint no-param-reassign: 0 */
 
-const fs = require('fs');
-const readline = require('readline');
+import fs from 'fs';
+import readline from 'readline';
 
-const parseBiogrid = (taxon, infile, outfile) => (
+const parseBiogrid = infile => (
   new Promise((resolve, reject) => {
-    const species = {};
-    const stream = fs.createWriteStream(outfile, { flags: 'w' });
+    const interactions = {};
 
     let isHeader = true;
     const lineReader = readline.createInterface({
@@ -15,19 +14,25 @@ const parseBiogrid = (taxon, infile, outfile) => (
     lineReader.on('line', (line) => {
       if (!isHeader) {
         const fields = line.split('\t');
-        const geneA = fields[7];
-        const geneB = fields[8];
-        const organismA = taxon[fields[15]];
-        const organismB = taxon[fields[16]];
-        species[organismA] = 1;
-        species[organismB] = 1;
-        stream.write(`${geneA}\t${geneB}\t${organismA}\t${organismB}\n`);
+        const geneA = fields[1];
+        const geneB = fields[2];
+        const organismA = fields[35];
+        const organismB = fields[36];
+        if (organismA === '9606' && organismB === '9606') {
+          if (!interactions[geneA]) {
+            interactions[geneA] = {};
+          }
+          if (!interactions[geneB]) {
+            interactions[geneB] = {};
+          }
+          interactions[geneA][geneB] = 1;
+          interactions[geneB][geneA] = 1;
+        }
       }
       isHeader = false;
     });
     lineReader.on('close', () => {
-      stream.end();
-      resolve(species);
+      resolve(interactions);
     });
     lineReader.on('error', (err) => {
       reject(err);
@@ -35,4 +40,4 @@ const parseBiogrid = (taxon, infile, outfile) => (
   })
 );
 
-module.exports = parseBiogrid;
+export default parseBiogrid;

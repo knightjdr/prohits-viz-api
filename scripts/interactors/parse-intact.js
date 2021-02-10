@@ -1,15 +1,14 @@
 /* eslint no-param-reassign: 0 */
 
-const fs = require('fs');
-const readline = require('readline');
+import fs from 'fs';
+import readline from 'readline';
 
-const parseIntact = (taxon, infile, outfile) => (
+const parseIntact = infile => (
   new Promise((resolve, reject) => {
-    const geneRegex = new RegExp(/uniprotkb:([^(]+)\(gene name\)/);
+    const geneRegex = new RegExp(/entrezgene\/locuslink:(\d+)/);
     const speciesRegex = new RegExp(/taxid:(\d+)/);
 
-    const species = {};
-    const stream = fs.createWriteStream(outfile, { flags: 'a' });
+    const interactions = {};
 
     let isHeader = true;
     const lineReader = readline.createInterface({
@@ -18,29 +17,29 @@ const parseIntact = (taxon, infile, outfile) => (
     lineReader.on('line', (line) => {
       if (!isHeader) {
         const fields = line.split('\t');
-        const genesA = fields[4].match(geneRegex);
-        const genesB = fields[5].match(geneRegex);
+        const genesA = fields[22].match(geneRegex);
+        const genesB = fields[23].match(geneRegex);
         if (genesA && genesB) {
           const [, geneA] = genesA;
           const [, geneB] = genesB;
           const organismsA = fields[9].match(speciesRegex);
           const organismsB = fields[10].match(speciesRegex);
-          if (organismsA && organismsB) {
-            const [, organismA] = organismsA;
-            const [, organismB] = organismsB;
-            const nameA = taxon[organismA];
-            const nameB = taxon[organismB];
-            species[nameA] = 1;
-            species[nameB] = 1;
-            stream.write(`${geneA}\t${geneB}\t${nameA}\t${nameB}\n`);
+          if (organismsA && organismsB && organismsA[1] === '9606' && organismsB[1] === '9606') {
+            if (!interactions[geneA]) {
+              interactions[geneA] = {};
+            }
+            if (!interactions[geneB]) {
+              interactions[geneB] = {};
+            }
+            interactions[geneA][geneB] = 1;
+            interactions[geneB][geneA] = 1;
           }
         }
       }
       isHeader = false;
     });
     lineReader.on('close', () => {
-      stream.end();
-      resolve(species);
+      resolve(interactions);
     });
     lineReader.on('error', (err) => {
       reject(err);
@@ -48,4 +47,4 @@ const parseIntact = (taxon, infile, outfile) => (
   })
 );
 
-module.exports = parseIntact;
+export default parseIntact;
