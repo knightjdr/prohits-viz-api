@@ -3,6 +3,7 @@ import path from 'path';
 import createDirs from '../../../helpers/files/create-dirs.js';
 import createStatus from '../../../helpers/status/create-status.js';
 import definePrimaryImageFile from './primary-image-file.js';
+import defineUserIndependentSettings from './define-user-independent-settings.js';
 import deleteDirs from '../../../helpers/files/delete-dir.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
 import moveFiles from '../../../helpers/files/move-files.js';
@@ -40,6 +41,8 @@ const runToolAnalysis = async (req, res) => {
       const workDir = await getWorkDir();
       const taskID = path.basename(workDir);
 
+      const additionalSettings = defineUserIndependentSettings(tool, workDir);
+
       res.send({ id: taskID, tool });
 
       await Promise.all([
@@ -50,7 +53,10 @@ const runToolAnalysis = async (req, res) => {
       await Promise.all([
         moveFiles(req.files.file, `${workDir}/files`, validatedForm.sampleFile),
         moveFiles(req.files.helperFile, `${workDir}/helper-files`),
-        writeFile(`${workDir}/settings.json`, JSON.stringify(validatedForm, null, 2)),
+        writeFile(
+          `${workDir}/settings.json`,
+          JSON.stringify({ ...validatedForm, ...additionalSettings }, null, 2),
+        ),
       ]);
 
       await spawnTask(workDir);
