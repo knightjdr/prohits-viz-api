@@ -24,7 +24,7 @@ const download = async () => {
     downloadHttps(fsConfig.biogrid.url, fsConfig.biogrid.zipFile),
     downloadFtp(fsConfig.intact.host, fsConfig.intact.hostFile, fsConfig.intact.zipFile),
   ]);
-  Promise.all([
+  await Promise.all([
     unzipFile('unzip', fsConfig.biogrid.zipFile, fsConfig.biogrid.file),
     unzipFile('unzip', fsConfig.intact.zipFile, fsConfig.intact.file),
   ]);

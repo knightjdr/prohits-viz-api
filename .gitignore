@@ -68,6 +68,7 @@ tmp/
 
 # download folders
 scripts/expression/downloads
+scripts/genedb/downloads
 scripts/interactors/downloads
 /files
 app/files

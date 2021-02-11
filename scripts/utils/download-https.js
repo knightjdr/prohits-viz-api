@@ -1,10 +1,10 @@
 import fs from 'fs';
 import https from 'https';
 
-const downloadHttp = (url, dest) => (
+const downloadHttp = (url, dest, options = {}) => (
   new Promise((resolve, reject) => {
     const stream = fs.createWriteStream(dest);
-    https.get(url, (response) => {
+    https.get(url, options, (response) => {
       response.on('data', (chunk) => {
         stream.write(chunk);
       });

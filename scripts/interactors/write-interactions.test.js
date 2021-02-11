@@ -1,5 +1,5 @@
-import mockFS from 'mock-fs';
 import fs from 'fs/promises';
+import mockFS from 'mock-fs';
 
 import writeInteractions from './write-interactions.js';
 
