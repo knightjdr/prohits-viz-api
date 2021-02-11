@@ -1,6 +1,7 @@
+import fs from 'fs/promises';
+
 import removeDuplicates from '../../app/utils/remove-duplicates.js';
 import sortArray from '../utils/sort-array-strings.js';
-import writeFile from '../../app/helpers/files/write-file.js';
 
 const writeInteractions = async (interactions, outfile) => {
   const mergedInteractions = {};
@@ -21,7 +22,7 @@ const writeInteractions = async (interactions, outfile) => {
     sortArray(mergedInteractions[source]);
   });
 
-  await writeFile(outfile, JSON.stringify(mergedInteractions));
+  await fs.writeFile(outfile, JSON.stringify(mergedInteractions));
 };
 
 export default writeInteractions;

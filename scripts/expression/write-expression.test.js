@@ -1,5 +1,5 @@
 import mockFS from 'mock-fs';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 import writeExpression from './write-expression.js';
 
@@ -31,7 +31,7 @@ describe('Write expression data', () => {
     };
 
     await writeExpression(expression, outfile);
-    const data = fs.readFileSync('./expression.json', 'utf8');
+    const data = await fs.readFile('./expression.json', 'utf8');
     expect(JSON.parse(data)).toEqual(expected);
   });
 });

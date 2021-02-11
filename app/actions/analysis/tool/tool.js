@@ -1,3 +1,4 @@
+import fs from 'fs/promises';
 import path from 'path';
 
 import createDirs from '../../../helpers/files/create-dirs.js';
@@ -10,7 +11,6 @@ import moveFiles from '../../../helpers/files/move-files.js';
 import spawnTask from './spawn.js';
 import updateStatus from '../../../helpers/status/update-status.js';
 import validate from '../../../helpers/validation/analysis/validate.js';
-import writeFile from '../../../helpers/files/write-file.js';
 
 /* This function will
 **  1. Validate form data
@@ -53,7 +53,7 @@ const runToolAnalysis = async (req, res) => {
       await Promise.all([
         moveFiles(req.files.file, `${workDir}/files`, validatedForm.sampleFile),
         moveFiles(req.files.helperFile, `${workDir}/helper-files`),
-        writeFile(
+        fs.writeFile(
           `${workDir}/settings.json`,
           JSON.stringify({ ...validatedForm, ...additionalSettings }, null, 2),
         ),

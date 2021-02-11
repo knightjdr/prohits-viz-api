@@ -1,7 +1,7 @@
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import fs from 'fs';
 
-import clearFolders from './clear-folders';
+import clearFolders from './clear-folders.js';
 
 const expiredFile = 86400000;
 jest.mock('../../config/config', () => ({
@@ -55,19 +55,15 @@ describe('Clear folders', () => {
     await clearFolders();
   });
 
-  it('should clear expired files/folders in tmp folder', async (done) => {
+  it('should clear expired files/folders in tmp folder', async () => {
     const expectedFiles = ['file1.txt', 'folder1', 'test1', 'uploads'];
-    fs.readdir('tmp', (err, files) => {
-      expect(files).toEqual(expectedFiles);
-      done();
-    });
+    const files = await fs.readdir('tmp');
+    expect(files).toEqual(expectedFiles);
   });
 
-  it('should clear expired files in uploads folder', async (done) => {
+  it('should clear expired files in uploads folder', async () => {
     const expectedFiles = ['file3.txt'];
-    fs.readdir('tmp/uploads', (err, files) => {
-      expect(files).toEqual(expectedFiles);
-      done();
-    });
+    const files = await fs.readdir('tmp/uploads');
+    expect(files).toEqual(expectedFiles);
   });
 });

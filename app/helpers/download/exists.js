@@ -1,17 +1,12 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
-const exists = (file, res) => (
-  new Promise((resolve) => {
-    fs.access(file, (err) => {
-      if (!err) {
-        resolve();
-      } else {
-        res.status(404);
-        res.end();
-        resolve();
-      }
-    });
-  })
-);
+const exists = async (file, res) => {
+  try {
+    await fs.stat(file);
+  } catch (error) {
+    res.status(404);
+    res.end();
+  }
+};
 
 export default exists;

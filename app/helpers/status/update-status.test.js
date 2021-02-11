@@ -1,5 +1,5 @@
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import fs from 'fs';
 
 import updateStatus from './update-status.js';
 
@@ -47,23 +47,21 @@ describe('Update status file', () => {
       statusDetails = await updateStatus('tmp/workDir1');
     });
 
-    it('should update status file', async (done) => {
-      fs.readFile('tmp/workDir1/status.json', 'utf8', (err, data) => {
-        const expectedStatus = {
-          date: new Date().toISOString(),
-          primaryFile: 'error',
-          status: 'complete',
-          files: [
-            'error',
-            'log',
-            'file1',
-            'file2',
-          ],
-          tool: 'dotplot',
-        };
-        expect(JSON.parse(data)).toEqual(expectedStatus);
-        done();
-      });
+    it('should update status file', async () => {
+      const data = await fs.readFile('tmp/workDir1/status.json', 'utf8');
+      const expectedStatus = {
+        date: new Date().toISOString(),
+        primaryFile: 'error',
+        status: 'complete',
+        files: [
+          'error',
+          'log',
+          'file1',
+          'file2',
+        ],
+        tool: 'dotplot',
+      };
+      expect(JSON.parse(data)).toEqual(expectedStatus);
     });
 
     it('should return status object', () => {
@@ -90,21 +88,19 @@ describe('Update status file', () => {
       statusDetails = await updateStatus('tmp/workDir2');
     });
 
-    it('should update status file with an error when interactive folder is missing', async (done) => {
-      fs.readFile('tmp/workDir2/status.json', 'utf8', (err, data) => {
-        const expectedStatus = {
-          date: new Date().toISOString(),
-          primaryFile: 'error',
-          status: 'error',
-          files: [
-            'error',
-            'log',
-          ],
-          tool: 'dotplot',
-        };
-        expect(JSON.parse(data)).toEqual(expectedStatus);
-        done();
-      });
+    it('should update status file with an error when interactive folder is missing', async () => {
+      const data = await fs.readFile('tmp/workDir2/status.json', 'utf8');
+      const expectedStatus = {
+        date: new Date().toISOString(),
+        primaryFile: 'error',
+        status: 'error',
+        files: [
+          'error',
+          'log',
+        ],
+        tool: 'dotplot',
+      };
+      expect(JSON.parse(data)).toEqual(expectedStatus);
     });
 
     it('should return status object', () => {

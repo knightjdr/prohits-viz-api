@@ -19,6 +19,10 @@ const mockedFileSystem = {
 };
 mockFS(mockedFileSystem);
 
+afterAll(() => {
+  mockFS.restore();
+});
+
 describe('Define user-independent analysis settings', () => {
   describe('scv tool', () => {
     let settings;

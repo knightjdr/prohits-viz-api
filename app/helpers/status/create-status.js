@@ -1,4 +1,4 @@
-import writeFile from '../files/write-file.js';
+import fs from 'fs/promises';
 
 const createStatus = async (workDir, tool, primaryFile) => {
   try {
@@ -10,7 +10,7 @@ const createStatus = async (workDir, tool, primaryFile) => {
     };
     const fileContent = JSON.stringify(status, null, 2);
 
-    await writeFile(`${workDir}/status.json`, fileContent);
+    await fs.writeFile(`${workDir}/status.json`, fileContent);
   } catch (error) {
     throw new Error(`Could not create status file for task ${workDir}`);
   }

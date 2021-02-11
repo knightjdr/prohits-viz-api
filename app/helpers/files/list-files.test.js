@@ -1,5 +1,6 @@
 import mockFS from 'mock-fs';
-import listFiles from './list-files';
+
+import listFiles from './list-files.js';
 
 // Must mock file system after requires are complete.
 mockFS({

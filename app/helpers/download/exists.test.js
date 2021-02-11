@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 
-import exists from './exists';
+import exists from './exists.js';
 
 // Must mock file system after requires are complete.
 mockFS({
@@ -22,13 +22,10 @@ describe('Download file existence check', () => {
   ));
 
   describe('when file does not exist', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.end.mockClear();
       res.status.mockClear();
-      exists('missing.txt', res)
-        .then(() => {
-          done();
-        });
+      await exists('missing.txt', res);
     });
 
     it('should set status code', () => {

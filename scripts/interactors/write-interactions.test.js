@@ -1,5 +1,5 @@
 import mockFS from 'mock-fs';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 import writeInteractions from './write-interactions.js';
 
@@ -37,7 +37,7 @@ describe('Write interactions', () => {
     };
 
     await writeInteractions(interactions, outfile);
-    const data = fs.readFileSync('./interactions.json', 'utf8');
+    const data = await fs.readFile('./interactions.json', 'utf8');
     expect(JSON.parse(data)).toEqual(expected);
   });
 });

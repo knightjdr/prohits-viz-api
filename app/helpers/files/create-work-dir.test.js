@@ -1,8 +1,8 @@
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import fs from 'fs';
 import { nanoid } from 'nanoid';
 
-import createWorkDir from './create-work-dir';
+import createWorkDir from './create-work-dir.js';
 
 jest.mock('../../config/config', () => ({
   workDir: 'tmp/',
@@ -33,9 +33,9 @@ describe('Working directory generation', () => {
       expect(workingDir).toBe('tmp/id');
     });
 
-    it('should make directory', () => {
-      expect(fs.statSync('tmp/id')).toBeTruthy();
-    });
+    it('should make directory', async () => (
+      expect(fs.stat('tmp/id')).resolves.toBeTruthy()
+    ));
   });
 
   describe('when unsuccesfully generated', () => {

@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 
-import readFile from './read-file';
+import readFile from './read-file.js';
 
 // Must mock file system after requires are complete.
 mockFS({
@@ -20,6 +20,6 @@ describe('Read file', () => {
 
   it('should return an error when file can not be read', async () => {
     const expectedError = new Error('Could not read file: missingFile.txt');
-    await expect(readFile('missingFile.txt')).rejects.toThrowError(expectedError);
+    return expect(readFile('missingFile.txt')).rejects.toThrowError(expectedError);
   });
 });

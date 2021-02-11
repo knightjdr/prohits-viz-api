@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 
-import getOldFiles from './get-old-files';
+import getOldFiles from './get-old-files.js';
 
 const expiredFile = 86400000;
 jest.mock('../../config/config', () => ({

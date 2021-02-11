@@ -1,5 +1,6 @@
+import fs from 'fs/promises';
+
 import readfile from '../files/read-file.js';
-import writefile from '../files/write-file.js';
 
 const setPrimaryFile = (files, primaryFile, currentChoice) => {
   if (files.includes('error')) {
@@ -22,7 +23,7 @@ const writeStatus = async (workDir, status, files, primaryFile) => {
       status,
     };
     const content = JSON.stringify(newStatus, null, 2);
-    await writefile(`${workDir}/status.json`, content);
+    await fs.writeFile(`${workDir}/status.json`, content);
     return newStatus;
   } catch (error) {
     throw new Error('Could not update status file');

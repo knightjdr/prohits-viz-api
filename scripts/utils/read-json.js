@@ -1,15 +1,8 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
-const readJson = file => (
-  new Promise((resolve, reject) => {
-    fs.readFile(file, 'UTF8', (err, data) => {
-      if (!err) {
-        resolve(JSON.parse(data));
-      } else {
-        reject(err);
-      }
-    });
-  })
-);
+const readJson = async (file) => {
+  const data = await fs.readFile(file, 'UTF8');
+  return JSON.parse(data);
+};
 
 export default readJson;

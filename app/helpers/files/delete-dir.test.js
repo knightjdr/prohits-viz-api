@@ -1,7 +1,7 @@
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import fs from 'fs';
 
-import deleteDirs from './delete-dir';
+import deleteDirs from './delete-dir.js';
 
 // Must mock file system after requires are complete.
 mockFS({
@@ -26,25 +26,16 @@ describe('Delete group of directories', () => {
       await deleteDirs('tmp1', list);
     });
 
-    it('should delete first directory', async (done) => {
-      fs.stat('tmp1/dir1', (err) => {
-        expect(err).not.toBeNull();
-        done();
-      });
-    });
+    it('should delete first directory', async () => (
+      expect(fs.stat('tmp1/dir1')).rejects.toBeTruthy()
+    ));
 
-    it('should delete second directory', async (done) => {
-      fs.stat('tmp1/dir2', (err) => {
-        expect(err).not.toBeNull();
-        done();
-      });
-    });
+    it('should delete second directory', async () => (
+      expect(fs.stat('tmp1/dir2')).rejects.toBeTruthy()
+    ));
 
-    it('should not delete third directory', async (done) => {
-      fs.stat('tmp1/dir3', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should not delete third directory', async () => (
+      expect(fs.stat('tmp1/dir3')).resolves.toBeTruthy()
+    ));
   });
 });

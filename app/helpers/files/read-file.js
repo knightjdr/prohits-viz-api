@@ -1,14 +1,12 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
-const readFile = (file, encoding = 'utf8') => (
-  new Promise((resolve, reject) => {
-    fs.readFile(file, encoding, (err, data) => {
-      if (!err) {
-        resolve(data);
-      }
-      reject(new Error(`Could not read file: ${file}`));
-    });
-  })
-);
+const readFile = async (file, encoding = 'utf8') => {
+  try {
+    const data = await fs.readFile(file, encoding);
+    return data;
+  } catch (error) {
+    throw new Error(`Could not read file: ${file}`);
+  }
+};
 
 export default readFile;

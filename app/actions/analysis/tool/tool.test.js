@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
 import runToolAnalysis from './tool.js';
@@ -126,54 +126,33 @@ describe('Run analysis', () => {
       expect(res.send).toHaveBeenCalledWith({ id: 'taskID', tool: 'dotplot' });
     });
 
-    it('should create subdirectory for files', async (done) => {
-      fs.stat('tmp/taskID/files/', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should create subdirectory for files', async () => (
+      expect(fs.stat('tmp/taskID/files/')).resolves.toBeTruthy()
+    ));
 
-    it('should create subdirectory for helper files', async (done) => {
-      fs.stat('tmp/taskID/helper-files/', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should create subdirectory for helper files', async () => (
+      expect(fs.stat('tmp/taskID/helper-files/')).resolves.toBeTruthy()
+    ));
 
-    it('should create status file', async (done) => {
-      fs.stat('tmp/taskID/status.json', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should create status file', async () => (
+      expect(fs.stat('tmp/taskID/status.json')).resolves.toBeTruthy()
+    ));
 
-    it('should move upload file', async (done) => {
-      fs.stat('tmp/uploads/temp.txt', (err) => {
-        expect(err).not.toBeNull();
-        done();
-      });
-    });
+    it('should move upload file', async () => (
+      expect(fs.stat('tmp/uploads/temp.txt')).rejects.toBeTruthy()
+    ));
 
-    it('should move helper file', async (done) => {
-      fs.stat('tmp/uploads/helper-file.txt', (err) => {
-        expect(err).not.toBeNull();
-        done();
-      });
-    });
+    it('should move helper file', async () => (
+      expect(fs.stat('tmp/uploads/helper-file.txt')).rejects.toBeTruthy()
+    ));
 
-    it('should place upload file in files directory', async (done) => {
-      fs.stat('tmp/taskID/files/file1.txt', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should place upload file in files directory', async () => (
+      expect(fs.stat('tmp/taskID/files/file1.txt')).resolves.toBeTruthy()
+    ));
 
-    it('should place helper file in helper-files directory', async (done) => {
-      fs.stat('tmp/taskID/helper-files/file2.txt', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should place helper file in helper-files directory', async () => (
+      expect(fs.stat('tmp/taskID//helper-files/file2.txt')).resolves.toBeTruthy()
+    ));
 
     it('should spawn task', () => {
       expect(spawnTask).toHaveBeenCalledWith('tmp/taskID');
@@ -183,7 +162,7 @@ describe('Run analysis', () => {
       expect(deleteDirs).toHaveBeenCalledWith('tmp/taskID', ['files', 'helper-files']);
     });
 
-    it('should update status file to indicate completion', async (done) => {
+    it('should update status file to indicate completion', async () => {
       const expected = {
         date: new Date().toISOString(),
         files: ['log', 'dotplot'],
@@ -191,10 +170,8 @@ describe('Run analysis', () => {
         status: 'complete',
         tool: 'dotplot',
       };
-      fs.readFile('tmp/taskID/status.json', 'utf8', (err, file) => {
-        expect(JSON.parse(file)).toEqual(expected);
-        done();
-      });
+      const file = await fs.readFile('tmp/taskID/status.json', 'utf8');
+      expect(JSON.parse(file)).toEqual(expected);
     });
 
     it('socket should emit action with status', () => {

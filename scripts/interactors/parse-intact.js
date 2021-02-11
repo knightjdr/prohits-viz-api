@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: 0 */
-
 import fs from 'fs';
 import readline from 'readline';
 

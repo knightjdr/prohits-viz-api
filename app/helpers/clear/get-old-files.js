@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
 import config from '../../config/config.js';
 
@@ -7,16 +7,14 @@ const isExpired = (stat) => {
   return currTime.valueOf() - stat.mtime.valueOf() > config.expiredFile;
 };
 
-const getFileStats = file => (
-  new Promise((resolve) => {
-    fs.stat(file, (err, stat) => {
-      if (!err) {
-        resolve(stat);
-      }
-      resolve({ mtime: new Date() });
-    });
-  })
-);
+const getFileStats = async (file) => {
+  try {
+    const stat = await fs.stat(file);
+    return stat;
+  } catch (error) {
+    return { mtime: new Date() };
+  }
+};
 
 const reduceToExpiredFiles = (stats, files) => (
   stats.reduce((accum, stat, i) => {

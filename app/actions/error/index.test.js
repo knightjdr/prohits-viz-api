@@ -1,7 +1,7 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import getTimestamp from '../../utils/get-timestamp.js';
 
+import getTimestamp from '../../utils/get-timestamp.js';
 import logClientError from './index.js';
 
 jest.mock('../../config/config.js', () => ({
@@ -41,13 +41,11 @@ describe('Log clientside error', () => {
       await logClientError(req, res);
     });
 
-    it('should log error to file', async (done) => {
+    it('should log error to file', async () => {
       const expected = '2021-01-21, 1:05:06 p.m., Error: component error\n'
         + '{\n  "message": "error message"\n}\n\n';
-      fs.readFile('logs/client.log', 'utf8', (err, data) => {
-        expect(data).toBe(expected);
-        done();
-      });
+      const data = await fs.readFile('logs/client.log', 'utf8');
+      expect(data).toBe(expected);
     });
 
     it('should end response', () => {

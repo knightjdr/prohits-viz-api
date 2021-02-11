@@ -1,7 +1,7 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
-import createDirs from './create-dirs';
+import createDirs from './create-dirs.js';
 
 mockFS({
   tmp: { workDir: {} },
@@ -17,13 +17,13 @@ describe('Create directories', () => {
       await createDirs('tmp/workDir', ['dir1', 'dir2']);
     });
 
-    it('should create first directory', () => {
-      expect(fs.statSync('tmp/workDir/dir1')).toBeTruthy();
-    });
+    it('should create first directory', async () => (
+      expect(fs.stat('tmp/workDir/dir1')).resolves.toBeTruthy()
+    ));
 
-    it('should create second directory', () => {
-      expect(fs.statSync('tmp/workDir/dir2')).toBeTruthy();
-    });
+    it('should create second directory', async () => (
+      expect(fs.stat('tmp/workDir/dir2')).resolves.toBeTruthy()
+    ));
   });
 
   it('should reject when unsuccesful at creating directories', async () => {

@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
 import config from '../../config/config.js';
 
@@ -14,18 +14,14 @@ const defineMethodAndPath = (file, useSample) => (
     }
 );
 
-const moveFile = (dest, file, useSample) => (
-  new Promise((resolve, reject) => {
+const moveFile = async (dest, file, useSample) => {
+  try {
     const options = defineMethodAndPath(file, useSample);
-    fs[options.method](options.filePath, `${dest}/${file.originalname}`, (err) => {
-      if (err) {
-        reject(new Error(`Error moving file ${file.originalname} to task directory`));
-      } else {
-        resolve();
-      }
-    });
-  })
-);
+    await fs[options.method](options.filePath, `${dest}/${file.originalname}`);
+  } catch (error) {
+    throw new Error(`Error moving file ${file.originalname} to task directory`);
+  }
+};
 
 /* Transfer files from upload folder to working directory.
 ** If a file is called 'samplefile.txt', use the sample file

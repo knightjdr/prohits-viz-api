@@ -1,5 +1,6 @@
+import fs from 'fs/promises';
+
 import removeDuplicates from '../../app/utils/remove-duplicates.js';
-import writeFile from '../../app/helpers/files/write-file.js';
 
 const writeExpression = async (expression, outfile) => {
   const ids = removeDuplicates([
@@ -15,7 +16,7 @@ const writeExpression = async (expression, outfile) => {
     };
   });
 
-  await writeFile(outfile, JSON.stringify(mergedExpression));
+  await fs.writeFile(outfile, JSON.stringify(mergedExpression));
 };
 
 export default writeExpression;

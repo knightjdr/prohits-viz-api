@@ -1,5 +1,5 @@
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import fs from 'fs';
 
 import moveFiles from './move-files.js';
 
@@ -37,20 +37,18 @@ describe('Move files for analysis', () => {
       await moveFiles(files, 'tmp/workDir/files', 'true');
     });
 
-    it('should copy sample file to working directory', () => {
-      expect(fs.existsSync('tmp/workDir/files/samplefile.txt')).toBeTruthy();
-    });
+    it('should copy sample file to working directory', async () => (
+      expect(fs.stat('tmp/workDir/files/samplefile.txt')).resolves.toBeTruthy()
+    ));
 
-    it('should not move sample file from original directory', () => {
-      expect(fs.existsSync('sample-files/analysis-file.txt')).toBeTruthy();
-    });
+    it('should not move sample file from original directory', async () => (
+      expect(fs.stat('sample-files/analysis-file.txt')).resolves.toBeTruthy()
+    ));
 
-    it('should have sample file with correct content', async (done) => {
+    it('should have sample file with correct content', async () => {
       const expectedContent = 'sample file';
-      fs.readFile('tmp/workDir/files/samplefile.txt', 'utf8', (err, data) => {
-        expect(data).toBe(expectedContent);
-        done();
-      });
+      const data = await fs.readFile('tmp/workDir/files/samplefile.txt', 'utf8');
+      expect(data).toBe(expectedContent);
     });
   });
 
@@ -62,20 +60,18 @@ describe('Move files for analysis', () => {
       await moveFiles(files, 'tmp/workDir/files');
     });
 
-    it('should put user file in working directory', async () => {
-      expect(fs.existsSync('tmp/workDir/files/samplefile.txt')).toBeTruthy();
-    });
+    it('should put user file in working directory', async () => (
+      expect(fs.stat('tmp/workDir/files/samplefile.txt')).resolves.toBeTruthy()
+    ));
 
-    it('should move user file 1 from uploads directory', async () => {
-      expect(fs.existsSync('tmp/uploads/sample-file.txt')).toBeFalsy();
-    });
+    it('should move user file 1 from uploads directory', async () => (
+      expect(fs.stat('tmp/uploads/sample-file.txt')).rejects.toBeTruthy()
+    ));
 
-    it('should have sample file with sample content', async (done) => {
+    it('should have sample file with sample content', async () => {
       const expectedContent = 'user file';
-      fs.readFile('tmp/workDir/files/samplefile.txt', 'utf8', (err, data) => {
-        expect(data).toBe(expectedContent);
-        done();
-      });
+      const data = await fs.readFile('tmp/workDir/files/samplefile.txt', 'utf8');
+      expect(data).toBe(expectedContent);
     });
   });
 
@@ -89,21 +85,21 @@ describe('Move files for analysis', () => {
         await moveFiles(files, 'tmp/workDir/files');
       });
 
-      it('should put user file 1 in working directory', async () => {
-        expect(fs.existsSync('tmp/workDir/files/userfile1.txt')).toBeTruthy();
-      });
+      it('should put user file 1 in working directory', async () => (
+        expect(fs.stat('tmp/workDir/files/userfile1.txt')).resolves.toBeTruthy()
+      ));
 
-      it('should move user file 1 from uploads directory', async () => {
-        expect(fs.existsSync('tmp/uploads/uploaded-file1.txt')).toBeFalsy();
-      });
+      it('should move user file 1 from uploads directory', async () => (
+        expect(fs.stat('tmp/uploads/uploaded-file1.txt')).rejects.toBeTruthy()
+      ));
 
-      it('should put user file 2 in working directory', async () => {
-        expect(fs.existsSync('tmp/workDir/files/userfile2.txt')).toBeTruthy();
-      });
+      it('should put user file 2 in working directory', async () => (
+        expect(fs.stat('tmp/workDir/files/userfile2.txt')).resolves.toBeTruthy()
+      ));
 
-      it('should move user file 2 from uploads directory', async () => {
-        expect(fs.existsSync('tmp/uploads/uploaded-file2.txt')).toBeFalsy();
-      });
+      it('should move user file 2 from uploads directory', async () => (
+        expect(fs.stat('tmp/uploads/uploaded-file2.txt')).rejects.toBeTruthy()
+      ));
     });
 
     it('should reject when user file not found', async () => {

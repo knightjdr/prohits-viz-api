@@ -1,7 +1,7 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
-import writeDataFile from './write-data-file';
+import writeDataFile from './write-data-file.js';
 
 mockFS({
   tmp: { workDir: {} },
@@ -13,19 +13,17 @@ afterAll(() => {
 
 describe('Write data to file', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
-      writeDataFile('tmp/workDir', { data: 'test' })
-        .then(() => {
-          done();
-        });
+    beforeAll(async () => {
+      await writeDataFile('tmp/workDir', { data: 'test' });
     });
 
-    it('should create file', () => {
-      expect(fs.existsSync('tmp/workDir/data.json')).toBeTruthy();
-    });
+    it('should create file', async () => (
+      expect(fs.stat('tmp/workDir/data.json')).resolves.toBeTruthy()
+    ));
 
-    it('should write instructions to file', () => {
-      expect(fs.readFileSync('tmp/workDir/data.json', 'utf8')).toBe('{"data":"test"}');
+    it('should write instructions to file', async () => {
+      const expected = '{"data":"test"}';
+      return expect(fs.readFile('tmp/workDir/data.json', 'utf8')).resolves.toBe(expected);
     });
   });
 });

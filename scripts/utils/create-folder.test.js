@@ -1,5 +1,5 @@
 import mockFS from 'mock-fs';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 import createFolder from './create-folder.js';
 
@@ -15,7 +15,7 @@ afterAll(() => {
 describe('Create folder', () => {
   it('should create a folder when it does not exist', async () => {
     await createFolder('./test-folder2');
-    expect(fs.existsSync('./test-folder2')).toBeTruthy();
+    return expect(fs.stat('./test-folder2')).resolves.toBeTruthy();
   });
 
   it('should resolve gracefully when a folder already exists', () => (
@@ -28,12 +28,12 @@ describe('Create folder', () => {
       done();
     });
 
-    it('should create parent folder', () => {
-      expect(fs.existsSync('./test-folder3')).toBeTruthy();
-    });
+    it('should create parent folder', async () => (
+      expect(fs.stat('./test-folder3')).resolves.toBeTruthy()
+    ));
 
-    it('should create subdirectory', () => {
-      expect(fs.existsSync('./test-folder3/sub-directory')).toBeTruthy();
-    });
+    it('should create subdirectory', async () => (
+      expect(fs.stat('./test-folder3/sub-directory')).resolves.toBeTruthy()
+    ));
   });
 });

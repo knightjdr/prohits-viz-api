@@ -1,5 +1,5 @@
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
-import fs from 'fs';
 
 import createWorkDir from '../../../helpers/files/create-work-dir.js';
 import handleVizFile from './handle-viz-file.js';
@@ -58,21 +58,16 @@ describe('Third party viz', () => {
       await handleVizFile(req, res);
     });
 
-    it('should create interactive subfolder', async (done) => {
-      fs.stat('tmp/test1/interactive', (err) => {
-        expect(err).toBeNull();
-        done();
-      });
-    });
+    it('should create interactive subfolder', async () => (
+      expect(fs.stat('tmp/test1/interactive')).resolves.toBeTruthy()
+    ));
 
-    it('should write request body to file', async (done) => {
+    it('should write request body to file', async () => {
       const expectedContents = {
         parameters: { imageType: 'dotplot' },
       };
-      fs.readFile('tmp/test1/interactive/dotplot.json', 'utf8', (err, data) => {
-        expect(data).toBe(JSON.stringify(expectedContents, null, 2));
-        done();
-      });
+      const data = await fs.readFile('tmp/test1/interactive/dotplot.json', 'utf8')
+      expect(data).toBe(JSON.stringify(expectedContents, null, 2));
     });
 
     it('should send response with url', () => {

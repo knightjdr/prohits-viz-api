@@ -1,7 +1,7 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
-import remove from './remove';
+import remove from './remove.js';
 
 const mockedFileSystem = {
   tmp: {
@@ -24,13 +24,13 @@ describe('Remove files', () => {
     await remove(files);
   });
 
-  it('should remove supplied files', () => {
+  it('should remove supplied files', async () => {
     files.forEach((file) => {
-      expect(fs.existsSync(file)).toBeFalsy();
+      expect(fs.stat(file)).rejects.toBeTruthy();
     });
   });
 
-  it('should not remove other files in folder', () => {
-    expect(fs.existsSync('tmp/file2.txt')).toBeTruthy();
-  });
+  it('should not remove other files in folder', async () => (
+    expect(fs.stat('tmp/file2.txt')).resolves.toBeTruthy()
+  ));
 });

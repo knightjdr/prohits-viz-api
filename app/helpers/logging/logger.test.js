@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
 import Logger from './logger.js';
@@ -45,14 +45,14 @@ describe('Logging', () => {
   it('should log all messages to combined.log', async () => {
     // need a delay with this test because logger doesn't write immediately
     await promiseDelay();
-    const file = fs.readFileSync('logs/test-combined.log', 'utf8');
+    const file = await fs.readFile('logs/test-combined.log', 'utf8');
     expect(file).toMatch(messages.output.combined);
   });
 
   it('should log error messages to error.log', async () => {
     // need a delay with this test because logger doesn't write immediately
     await promiseDelay();
-    const file = fs.readFileSync('logs/test-error.log', 'utf8');
+    const file = await fs.readFile('logs/test-error.log', 'utf8');
     expect(file).toMatch(messages.output.error);
   });
 });

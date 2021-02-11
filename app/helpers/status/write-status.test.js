@@ -1,12 +1,17 @@
-import readfile from '../files/read-file.js';
-import writefile from '../files/write-file.js';
+import fs from 'fs/promises';
+import mockFS from 'mock-fs';
 
 import writeStatus from './write-status.js';
 
-jest.mock('../files/read-file');
-jest.mock('../files/write-file');
+mockFS({
+  workDir: {
+    'status.json': '{"primaryFile": "dotplot", "status": "running"}',
+  },
+});
 
-const json = '{"primaryFile": "dotplot", "status": "running"}';
+afterAll(() => {
+  mockFS.restore();
+});
 
 describe('Write to status file', () => {
   describe('status file exists', () => {
@@ -16,21 +21,16 @@ describe('Write to status file', () => {
       let statusDetails;
 
       beforeAll(async () => {
-        readfile.mockResolvedValueOnce(json);
         statusDetails = await writeStatus('workDir', status, files);
       });
 
-      it('should call read file', () => {
-        expect(readfile).toHaveBeenCalledWith('workDir/status.json');
-      });
-
-      it('should call write file', () => {
+      it('should write file', async () => {
         const expected = JSON.stringify({
           primaryFile: 'dotplot',
           status,
           files,
         }, null, 2);
-        expect(writefile).toHaveBeenCalledWith('workDir/status.json', expected);
+        return expect(fs.readFile('workDir/status.json', 'utf8')).resolves.toEqual(expected);
       });
 
       it('should return status object', () => {
@@ -48,21 +48,16 @@ describe('Write to status file', () => {
       const status = 'complete';
 
       beforeAll(async () => {
-        readfile.mockResolvedValueOnce(json);
         await writeStatus('workDir', status, files, 'error');
       });
 
-      it('should call read file', () => {
-        expect(readfile).toHaveBeenCalledWith('workDir/status.json');
-      });
-
-      it('should call write file', () => {
-        const expectedStatus = JSON.stringify({
+      it('should write file', async () => {
+        const expected = JSON.stringify({
           primaryFile: 'error',
           status,
           files,
         }, null, 2);
-        expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
+        return expect(fs.readFile('workDir/status.json', 'utf8')).resolves.toEqual(expected);
       });
     });
 
@@ -71,28 +66,22 @@ describe('Write to status file', () => {
       const status = 'complete';
 
       beforeAll(async () => {
-        readfile.mockResolvedValueOnce(json);
         await writeStatus('workDir', status, files);
       });
 
-      it('should call read file', () => {
-        expect(readfile).toHaveBeenCalledWith('workDir/status.json');
-      });
-
-      it('should call write file', () => {
-        const expectedStatus = JSON.stringify({
+      it('should write file', async () => {
+        const expected = JSON.stringify({
           primaryFile: 'error',
           status,
           files,
         }, null, 2);
-        expect(writefile).toHaveBeenCalledWith('workDir/status.json', expectedStatus);
+        return expect(fs.readFile('workDir/status.json', 'utf8')).resolves.toEqual(expected);
       });
     });
   });
 
   it('should throw error when reading status file throws error', async () => {
     const expectedError = new Error('Could not update status file');
-    readfile.mockRejectedValueOnce();
-    await expect(writeStatus('workDir', 'complete', [])).rejects.toThrowError(expectedError);
+    await expect(writeStatus('missingDir', 'complete', [])).rejects.toThrowError(expectedError);
   });
 });
