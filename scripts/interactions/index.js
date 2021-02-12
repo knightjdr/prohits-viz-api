@@ -7,7 +7,7 @@ import writeInteractions from './write-interactions.js';
 
 const biogridFile = './downloads/biogrid.tab';
 const intactFile = './downloads/intact.tab';
-const outFile = '../../files/interactions.json';
+const outFile = '../../files/unmapped/interactions.json';
 
 const main = async () => {
   await download();

@@ -1,4 +1,5 @@
 import readJSON from '../../utils/read-json.js';
+import round from '../../utils/round.js';
 import sortArray from '../../utils/sort-array-strings.js';
 
 const mongoKeyRE = new RegExp(/[.]/g);
@@ -22,7 +23,7 @@ const parseTissues = async (infile) => {
     if (!expression[id]) {
       expression[id] = {};
     }
-    expression[id][cell] = Number(intensity);
+    expression[id][cell] = round(Number(intensity), 2);
   });
 
   const tissueArr = Object.keys(tissues);

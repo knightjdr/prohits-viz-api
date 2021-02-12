@@ -7,7 +7,6 @@ const createTabs = () => '\t'.repeat(14);
 const uniprotTab = `UniProtKB-AC\tUniProtKB-ID\tGeneID (EntrezGene)\tRefSeq${createTabs()}Ensembl\t\tEnsembl_PRO
 P11111\tA_HUMAN\t111\tNP_100000.1; NP_110000\t${createTabs()}ENSG00000000001\t\tENSP00000000001; ENSP00000000011
 P22222\tB_HUMAN\t222\tNP_200000.1\t${createTabs()}ENSG00000000002; ENSG00000000022\t\tENSP00000000002
-P11112\tAA_HUMAN\t111\t\t${createTabs()}ENSG00000000111\t\tENSP00000000111
 `;
 
 const mockedFileSystem = {
@@ -20,21 +19,17 @@ afterAll(() => {
 });
 
 describe('Parse uniprot gene map', () => {
-  it('should parse data by Entrez ID from file', async () => {
+  it('should parse protein identifiers from file and index by UniProt accession', async () => {
     const expected = {
-      111: {
-        ensemblg: ['ENSG00000000001', 'ENSG00000000111'],
-        ensemblp: ['ENSP00000000001', 'ENSP00000000011', 'ENSP00000000111'],
+      P11111: {
+        ensemblp: ['ENSP00000000001', 'ENSP00000000011'],
         refseqp: ['NP_100000.1', 'NP_110000'],
-        uniprotacc: ['P11111', 'P11112'],
-        uniprotid: ['A_HUMAN', 'AA_HUMAN'],
+        uniprotid: 'A_HUMAN',
       },
-      222: {
-        ensemblg: ['ENSG00000000002', 'ENSG00000000022'],
+      P22222: {
         ensemblp: ['ENSP00000000002'],
         refseqp: ['NP_200000.1'],
-        uniprotacc: ['P22222'],
-        uniprotid: ['B_HUMAN'],
+        uniprotid: 'B_HUMAN',
       },
     };
 
