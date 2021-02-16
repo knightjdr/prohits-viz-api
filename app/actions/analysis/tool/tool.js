@@ -41,7 +41,7 @@ const runToolAnalysis = async (req, res) => {
       const workDir = await getWorkDir();
       const taskID = path.basename(workDir);
 
-      const additionalSettings = defineUserIndependentSettings(tool, workDir);
+      const additionalSettings = defineUserIndependentSettings(validatedForm, workDir);
 
       res.send({ id: taskID, tool });
 
