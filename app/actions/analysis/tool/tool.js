@@ -41,14 +41,14 @@ const runToolAnalysis = async (req, res) => {
       const workDir = await getWorkDir();
       const taskID = path.basename(workDir);
 
-      const additionalSettings = defineUserIndependentSettings(validatedForm, workDir);
-
       res.send({ id: taskID, tool });
 
       await Promise.all([
         createDirs(workDir, ['files', 'helper-files']),
         createStatus(workDir, tool, definePrimaryImageFile(tool, validatedForm)),
       ]);
+
+      const additionalSettings = await defineUserIndependentSettings(validatedForm, workDir);
 
       await Promise.all([
         moveFiles(req.files.file, `${workDir}/files`, validatedForm.sampleFile),
