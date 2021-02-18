@@ -43,6 +43,29 @@ describe('Validate specificity settings', () => {
     expect(validateSettings(settings)).toEqual(expected);
   });
 
+  it('should validate abundance array with specified abundance filter column', () => {
+    const settings = {
+      abundance: ['abundance', 'otherColumn'],
+      abundanceFilterColumn: 'otherColumn',
+      control: 'ctrlCounts',
+      ctrlSub: true,
+      normalization: 'readout',
+      normalizationReadout: 'readoutA',
+      readoutLengthNorm: true,
+      readoutLength: 'ReadoutLength',
+    };
+
+    const expected = {
+      errors: {},
+      values: {
+        ...settings,
+        abundance: 'otherColumn',
+        otherAbundance: ['abundance'],
+      },
+    };
+    expect(validateSettings(settings)).toEqual(expected);
+  });
+
   it('should invalidate unacceptable settings', () => {
     const settings = {
       control: '',

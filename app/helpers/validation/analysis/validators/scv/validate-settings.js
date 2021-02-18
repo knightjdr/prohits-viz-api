@@ -5,8 +5,13 @@ const validateAbundanceColumn = (currentValues) => {
   const validated = { ...currentValues };
 
   if (Array.isArray(validated.abundance)) {
-    validated.otherAbundance = validated.abundance.slice(1);
-    [validated.abundance] = validated.abundance;
+    if (validated.abundanceFilterColumn) {
+      validated.otherAbundance = validated.abundance.filter((column) => column !== validated.abundanceFilterColumn);
+      validated.abundance = validated.abundanceFilterColumn;
+    } else {
+      validated.otherAbundance = validated.abundance.slice(1);
+      [validated.abundance] = validated.abundance;
+    }
   }
 
   return validated;
