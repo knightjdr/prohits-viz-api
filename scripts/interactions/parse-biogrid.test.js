@@ -2,7 +2,7 @@ import mockFS from 'mock-fs';
 
 import parseBiogrid from './parse-biogrid.js';
 
-const createTabs = () => '\t'.repeat(33);
+const createTabs = () => '\t'.repeat(13);
 
 const infile = `interaction ID\tentrez ID A\tentrez IDB${createTabs()}species A\tspecies B
 1\t111\t222${createTabs()}9606\t9606

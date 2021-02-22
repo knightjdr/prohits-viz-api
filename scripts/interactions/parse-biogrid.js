@@ -14,8 +14,8 @@ const parseBiogrid = infile => (
         const fields = line.split('\t');
         const geneA = fields[1];
         const geneB = fields[2];
-        const organismA = fields[35];
-        const organismB = fields[36];
+        const organismA = fields[15];
+        const organismB = fields[16];
         if (organismA === '9606' && organismB === '9606') {
           if (!interactions[geneA]) {
             interactions[geneA] = {};
