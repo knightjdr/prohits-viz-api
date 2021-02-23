@@ -27,6 +27,9 @@ const moveFile = async (dest, file, useSample) => {
 ** If a file is called 'samplefile.txt', use the sample file
 ** instead of the actual input file.path */
 const moveFiles = async (files, dest, useSample = false) => {
+  if (!files || files.length === 0) {
+    return Promise.resolve();
+  }
   const promises = files?.map(async file => moveFile(dest, file, useSample));
   return Promise.all(promises);
 };
