@@ -5,6 +5,8 @@ const getPrimaryImageFile = (tool, settings) => {
     return `${settings.readout}-${settings.readout}`;
   } if (tool === 'dotplot') {
     return 'dotplot';
+  } if (tool === 'scv') {
+    return 'scv';
   } if (tool === 'specificity') {
     return 'specificity';
   }

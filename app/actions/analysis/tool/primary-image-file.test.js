@@ -25,6 +25,14 @@ describe('Get primary analysis image file', () => {
     expect(getPrimaryImageFile(tool, settings)).toBe(expected);
   });
 
+  it('should get scv file', () => {
+    const settings = {};
+    const tool = 'scv';
+
+    const expected = 'scv';
+    expect(getPrimaryImageFile(tool, settings)).toBe(expected);
+  });
+
   it('should get specificity file', () => {
     const settings = {};
     const tool = 'specificity';
