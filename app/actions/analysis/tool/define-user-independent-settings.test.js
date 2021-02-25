@@ -48,7 +48,7 @@ describe('Define user-independent analysis settings', () => {
 
       it('should return object with path to files', () => {
         const expected = {
-          geneFile: 'tmp/test/helper-files/gene-db.json',
+          geneFile: 'helper-files/gene-db.json',
           knownFile: '',
           proteinExpressionFile: '',
           rnaExpressionFile: '',
@@ -80,10 +80,10 @@ describe('Define user-independent analysis settings', () => {
 
       it('should return object with path to files', () => {
         const expected = {
-          geneFile: 'tmp/test/helper-files/gene-db.json',
-          knownFile: 'tmp/test/helper-files/interactions.json',
-          proteinExpressionFile: 'tmp/test/helper-files/protein-expression.json',
-          rnaExpressionFile: 'tmp/test/helper-files/rna-expression.json',
+          geneFile: 'helper-files/gene-db.json',
+          knownFile: 'helper-files/interactions.json',
+          proteinExpressionFile: 'helper-files/protein-expression.json',
+          rnaExpressionFile: 'helper-files/rna-expression.json',
         };
         expect(settings).toEqual(expected);
       });

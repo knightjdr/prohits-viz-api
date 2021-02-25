@@ -2,7 +2,7 @@ import addPath from './add-path.js';
 import config from '../../config/config.js';
 import filterOutFoldersToIgnore from './filter-folders.js';
 import getOldFiles from './get-old-files.js';
-import listFiles from '../../helpers/files/list-files.js';
+import listFiles from '../files/list-files.js';
 import removeFiles from './remove.js';
 
 const clearFolders = async () => {

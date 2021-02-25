@@ -3,10 +3,10 @@ import fs from 'fs/promises';
 import config from '../../../config/config.js';
 
 const addFile = async (filename, workDir) => {
-  const source = `${config.dataDir}${filename}`;
+  const source = `${process.cwd()}/${config.dataDir}${filename}`;
   const target = `${workDir}/helper-files/${filename}`;
   await fs.symlink(source, target);
-  return target;
+  return `helper-files/${filename}`;
 };
 
 const defineUserIndependentSettings = async (settings, workDir) => {
