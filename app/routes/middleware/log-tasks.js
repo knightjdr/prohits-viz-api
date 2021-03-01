@@ -18,7 +18,7 @@ const calculateFileSize = (files) => {
 
 const creatDocument = (req) => {
   const { files, params, path } = req;
-  const fileSize = calculateFileSize(files.file);
+  const fileSize = calculateFileSize(files?.file);
 
   return {
     date: new Date().toISOString(),
