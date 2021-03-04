@@ -9,10 +9,19 @@ const addFile = async (filename, workDir) => {
   return `helper-files/${filename}`;
 };
 
+const addMapFileName = (value, name) => {
+  if (Array.isArray(value) && value.length > 0) {
+    return name;
+  }
+  return '';
+};
+
 const defineUserIndependentSettings = async (settings, workDir) => {
   const {
+    conditionMapFile,
     known,
     proteinTissues,
+    readoutMapFile,
     rnaTissues,
     type: tool,
   } = settings;
@@ -26,9 +35,11 @@ const defineUserIndependentSettings = async (settings, workDir) => {
     ]);
 
     return {
+      conditionMapFile: addMapFileName(conditionMapFile, 'helper-files/condition-map.txt'),
       geneFile: files[0],
       knownFile: files[1],
       proteinExpressionFile: files[2],
+      readoutMapFile: addMapFileName(readoutMapFile, 'helper-files/readout-map.txt'),
       rnaExpressionFile: files[3],
     };
   }

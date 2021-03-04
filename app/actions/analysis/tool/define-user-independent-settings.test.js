@@ -48,9 +48,11 @@ describe('Define user-independent analysis settings', () => {
 
       it('should return object with path to files', () => {
         const expected = {
+          conditionMapFile: '',
           geneFile: 'helper-files/gene-db.json',
           knownFile: '',
           proteinExpressionFile: '',
+          readoutMapFile: '',
           rnaExpressionFile: '',
         };
         expect(settings).toEqual(expected);
@@ -69,8 +71,10 @@ describe('Define user-independent analysis settings', () => {
 
       beforeAll(async () => {
         const formSettings = {
+          conditionMapFile: [{}],
           known: 'interaction',
           proteinTissues: ['HEK-293'],
+          readoutMapFile: [{}],
           rnaTissues: ['HEK 293'],
           type: 'scv',
         };
@@ -80,9 +84,11 @@ describe('Define user-independent analysis settings', () => {
 
       it('should return object with path to files', () => {
         const expected = {
+          conditionMapFile: 'helper-files/condition-map.txt',
           geneFile: 'helper-files/gene-db.json',
           knownFile: 'helper-files/interactions.json',
           proteinExpressionFile: 'helper-files/protein-expression.json',
+          readoutMapFile: 'helper-files/readout-map.txt',
           rnaExpressionFile: 'helper-files/rna-expression.json',
         };
         expect(settings).toEqual(expected);
