@@ -125,6 +125,11 @@ describe('Validate heat map fields', () => {
 
       const expected = {
         columnDB: ['baitA', 'baitB'],
+        minimap: {
+          main: {
+            needSyncing: true,
+          },
+        },
         rowDB: [
           {
             name: 'preyA',
@@ -175,8 +180,10 @@ describe('Validate heat map fields', () => {
 
       const expected = {
         columnDB: ['baitA', 'baitB'],
-        settings: {
-          imageType: 'dotplot',
+        minimap: {
+          main: {
+            needSyncing: true,
+          },
         },
         rowDB: [
           {
@@ -201,6 +208,9 @@ describe('Validate heat map fields', () => {
             ],
           },
         ],
+        settings: {
+          imageType: 'dotplot',
+        },
       };
 
       const actual = await validateHeatmapFields(request);

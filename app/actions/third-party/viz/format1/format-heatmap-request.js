@@ -41,5 +41,10 @@ readouts.forEach((readout) => {
 
 parentPort.postMessage({
   columnDB: conditions,
+  minimap: {
+    main: {
+      needSyncing: true,
+    },
+  },
   rowDB,
 });

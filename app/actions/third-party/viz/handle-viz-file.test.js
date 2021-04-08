@@ -66,7 +66,7 @@ describe('Third party viz', () => {
       const expectedContents = {
         parameters: { imageType: 'dotplot' },
       };
-      const data = await fs.readFile('tmp/test1/interactive/dotplot.json', 'utf8')
+      const data = await fs.readFile('tmp/test1/interactive/dotplot.json', 'utf8');
       expect(data).toBe(JSON.stringify(expectedContents, null, 2));
     });
 
