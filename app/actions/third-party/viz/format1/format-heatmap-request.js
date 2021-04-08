@@ -1,6 +1,6 @@
 import { workerData, parentPort } from 'worker_threads';
 
-import removeDuplicates from '../../../utils/remove-duplicates.js';
+import removeDuplicates from '../../../../utils/remove-duplicates.js';
 
 const { data, parameters } = workerData;
 

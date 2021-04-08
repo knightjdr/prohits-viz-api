@@ -106,14 +106,14 @@ describe('Validate heat map fields', () => {
   });
 
   describe('Simple request format', () => {
-    it('should validate request and return newly formatted', async () => {
+    it('should validate heatmap request and return newly formatted data', async () => {
       const request = {
         dataFormat: 'format1',
         parameters: {
           imageType: 'heatmap',
+          abundance: 'abundance',
           condition: 'bait',
           readout: 'prey',
-          abundance: 'abundance',
         },
         data: [
           { bait: 'baitA', prey: 'preyA', abundance: 1 },
@@ -137,6 +137,68 @@ describe('Validate heat map fields', () => {
           {
             name: 'preyC',
             data: [{ value: 0 }, { value: 4 }],
+          },
+        ],
+      };
+
+      const actual = await validateHeatmapFields(request);
+      expect(actual).toEqual(expected);
+    });
+
+    it('should validate dotplot request and return newly formatted data', async () => {
+      const request = {
+        dataFormat: 'format1',
+        parameters: {
+          imageType: 'dotplot',
+          abundance: 'abundance',
+          condition: 'condition',
+          ratio: 'ratio',
+          readout: 'readout',
+          score: 'score',
+          scoreType: 'lte',
+        },
+        data: [
+          {
+            condition: 'baitA', readout: 'preyA', abundance: 17, score: 0.05, ratio: 0.68,
+          },
+          {
+            condition: 'baitA', readout: 'preyB', abundance: 13, score: 0.01, ratio: 1,
+          },
+          {
+            condition: 'baitB', readout: 'preyA', abundance: 25, score: 0.01, ratio: 1,
+          },
+          {
+            condition: 'baitB', readout: 'preyC', abundance: 73, score: 0.01, ratio: 1,
+          },
+        ],
+      };
+
+      const expected = {
+        columnDB: ['baitA', 'baitB'],
+        settings: {
+          imageType: 'dotplot',
+        },
+        rowDB: [
+          {
+            name: 'preyA',
+            data: [
+              { value: 17, score: 0.05, ratio: 0.68 },
+              { value: 25, score: 0.01, ratio: 1 },
+            ],
+          },
+          {
+            name: 'preyB',
+            data: [
+              { value: 13, score: 0.01, ratio: 1 },
+              { value: 0, score: 0.05, ratio: 0 },
+            ],
+          },
+          {
+            name: 'preyC',
+            data: [
+              { value: 0, score: 0.05, ratio: 0 },
+              { value: 73, score: 0.01, ratio: 1 },
+            ],
           },
         ],
       };

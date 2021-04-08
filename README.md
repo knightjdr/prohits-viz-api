@@ -1,11 +1,11 @@
 # Introduction
 
-This API allows third-party access to the analysis and visualization tools at ProHits-viz.
+This API allows third-party access to the visualization tools at ProHits-viz.
 
 # Overview
 
 ## Access
-Access to the api requires a key. Please email contact@prohits.org to request one. Once you have a key include it and your contact email in the request header using the `apikey` field. The contact email and key should be separated using a colon: `contact@address.org:apikey`
+Access to the api requires a key. Please email contact@prohits.org to request one. Once you have a key, include it and your contact email in the request header using the `apikey` field. The contact email and key should be separated using a colon: `contact@address.org:apikey`
 
 ## Address
 https<nolink>://prohits-viz.org/api/third-party
@@ -15,15 +15,45 @@ https<nolink>://prohits-viz.org/api/third-party
 All endpoints use the POST method.
 
 ### Route: /viz
-headers:
+
+This route is used for passing data in a supported "interactive" format for displaying at ProHits-viz. Other than displaying the data as an image, ProHits-viz does not do any filtering or clustering. Data should be passed as you want it visualized.
+
+#### Request header
+
+There are three required headers for the request. Your contact address and apikey should be used in the `Apikey` field.
+
 * `Accept: application/json`
 * `Apikey: contact@address.org:apikey`
 * `Content-Type: application/json`
 
-response:
-* 200 status: url where the image can be accessed
+#### Request body
 
-body: Please see the JSON files in the sample-files folder for examples of how to format the request body. Specfically see the "-minimal.json" files for minimal working examples for either dot plots or heat maps. See the dotplot.json file for an example with many optional parameters set.
+Examples of the request format for the body can be found in the folder `sample-files/`. Files with `-minimal` in the file handle are basic examples that can be used to better understand the request format.
+
+##### Heat maps/dot plots
+
+The request body can take two different formats. `format1` is a minimal format designed to make it as easy as possible to submit data. See the file `sample-files/heatmap-format1-minimal.json` for an example. In the `parameters` object, the `condition`, `readout` and `abundance` fields are required and refer to the keys used in the `data` array. The `data` field is an array, with a single data point per entry corresponding to a condition-readout pair with their associated abundance. In the case of a dot plot, there must also be a `score` and `ratio` field, with the ratio referring to the relative circle size from 0-1.
+
+When `format1` is drawn as an image, the first `condition` encountered in the `data` array will be the first column, the next unique condition the second column, and so on. Similarly for readouts. You do not need to specify a value for every cell (column-row) pair on the heat map as missing values will be treated as zero.
+
+`format1` will be turned into `format2`. `format2` is the actual JSON structure used by the interactive viewer at ProHits-viz and requests sent to our server in this format will be handled quicker as no conversion is necessary. However, the structure for `format2` is slightly more complicated.
+
+In `format2`, the `columnDB` array lists the column names and their order, while the `rowDB` array contains data for each row in the image. The order of the rows is the order they will be displayed in. The `name` field for each row specifies the name to display for the row, and the `data` array lists the row data values corresponding to each column. The order of these values must match the `columnDB` order and missing values are not permitted (use zero instead).
+
+##### Scatter plots
+
+Coming soon...
+
+##### Circular heat maps
+
+Coming soon...
+
+#### Response
+
+* 200 status: JSON response with a `url` field whose value will be a link where the image can be accessed. An example response will look like:
+```json
+{ "url": "https://prohits-viz.org/visualization/samplefile/dotplot" } 
+```
 
 # Error Codes
 * 400: Error with request body
@@ -33,10 +63,10 @@ body: Please see the JSON files in the sample-files folder for examples of how t
 * 500: Server error
 
 # Rate limit
-There is no rate limit to requests.
+Requests are limited to 5 per second.
 
 # Tests
 
 `npm test`
 
-© 2018 James Knight.
+© 2021 James Knight.

@@ -4,7 +4,9 @@ import validateScatterFields from './validate-scatter-fields.js';
 
 const validImageTypes = ['circheatmap', 'dotplot', 'heatmap', 'scatter'];
 
-const validateFields = async (imageType, data) => {
+const validateFields = async (data) => {
+  const { parameters: { imageType } } = data;
+
   if (!validImageTypes.includes(imageType)) {
     throw new Error('Invalid image type');
   }

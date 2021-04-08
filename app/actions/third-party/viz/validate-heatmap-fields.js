@@ -33,9 +33,11 @@ export const validateRowDB = (rowDB) => {
   }
 };
 
-export const formatSimpleRequest = workerData => (
+export const formatSimpleRequest = (workerData, imageType) => (
   new Promise((resolve, reject) => {
-    const worker = new Worker('./app/actions/third-party/viz/format-heatmap-request.js', { workerData });
+    const worker = imageType === 'dotplot'
+      ? new Worker('./app/actions/third-party/viz/format1/format-dotplot-request.js', { workerData })
+      : new Worker('./app/actions/third-party/viz/format1/format-heatmap-request.js', { workerData });
     worker.once('message', (message) => {
       resolve(message);
     });
@@ -49,11 +51,11 @@ export const formatSimpleRequest = workerData => (
 );
 
 const validateHeatmapFields = async (request) => {
-  const { dataFormat } = request;
+  const { dataFormat, parameters } = request;
 
   let formatted = request;
   if (dataFormat === 'format1') {
-    formatted = await formatSimpleRequest(request);
+    formatted = await formatSimpleRequest(request, parameters.imageType);
   }
 
   const { columnDB, rowDB } = formatted;

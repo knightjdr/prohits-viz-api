@@ -17,7 +17,7 @@ const validate = async (body) => {
   const { parameters } = requestData;
 
   validateParameters(parameters);
-  const validatedFields = await validateFields(parameters.imageType, requestData);
+  const validatedFields = await validateFields(requestData);
 
   return {
     parameters,

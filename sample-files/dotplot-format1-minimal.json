@@ -1,0 +1,18 @@
+{
+	"dataFormat": "format1",
+	"parameters": {
+		"imageType": "dotplot",
+		"abundance": "abundance",
+		"condition": "condition",
+    "ratio": "ratio",
+		"readout": "readout",
+    "score": "score",
+    "scoreType": "lte"
+	},
+	"data": [
+		{"condition": "baitA", "readout": "preyA", "abundance": 17, "score": 0.05, "ratio": 0.68},
+		{"condition": "baitA", "readout": "preyB", "abundance": 13, "score": 0.01, "ratio": 1},
+		{"condition": "baitB", "readout": "preyA", "abundance": 25, "score": 0.01, "ratio": 1},
+		{"condition": "baitB", "readout": "preyC", "abundance": 73, "score": 0.01, "ratio": 1}
+	]
+}
