@@ -8,7 +8,7 @@ import createWorkDir from '../../../helpers/files/create-work-dir.js';
 
 const handleVizFile = async (req, res) => {
   try {
-    const validated = validate(req.body);
+    const validated = await validate(req.body);
 
     const workingDir = await createWorkDir();
     await createDirs(workingDir, ['interactive']);

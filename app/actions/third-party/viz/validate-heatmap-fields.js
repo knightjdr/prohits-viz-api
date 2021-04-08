@@ -1,3 +1,5 @@
+import { Worker } from 'worker_threads';
+
 export const validateColumnDB = (columnDB) => {
   if (
     !columnDB
@@ -31,14 +33,35 @@ export const validateRowDB = (rowDB) => {
   }
 };
 
-const validateHeatmapFields = (data) => {
-  const {
-    columnDB,
-    rowDB,
-  } = data;
+export const formatSimpleRequest = workerData => (
+  new Promise((resolve, reject) => {
+    const worker = new Worker('./app/actions/third-party/viz/format-heatmap-request.js', { workerData });
+    worker.once('message', (message) => {
+      resolve(message);
+    });
+    worker.on('error', reject);
+    worker.on('exit', (code) => {
+      if (code !== 0) {
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+  })
+);
+
+const validateHeatmapFields = async (request) => {
+  const { dataFormat } = request;
+
+  let formatted = request;
+  if (dataFormat === 'format1') {
+    formatted = await formatSimpleRequest(request);
+  }
+
+  const { columnDB, rowDB } = formatted;
 
   validateColumnDB(columnDB);
   validateRowDB(rowDB);
+
+  return formatted;
 };
 
 export default validateHeatmapFields;

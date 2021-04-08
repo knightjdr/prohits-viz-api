@@ -6,20 +6,23 @@ import validateParameters from './validate-parameters.js';
 // necessary fields and values for the interactive viewer. If the analysis
 // type is "dotplot" or "heatmap", this includes checking for the "column"
 // and "rows" props.
-const validate = (body) => {
-  const data = isJson(body, false);
+const validate = async (body) => {
+  const requestData = isJson(body, false);
 
   // If the json is not valid, return err.
-  if (!data) {
+  if (!requestData) {
     throw new Error('Invalid body format');
   }
 
-  const { parameters } = data;
+  const { parameters } = requestData;
 
   validateParameters(parameters);
-  validateFields(parameters.imageType, data);
+  const validatedFields = await validateFields(parameters.imageType, requestData);
 
-  return data;
+  return {
+    parameters,
+    ...validatedFields,
+  };
 };
 
 export default validate;

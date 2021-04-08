@@ -29,6 +29,8 @@ const validateCircHeatmapFields = (data) => {
   } = data;
 
   validatePlots(plots);
+
+  return data;
 };
 
 export default validateCircHeatmapFields;

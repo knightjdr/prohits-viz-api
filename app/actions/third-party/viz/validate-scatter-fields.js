@@ -31,6 +31,8 @@ const validateScatterFields = (data) => {
   } = data;
 
   validatePlots(plots);
+
+  return data;
 };
 
 export default validateScatterFields;
