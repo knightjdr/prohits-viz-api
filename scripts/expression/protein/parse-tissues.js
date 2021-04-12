@@ -1,4 +1,4 @@
-import readJSON from '../../utils/read-json.js';
+import readJSON from '../../../app/utils/read-json.js';
 import round from '../../utils/round.js';
 import sortArray from '../../utils/sort-array-strings.js';
 

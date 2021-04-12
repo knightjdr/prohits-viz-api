@@ -2,10 +2,7 @@ import mockFS from 'mock-fs';
 
 import getOldFiles from './get-old-files.js';
 
-const expiredFile = 86400000;
-jest.mock('../../config/config', () => ({
-  expiredFile: 86400000,
-}));
+const lifeSpan = 86400000;
 
 const mockedFileSystem = {
   tmp: {
@@ -15,11 +12,11 @@ const mockedFileSystem = {
     }),
     'file2.txt': mockFS.file({
       content: '',
-      mtime: new Date(new Date().valueOf() - expiredFile - 1),
+      mtime: new Date(new Date().valueOf() - lifeSpan - 1),
     }),
     'file3.txt': mockFS.file({
       content: '',
-      mtime: new Date(new Date().valueOf() - (expiredFile / 2)),
+      mtime: new Date(new Date().valueOf() - (lifeSpan / 2)),
     }),
   },
 };
@@ -32,10 +29,9 @@ afterAll(() => {
 describe('List old files', () => {
   let oldFiles;
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     const files = ['tmp/file1.txt', 'tmp/file2.txt', 'tmp/file3.txt'];
-    oldFiles = await getOldFiles(files);
-    done();
+    oldFiles = await getOldFiles(files, lifeSpan);
   });
 
   it('should return a list of expired files', () => {

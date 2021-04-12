@@ -1,4 +1,4 @@
-import readJSON from '../utils/read-json.js';
+import readJSON from '../../app/utils/read-json.js';
 
 const getFieldAsArray = (value) => {
   if (Array.isArray(value)) {

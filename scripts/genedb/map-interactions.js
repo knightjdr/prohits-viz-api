@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-import readJson from '../utils/read-json.js';
+import readJson from '../../app/utils/read-json.js';
 
 const mapInteractions = async (infile, outfile, geneData) => {
   const interactions = await readJson(infile);

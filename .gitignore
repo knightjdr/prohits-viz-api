@@ -63,8 +63,9 @@ typings/
 # config
 app/config/config.js
 
-# temporary folders
+# temporary folders and archive
 tmp/
+archive/
 
 # download folders
 scripts/expression/downloads

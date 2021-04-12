@@ -1,34 +1,37 @@
 import fs from 'fs/promises';
 
-import config from '../../config/config.js';
-
-const isExpired = (stat) => {
+const isExpired = (stat, lifespan) => {
   const currTime = new Date();
-  return currTime.valueOf() - stat.mtime.valueOf() > config.expiredFile;
+  return currTime.valueOf() - stat.mtime.valueOf() > lifespan;
 };
 
-const getFileStats = async (file) => {
+const getFileStats = async (filename) => {
   try {
-    const stat = await fs.stat(file);
-    return stat;
+    const stat = await fs.stat(filename);
+    return {
+      ...stat,
+      filename,
+    };
   } catch (error) {
-    return { mtime: new Date() };
+    return {
+      filename,
+    };
   }
 };
 
-const reduceToExpiredFiles = (stats, files) => (
-  stats.reduce((accum, stat, i) => {
-    if (isExpired(stat)) {
-      return [...accum, files[i]];
+const reduceToExpiredFiles = (stats, lifespan) => (
+  stats.reduce((accum, stat) => {
+    if (isExpired(stat, lifespan)) {
+      return [...accum, stat.filename];
     }
     return accum;
   }, [])
 );
 
-const getOldFiles = async (files) => {
-  const promises = files.map(async file => getFileStats(file));
+const getOldFiles = async (files, lifespan) => {
+  const promises = files.map(async filename => getFileStats(filename));
   const stats = await Promise.all(promises);
-  return reduceToExpiredFiles(stats, files);
+  return reduceToExpiredFiles(stats, lifespan);
 };
 
 export default getOldFiles;
