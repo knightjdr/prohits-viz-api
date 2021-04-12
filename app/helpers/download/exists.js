@@ -2,10 +2,12 @@ import fs from 'fs/promises';
 
 const exists = async (file, res) => {
   try {
-    await fs.stat(file);
+    const results = await fs.stat(file);
+    return results;
   } catch (error) {
     res.status(404);
     res.end();
+    return false;
   }
 };
 

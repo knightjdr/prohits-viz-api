@@ -15,7 +15,7 @@ afterAll(() => {
 });
 
 describe('Working directory generation', () => {
-  describe('when succesfully generated', () => {
+  describe('when successfully generated', () => {
     let workingDir;
 
     beforeAll(async (done) => {
@@ -38,7 +38,7 @@ describe('Working directory generation', () => {
     ));
   });
 
-  describe('when unsuccesfully generated', () => {
+  describe('when unsuccessfully generated', () => {
     let error;
 
     beforeAll(async (done) => {

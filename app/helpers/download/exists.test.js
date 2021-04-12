@@ -18,7 +18,7 @@ afterAll(() => {
 
 describe('Download file existence check', () => {
   it('should resolve when file exists', () => (
-    expect(exists('file.txt', res)).resolves.toBeUndefined()
+    expect(exists('file.txt', res)).resolves.toBeDefined()
   ));
 
   describe('when file does not exist', () => {

@@ -5,10 +5,10 @@ import extToMimeType from './ext-to-mime-type.js';
 import removeFile from '../files/remove-file.js';
 
 export const removeFileOnCompletion = (file, shouldRemoveFile) => {
-  const workdir = file.replace(config.workDir, '').split('/')[0];
-  const workdirPath = `${config.workDir}${workdir}`;
+  const workDir = file.replace(config.workDir, '').split('/')[0];
+  const workDirPath = `${config.workDir}${workDir}`;
   if (shouldRemoveFile) {
-    removeFile(workdirPath);
+    removeFile(workDirPath);
   }
 };
 

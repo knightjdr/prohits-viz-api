@@ -1,5 +1,6 @@
 import multer from 'multer';
 
+import archiveSession from '../actions/archive/archive-session.js';
 import config from '../config/config.js';
 import getSocket from './middleware/get-socket.js';
 import logTasks from './middleware/log-tasks.js';
@@ -19,6 +20,7 @@ const multerConfig = upload.fields([{ name: 'file' }, { name: 'helperFile' }]);
 const post = (router) => {
   router.post('/analysis/viz/:tool', getSocket, logTasks, vizAnalysis);
   router.post('/analysis/:tool', multerConfig, getSocket, logTasks, toolAnalysis);
+  router.post('/archive/', archiveSession);
   router.post('/error/', logClientError);
   router.post('/export/', getSocket, exportImage);
   router.post('/sync/:snapshotID', noCacheClient, getSocket, sync);
