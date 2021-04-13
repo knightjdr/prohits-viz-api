@@ -35,6 +35,7 @@ describe('Archive session file', () => {
           settings: { fillColor: 'blue' },
           parameters: {
             otherField: 'value',
+            filename: 'dotplot',
             taskID: 'abc',
           },
         },
@@ -54,6 +55,7 @@ describe('Archive session file', () => {
         settings: { fillColor: 'blue' },
         parameters: {
           otherField: 'value',
+          filename: 'archiveID',
           taskID: 'archive',
         },
       };
@@ -75,6 +77,7 @@ describe('Archive session file', () => {
           settings: { fillColor: 'blue' },
           parameters: {
             otherField: 'value',
+            filename: 'dotplot',
             taskID: 'abc',
           },
         },

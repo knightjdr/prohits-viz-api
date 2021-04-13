@@ -20,12 +20,15 @@ describe('Name of the group', () => {
   it('should return all files that do not match an ignore folder', async () => {
     const directoryInfo = {
       dir: 'tmp/',
-      ignoreFolders: ['uploads/'],
+      ignoreFolders: ['samplefile/', 'uploads/'],
     };
     const unfilteredFliesToRemove = [
       'tmp/abc',
       'tmp/def',
       'tmp/ghi',
+      'tmp/samplefile/status.json',
+      'tmp/samplefile/interactive/',
+      'tmp/samplefile/interactive/file.json',
       'tmp/uploads/',
       'tmp/uploads/def',
       'tmp/white-list.json',
@@ -42,13 +45,16 @@ describe('Name of the group', () => {
   it('should return all files that do not match an ignore folder or are in whitelist', async () => {
     const directoryInfo = {
       dir: 'tmp/',
-      ignoreFolders: ['uploads/'],
+      ignoreFolders: ['samplefile/', 'uploads/'],
       whiteList: 'white-list.json',
     };
     const unfilteredFliesToRemove = [
       'tmp/abc',
       'tmp/def',
       'tmp/ghi',
+      'tmp/samplefile/status.json',
+      'tmp/samplefile/interactive/',
+      'tmp/samplefile/interactive/file.json',
       'tmp/uploads/',
       'tmp/uploads/def',
       'tmp/white-list.json',

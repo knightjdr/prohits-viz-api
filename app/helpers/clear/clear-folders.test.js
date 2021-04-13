@@ -47,7 +47,18 @@ const mockedFileSystem = {
     ]),
   },
   tmp: {
-    samplefile: {},
+    samplefile: {
+      interactive: {
+        'file.json': mockFS.file({
+          content: '',
+          mtime: new Date(new Date().valueOf() - lifespanArchiveFile - 1),
+        }),
+      },
+      'status.json': mockFS.file({
+        content: '',
+        mtime: new Date(new Date().valueOf() - lifespanArchiveFile - 1),
+      }),
+    },
     test: {},
     'file1.txt': mockFS.file({
       content: '',
@@ -97,8 +108,23 @@ describe('Clear folders', () => {
   });
 
   it('should clear expired files/folders in tmp folder', async () => {
-    const expectedFiles = ['file1.txt', 'folder1', 'samplefile', 'test', 'uploads'];
+    const expectedFiles = [
+      'file1.txt',
+      'folder1',
+      'samplefile',
+      'test',
+      'uploads',
+    ];
     const files = await fs.readdir('tmp');
+    expect(files).toEqual(expectedFiles);
+  });
+
+  it('should not clear files in samplefile folder', async () => {
+    const expectedFiles = [
+      'interactive',
+      'status.json',
+    ];
+    const files = await fs.readdir('tmp/samplefile');
     expect(files).toEqual(expectedFiles);
   });
 

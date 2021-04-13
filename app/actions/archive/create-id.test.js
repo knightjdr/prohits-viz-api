@@ -11,7 +11,7 @@ describe('Create archive ID', () => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    const expected = `${year}-${month}-${day}-randomID`;
+    const expected = `${year}${month}${day}randomID`;
     expect(createArchiveID()).toBe(expected);
   });
 });

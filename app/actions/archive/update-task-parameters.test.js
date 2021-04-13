@@ -1,4 +1,4 @@
-import updateTaskID from './update-task-id.js';
+import updateTaskParameters from './update-task-parameters.js';
 
 describe('Update task id for archive', () => {
   it('should update an existing task ID', () => {
@@ -16,7 +16,7 @@ describe('Update task id for archive', () => {
         taskID: 'archive',
       },
     };
-    expect(updateTaskID(data)).toEqual(expected);
+    expect(updateTaskParameters(data)).toEqual(expected);
   });
 
   it('should update missing parameters field', () => {
@@ -29,6 +29,6 @@ describe('Update task id for archive', () => {
         taskID: 'archive',
       },
     };
-    expect(updateTaskID(data)).toEqual(expected);
+    expect(updateTaskParameters(data)).toEqual(expected);
   });
 });

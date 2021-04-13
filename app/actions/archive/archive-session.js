@@ -2,12 +2,12 @@ import fs from 'fs/promises';
 
 import config from '../../config/config.js';
 import createArchiveID from './create-id.js';
-import updateTaskID from './update-task-id.js';
+import updateTaskParameters from './update-task-parameters.js';
 
 const archiveSession = async (req, res) => {
   try {
     const archiveID = createArchiveID();
-    const data = updateTaskID(req.body);
+    const data = updateTaskParameters(req.body, archiveID);
     await fs.writeFile(
       `${config.archiveDir}${archiveID}.json`,
       JSON.stringify(data),
