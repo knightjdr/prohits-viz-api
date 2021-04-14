@@ -17,7 +17,7 @@ jest.mock('../../config/config', () => ({
     },
     {
       dir: 'tmp/',
-      ignoreFolders: ['samplefile/', 'test/', 'uploads/'],
+      ignoreFolders: ['samplefile', 'test', 'uploads'],
       lifespan: lifespanTMPFile,
     },
     {
@@ -28,67 +28,93 @@ jest.mock('../../config/config', () => ({
   ],
 }));
 
+const freshArchiveDate = new Date(new Date().valueOf() - (lifespanArchiveFile / 2));
+const oldArchiveDate = new Date(new Date().valueOf() - lifespanArchiveFile - 1);
+const freshTMPDate = new Date(new Date().valueOf() - (lifespanTMPFile / 2));
+const oldTMPDate = new Date(new Date().valueOf() - lifespanTMPFile - 1);
+const freshUploadDate = new Date(new Date().valueOf() - (lifespanUploadFile / 2));
+const oldUploadDate = new Date(new Date().valueOf() - lifespanUploadFile - 1);
+
 const mockedFileSystem = {
-  archive: {
-    'file1.json': mockFS.file({
-      content: '',
-      mtime: new Date(new Date().valueOf() - (lifespanArchiveFile / 2)),
-    }),
-    'file2.json': mockFS.file({
-      content: '',
-      mtime: new Date(new Date().valueOf() - lifespanArchiveFile - 1),
-    }),
-    'file3.json': mockFS.file({
-      content: '',
-      mtime: new Date(new Date().valueOf() - lifespanArchiveFile - 1),
-    }),
-    'white-list.json': JSON.stringify([
-      'file2.json',
-    ]),
-  },
-  tmp: {
-    samplefile: {
-      interactive: {
-        'file.json': mockFS.file({
-          content: '',
-          mtime: new Date(new Date().valueOf() - lifespanArchiveFile - 1),
-        }),
-      },
-      'status.json': mockFS.file({
+  archive: mockFS.directory({
+    mtime: oldArchiveDate,
+    items: {
+      'file1.json': mockFS.file({
         content: '',
-        mtime: new Date(new Date().valueOf() - lifespanArchiveFile - 1),
+        mtime: freshArchiveDate,
+      }),
+      'file2.json': mockFS.file({
+        content: '',
+        mtime: oldArchiveDate,
+      }),
+      'file3.json': mockFS.file({
+        content: '',
+        mtime: oldArchiveDate,
+      }),
+      'white-list.json': mockFS.file({
+        content: JSON.stringify([
+          'file2.json',
+        ]),
+        mtime: oldArchiveDate,
       }),
     },
-    test: {},
-    'file1.txt': mockFS.file({
-      content: '',
-      mtime: new Date(new Date().valueOf() - (lifespanTMPFile / 2)),
-    }),
-    'file2.txt': mockFS.file({
-      content: '',
-      mtime: new Date(new Date().valueOf() - lifespanTMPFile - 1),
-    }),
-    folder1: mockFS.directory({
-      items: {},
-      mode: '0755',
-      mtime: new Date(new Date().valueOf() - (lifespanTMPFile / 2)),
-    }),
-    folder2: mockFS.directory({
-      items: {},
-      mode: '0755',
-      mtime: new Date(new Date().valueOf() - lifespanTMPFile - 1),
-    }),
-    uploads: {
-      'file3.txt': mockFS.file({
-        content: '',
-        mtime: new Date(new Date().valueOf() - (lifespanUploadFile / 2)),
+  }),
+  tmp: mockFS.directory({
+    mtime: oldTMPDate,
+    items: {
+      samplefile: mockFS.directory({
+        mtime: oldTMPDate,
+        items: {
+          interactive: mockFS.directory({
+            mtime: oldTMPDate,
+            items: {
+              'file.json': mockFS.file({
+                content: '',
+                mtime: oldTMPDate,
+              }),
+            },
+          }),
+          'status.json': mockFS.file({
+            content: '',
+            mtime: oldTMPDate,
+          }),
+        },
       }),
-      'file4.txt': mockFS.file({
+      test: mockFS.directory({
+        mtime: oldTMPDate,
+        items: {},
+      }),
+      'file1.txt': mockFS.file({
         content: '',
-        mtime: new Date(new Date().valueOf() - lifespanUploadFile - 1),
+        mtime: freshTMPDate,
+      }),
+      'file2.txt': mockFS.file({
+        content: '',
+        mtime: oldTMPDate,
+      }),
+      folder1: mockFS.directory({
+        items: {},
+        mtime: freshTMPDate,
+      }),
+      folder2: mockFS.directory({
+        items: {},
+        mtime: oldTMPDate,
+      }),
+      uploads: mockFS.directory({
+        mtime: oldTMPDate,
+        items: {
+          'file3.txt': mockFS.file({
+            content: '',
+            mtime: freshUploadDate,
+          }),
+          'file4.txt': mockFS.file({
+            content: '',
+            mtime: oldUploadDate,
+          }),
+        },
       }),
     },
-  },
+  }),
 };
 mockFS(mockedFileSystem);
 

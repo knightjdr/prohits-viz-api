@@ -14,6 +14,7 @@ const getFileStats = async (filename) => {
     };
   } catch (error) {
     return {
+      mtime: new Date(),
       filename,
     };
   }
