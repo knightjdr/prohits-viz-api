@@ -11,8 +11,8 @@ const constructJSON = data => ({
     edgeColor: data.edgeColor,
     fillColor: data.fillColor,
     minAbundance: data.minAbundance,
-    primaryFilter: data.fillColor,
-    scoreType: data.fillColor,
+    primaryFilter: data.primaryFilter,
+    scoreType: data.scoreType,
     secondaryFilter: data.secondaryFilter,
   },
 });

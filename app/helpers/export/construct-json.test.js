@@ -27,15 +27,13 @@ describe('Construct JSON for pvsync', () => {
       },
       rowDB: [{ data: [{ ratio: 0.5, score: 0.01, value: 1 }], name: 'a' }],
       rowOrder: [0],
-      settings: {
-        abundanceCap: 50,
-        edgeColor: 'red',
-        fillColor: 'blue',
-        minAbundance: 0,
-        primaryFilter: 0.01,
-        scoreType: 'lte',
-        secondaryFilter: 0.05,
-      },
+      abundanceCap: 50,
+      edgeColor: 'red',
+      fillColor: 'blue',
+      minAbundance: 0,
+      primaryFilter: 0.01,
+      scoreType: 'lte',
+      secondaryFilter: 0.05,
     };
 
     const expected = {
@@ -51,8 +49,8 @@ describe('Construct JSON for pvsync', () => {
         edgeColor: data.edgeColor,
         fillColor: data.fillColor,
         minAbundance: data.minAbundance,
-        primaryFilter: data.fillColor,
-        scoreType: data.fillColor,
+        primaryFilter: data.primaryFilter,
+        scoreType: data.scoreType,
         secondaryFilter: data.secondaryFilter,
       },
     };
