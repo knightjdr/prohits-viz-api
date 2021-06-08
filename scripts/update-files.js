@@ -47,7 +47,7 @@ const update = async () => {
   try {
     await Promise.all([
       downloadExpression(),
-      // downloadInteractions(),
+      downloadInteractions(),
     ]);
     await mapGeneIDs();
     await mergeVersions();
