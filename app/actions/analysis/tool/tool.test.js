@@ -1,14 +1,14 @@
 import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
-import runToolAnalysis from './tool.js';
-import deleteDirs from '../../../helpers/files/delete-dir.js';
+import cleanup from './cleanup.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
+import runToolAnalysis from './tool.js';
 import spawnTask from './spawn.js';
 import validate from '../../../helpers/validation/analysis/validate.js';
 
-jest.mock('../../../helpers/files/delete-dir');
-deleteDirs.mockResolvedValue();
+jest.mock('./cleanup.js');
+cleanup.mockResolvedValue();
 jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('./spawn');
 spawnTask.mockResolvedValue();
@@ -103,7 +103,7 @@ describe('Run analysis', () => {
     };
 
     beforeAll(async () => {
-      deleteDirs.mockClear();
+      cleanup.mockClear();
       res.locals.socket.emit.mockClear();
       res.send.mockClear();
       spawnTask.mockClear();
@@ -158,8 +158,8 @@ describe('Run analysis', () => {
       expect(spawnTask).toHaveBeenCalledWith('tmp/taskID');
     });
 
-    it('should call delete directories', () => {
-      expect(deleteDirs).toHaveBeenCalledWith('tmp/taskID', ['files', 'helper-files']);
+    it('should call cleanup', () => {
+      expect(cleanup).toHaveBeenCalledWith('tmp/taskID', 'dotplot');
     });
 
     it('should update status file to indicate completion', async () => {

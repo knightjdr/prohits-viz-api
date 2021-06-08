@@ -1,11 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import cleanup from './cleanup.js';
 import createDirs from '../../../helpers/files/create-dirs.js';
 import createStatus from '../../../helpers/status/create-status.js';
 import definePrimaryImageFile from './primary-image-file.js';
 import defineUserIndependentSettings from './define-user-independent-settings.js';
-import deleteDirs from '../../../helpers/files/delete-dir.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
 import moveFiles from '../../../helpers/files/move-files.js';
 import spawnTask from './spawn.js';
@@ -62,7 +62,7 @@ const runToolAnalysis = async (req, res) => {
       await spawnTask(workDir);
       const [status] = await Promise.all([
         updateStatus(workDir),
-        deleteDirs(workDir, ['files', 'helper-files']),
+        cleanup(workDir, tool),
       ]);
 
       socket.emit(

@@ -1,19 +1,27 @@
 /* eslint no-console: 0 */
+import fs from 'fs/promises';
 
 import createFolder from '../utils/create-folder.js';
 import protein from './protein/protein.js';
 import rna from './rna/rna.js';
 
-const main = async () => {
+const DOWNLOAD_FOLDER = './scripts/expression/downloads/';
+const OUTFILE_VERSIONS = './scripts/expression/downloads/versions.json';
+
+const downloadExpression = async () => {
   try {
-    await createFolder('./downloads');
-    await Promise.all([
-      protein(),
-      rna(),
+    await createFolder(DOWNLOAD_FOLDER);
+
+    const versions = await Promise.all([
+      protein(DOWNLOAD_FOLDER),
+      rna(DOWNLOAD_FOLDER),
     ]);
+    console.log(`Downloading ProteomicsDB version ${versions[0]} and HPA version ${versions[1]}`);
+
+    await fs.writeFile(OUTFILE_VERSIONS, JSON.stringify({ proteomicsdb: versions[0], hpa: versions[1] }, null, 2));
   } catch (error) {
     console.error(error);
   }
 };
 
-main();
+export default downloadExpression;

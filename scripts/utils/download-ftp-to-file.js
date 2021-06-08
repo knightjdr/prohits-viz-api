@@ -1,19 +1,22 @@
+import fs from 'fs';
 import Ftp from 'ftp';
 
-const downloadFile = (host, file) => (
+const downloadFile = (host, file, dest) => (
   new Promise((resolve, reject) => {
+    const outFile = fs.createWriteStream(dest);
     const client = new Ftp();
     client.on('ready', () => {
-      const chunks = [];
       client.get(file, (err, stream) => {
         if (err) {
+          fs.unlink(dest);
           reject(err);
         }
         stream.once('close', () => {
           client.end();
-          resolve(Buffer.concat(chunks).toString('utf8'));
+          outFile.close();
+          resolve();
         });
-        stream.on('data', (chunk) => { chunks.push(Buffer.from(chunk)); });
+        stream.pipe(outFile);
       });
     });
     client.connect({ host });

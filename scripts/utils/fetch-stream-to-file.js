@@ -12,7 +12,7 @@ const stream = (res, file) => (
   })
 );
 
-const fetchStream = async (url, file) => {
+const fetchAndStreamToFile = async (url, file) => {
   const res = await fetch(url);
   if (res.ok) {
     await stream(res, file);
@@ -21,4 +21,4 @@ const fetchStream = async (url, file) => {
   }
 };
 
-export default fetchStream;
+export default fetchAndStreamToFile;

@@ -1,28 +1,43 @@
-import downloadHttps from '../../utils/download-https.js';
+import downloadHttps from '../../utils/download-https-to-file.js';
 import unzipFile from '../../utils/unzip-file.js';
 
-const fsConfig = {
+const configTemplate = {
   cell: {
-    file: './downloads/rna-cells.tsv',
+    file: '%DOWNLOAD_FOLDER%rna-cells.tsv',
     url: 'https://www.proteinatlas.org/download/rna_celline.tsv.zip',
-    zipFile: './downloads/rna-cells.zip',
+    zipFile: '%DOWNLOAD_FOLDER%rna-cells.zip',
   },
   tissue: {
-    file: './downloads/rna-tissues.tsv',
+    file: '%DOWNLOAD_FOLDER%rna-tissues.tsv',
     url: 'https://www.proteinatlas.org/download/rna_tissue.tsv.zip',
-    zipFile: './downloads/rna-tissues.zip',
+    zipFile: '%DOWNLOAD_FOLDER%rna-tissues.zip',
   },
 };
 
+const populateConfigTemplate = downloadFolder => ({
+  cell: {
+    file: configTemplate.cell.file.replace('%DOWNLOAD_FOLDER%', downloadFolder),
+    url: configTemplate.cell.url,
+    zipFile: configTemplate.cell.zipFile.replace('%DOWNLOAD_FOLDER%', downloadFolder),
+  },
+  tissue: {
+    file: configTemplate.tissue.file.replace('%DOWNLOAD_FOLDER%', downloadFolder),
+    url: configTemplate.tissue.url,
+    zipFile: configTemplate.tissue.zipFile.replace('%DOWNLOAD_FOLDER%', downloadFolder),
+  },
+});
+
 /* Download and unzip expression data from HPA. */
-const downloadRNAExpression = async () => {
+const downloadRNAExpression = async (downloadFolder) => {
+  const config = populateConfigTemplate(downloadFolder);
+
   await Promise.all([
-    downloadHttps(fsConfig.cell.url, fsConfig.cell.zipFile),
-    downloadHttps(fsConfig.tissue.url, fsConfig.tissue.zipFile),
+    downloadHttps(config.cell.url, config.cell.zipFile),
+    downloadHttps(config.tissue.url, config.tissue.zipFile),
   ]);
   await Promise.all([
-    unzipFile('unzip', fsConfig.cell.zipFile, fsConfig.cell.file),
-    unzipFile('unzip', fsConfig.tissue.zipFile, fsConfig.tissue.file),
+    unzipFile('unzip', config.cell.zipFile, config.cell.file),
+    unzipFile('unzip', config.tissue.zipFile, config.tissue.file),
   ]);
 };
 
