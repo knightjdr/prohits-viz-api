@@ -1,14 +1,15 @@
 import fs from 'fs/promises';
 
-const createStatus = async (workDir, tool, primaryFile) => {
+const createStatus = async (workDir, options) => {
   try {
-    const status = {
+    const { primaryFile, status, tool } = options;
+    const taskStatus = {
       date: new Date().toISOString(),
       primaryFile: primaryFile || tool,
-      status: 'running',
+      status: status || 'running',
       tool,
     };
-    const fileContent = JSON.stringify(status, null, 2);
+    const fileContent = JSON.stringify(taskStatus, null, 2);
 
     await fs.writeFile(`${workDir}/status.json`, fileContent);
   } catch (error) {

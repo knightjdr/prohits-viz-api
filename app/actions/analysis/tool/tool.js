@@ -14,15 +14,16 @@ import validate from '../../../helpers/validation/analysis/validate.js';
 
 /* This function will
 **  1. Validate form data
+**  1b. Augment validated form
 **  2. Create a working directory
-**  ** send response with the task ID.
-**  3a. Create a folder for storing uploaded files
-**  3b. Create a file for writing the task status.
-**  4a. Move uploaded files to the folder
-**  4b. Create settings file for analysis.
-**  5. Spawn the task
-**  6a. Emit a response via socket that the user should check their task status.
-**  6b. Delete the input file folder after the task is complete.
+**  3. send response with the task ID.
+**  4a. Create a folder for storing uploaded files
+**  4b. Create a file for writing the task status.
+**  5a. Move uploaded files to the folder
+**  5b. Create settings file for analysis.
+**  6. Spawn the task
+**  7a. Emit a response via socket that the task is complete.
+**  7b. Delete the input file folder after the task is complete.
 ** */
 const runToolAnalysis = async (req, res) => {
   try {
@@ -45,7 +46,7 @@ const runToolAnalysis = async (req, res) => {
 
       await Promise.all([
         createDirs(workDir, ['files', 'helper-files']),
-        createStatus(workDir, tool, definePrimaryImageFile(tool, validatedForm)),
+        createStatus(workDir, { tool, primaryFile: definePrimaryImageFile(tool, validatedForm) }),
       ]);
 
       const additionalSettings = await defineUserIndependentSettings(validatedForm, workDir);

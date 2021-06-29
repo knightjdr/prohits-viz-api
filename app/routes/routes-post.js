@@ -13,11 +13,13 @@ import logClientError from '../actions/error/index.js';
 import sync from '../actions/sync/sync.js';
 import toolAnalysis from '../actions/analysis/tool/tool.js';
 import vizAnalysis from '../actions/analysis/viz/analysis.js';
+import utilityAnalysis from '../actions/analysis/utility/utility.js';
 
 const upload = multer({ dest: config.upload });
 const multerConfig = upload.fields([{ name: 'file' }, { name: 'helperFile' }]);
 
 const post = (router) => {
+  router.post('/analysis/utility/:tool', multerConfig, getSocket, logTasks, utilityAnalysis);
   router.post('/analysis/viz/:tool', getSocket, logTasks, vizAnalysis);
   router.post('/analysis/:tool', multerConfig, getSocket, logTasks, toolAnalysis);
   router.post('/archive/', archiveSession);
