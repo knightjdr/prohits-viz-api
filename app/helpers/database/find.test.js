@@ -1,8 +1,8 @@
 import mongodb from 'mongo-mock';
 import { ObjectID } from 'mongodb';
 
-import database from './database';
-import find from './find';
+import database from './database.js';
+import find from './find.js';
 
 jest.mock('../../config/config', () => (
   {
@@ -20,7 +20,7 @@ const documents = [
   { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
 ];
 
-beforeAll(async (done) => {
+beforeAll((done) => {
   mongodb.max_delay = 0;
   const { MongoClient } = mongodb;
   const url = 'mongodb://localhost:27017/test';

@@ -1,9 +1,9 @@
-const validateFiles = (files) => (
+const validateFiles = files => (
   files && Array.isArray(files) && files.length > 0
     ? {}
     : {
       errors: {
-        files: 'missing file',
+        files: 'Missing file',
       },
     }
 );

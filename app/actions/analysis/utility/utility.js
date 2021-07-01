@@ -1,11 +1,12 @@
 import path from 'path';
 
+import createCommand from './create-command.js';
 import createDirs from '../../../helpers/files/create-dirs.js';
 import createStatus from '../../../helpers/status/create-status.js';
 import deleteDirs from '../../../helpers/files/delete-dir.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
 import moveFiles from '../../../helpers/files/move-files.js';
-// import spawnTask from './spawn.js';
+import spawnProcess from './spawn.js';
 import validate from './validation/validate.js';
 
 /* This function will
@@ -43,9 +44,17 @@ const runUtilityAnalysis = async (req, res) => {
 
       await moveFiles(req.files.file, `${workDir}/files`);
 
-      //  await spawnTask(workDir);
+      const script = createCommand(fields);
+      const error = await spawnProcess(script, workDir);
+
       const [status] = await Promise.all([
-        createStatus(workDir, { status: 'complete', tool }),
+        createStatus(
+          workDir,
+          {
+            status: error ? 'error' : 'complete',
+            tool,
+          },
+        ),
         deleteDirs(workDir, ['files']),
       ]);
 

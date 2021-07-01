@@ -1,6 +1,6 @@
-import addMongoDate from '../../utils/add-mongo-date';
-import find from '../../helpers/database/find';
-import getNewsArticles from './get-news-articles';
+import addMongoDate from '../../utils/add-mongo-date.js';
+import find from '../../helpers/database/find.js';
+import getNewsArticles from './get-news-articles.js';
 
 jest.mock('../../utils/add-mongo-date');
 jest.mock('../../helpers/database/find');
@@ -20,13 +20,12 @@ const returnValues = {
 
 describe('News list', () => {
   describe('when find returns response object', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.send.mockClear();
       res.status.mockClear();
       find.mockResolvedValueOnce(returnValues.news.find);
       addMongoDate.arr.mockReturnValueOnce(returnValues.news.addDate);
       await getNewsArticles(req, res);
-      done();
     });
 
     it('should return default status', () => {
@@ -39,12 +38,11 @@ describe('News list', () => {
   });
 
   describe('when there is a news list error', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.end.mockClear();
       res.status.mockClear();
       find.mockRejectedValueOnce(new Error());
       await getNewsArticles(req, res);
-      done();
     });
 
     afterAll(() => {

@@ -24,21 +24,37 @@ afterEach(() => {
 
 describe('Create status file', () => {
   describe('successfully', () => {
-    it('should write status file', async () => {
-      const expected = JSON.stringify({
+    let expected;
+    let status;
+    beforeAll(async () => {
+      const options = { tool: 'dotplot' };
+      status = await createStatus('workDir', options);
+
+      expected = {
         date: new Date().toISOString(),
         primaryFile: 'dotplot',
         status: 'running',
         tool: 'dotplot',
-      }, null, 2);
+      };
+    });
 
-      await createStatus('workDir', 'dotplot');
-      return expect(fs.readFile('workDir/status.json', 'utf8')).resolves.toEqual(expected);
+    it('should write status file', async () => {
+      const expectedJSON = JSON.stringify(expected, null, 2);
+      return expect(fs.readFile('workDir/status.json', 'utf8')).resolves.toEqual(expectedJSON);
+    });
+
+    it('should return status', () => {
+      expect(status).toEqual(expected);
     });
   });
 
   describe('successfully with primaryFile different from analysisType', () => {
     it('should write status file', async () => {
+      const options = {
+        primaryFile: 'otherFile',
+        tool: 'dotplot',
+      };
+
       const expected = JSON.stringify({
         date: new Date().toISOString(),
         primaryFile: 'otherFile',
@@ -46,7 +62,7 @@ describe('Create status file', () => {
         tool: 'dotplot',
       }, null, 2);
 
-      await createStatus('workDir', 'dotplot', 'otherFile');
+      await createStatus('workDir', options);
       return expect(fs.readFile('workDir/status.json', 'utf8')).resolves.toEqual(expected);
     });
   });

@@ -18,15 +18,11 @@ describe('Working directory generation', () => {
   describe('when successfully generated', () => {
     let workingDir;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       mockFS({
         tmp: {},
       });
-      createWorkDir()
-        .then((dir) => {
-          workingDir = dir;
-          done();
-        });
+      workingDir = await createWorkDir();
     });
 
     it('should resolve with directory name', () => {
@@ -41,13 +37,13 @@ describe('Working directory generation', () => {
   describe('when unsuccessfully generated', () => {
     let error;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       mockFS({});
-      createWorkDir()
-        .catch((err) => {
-          error = err;
-          done();
-        });
+      try {
+        await createWorkDir();
+      } catch (err) {
+        error = err;
+      }
     });
 
     it('should reject with error', () => {

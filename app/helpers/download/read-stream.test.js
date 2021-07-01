@@ -88,14 +88,14 @@ describe('Streaming a file to response', () => {
   describe('when unsuccessful', () => {
     let error;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.end.mockClear();
       res.setHeader.mockClear();
-      readStream('tmp/aaaaaa/missing.svg', res)
-        .catch((err) => {
-          error = err;
-          done();
-        });
+      try {
+        await readStream('tmp/aaaaaa/missing.svg', res);
+      } catch (err) {
+        error = err;
+      }
     });
 
     it('should set content-type to mime type', () => {

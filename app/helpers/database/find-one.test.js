@@ -1,7 +1,7 @@
 import mongodb from 'mongo-mock';
 
-import database from './database';
-import findOne from './find-one';
+import database from './database.js';
+import findOne from './find-one.js';
 
 jest.mock('../../config/config', () => (
   {
@@ -14,7 +14,7 @@ jest.mock('./database', () => ({
   connection: null,
 }));
 
-beforeAll(async (done) => {
+beforeAll((done) => {
   mongodb.max_delay = 0;
   const { MongoClient } = mongodb;
   const url = 'mongodb://localhost:27017/test';

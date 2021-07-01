@@ -12,7 +12,7 @@ describe('Validate files', () => {
     const files = undefined;
 
     const expected = {
-      errors: { files: 'missing file' },
+      errors: { files: 'Missing file' },
     };
     expect(validateFiles(files)).toEqual(expected);
   });
@@ -21,7 +21,7 @@ describe('Validate files', () => {
     const files = {};
 
     const expected = {
-      errors: { files: 'missing file' },
+      errors: { files: 'Missing file' },
     };
     expect(validateFiles(files)).toEqual(expected);
   });
@@ -30,7 +30,7 @@ describe('Validate files', () => {
     const files = [];
 
     const expected = {
-      errors: { files: 'missing file' },
+      errors: { files: 'Missing file' },
     };
     expect(validateFiles(files)).toEqual(expected);
   });

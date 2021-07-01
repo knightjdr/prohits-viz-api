@@ -21,7 +21,7 @@ const validate = (fields, file) => {
   return {
     errors: {
       ...validated.errors,
-      ...validateFiles(file),
+      ...validateFiles(file).errors,
     },
     fields: {
       utility,

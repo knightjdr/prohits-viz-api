@@ -8,12 +8,9 @@ require('child_process').spawn = testSpawn;
 
 describe('Spawn dotplot analysis', () => {
   describe('when successful', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       testSpawn.setDefault(testSpawn.simple(0));
-      spawnProcess('workDir/')
-        .then(() => {
-          done();
-        });
+      await spawnProcess('workDir/');
     });
 
     it('should spawn pvanalyze', () => {

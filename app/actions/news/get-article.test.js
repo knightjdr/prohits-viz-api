@@ -1,6 +1,6 @@
-import addMongoDate from '../../utils/add-mongo-date';
-import findOne from '../../helpers/database/find-one';
-import getArticle from './get-article';
+import addMongoDate from '../../utils/add-mongo-date.js';
+import findOne from '../../helpers/database/find-one.js';
+import getArticle from './get-article.js';
 
 jest.mock('../../utils/add-mongo-date');
 jest.mock('../../helpers/database/find-one');
@@ -19,7 +19,7 @@ const returnValues = {
 
 describe('News article', () => {
   describe('when there is a matching headline', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       findOne.mockClear();
       res.status.mockClear();
       res.send.mockClear();
@@ -28,7 +28,6 @@ describe('News article', () => {
 
       const req = { params: { headline: 'article-1' } };
       await getArticle(req, res);
-      done();
     });
 
     it('should find article with headline', () => {
@@ -47,14 +46,13 @@ describe('News article', () => {
   });
 
   describe('when there is no news item matching title', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       findOne.mockClear();
       res.end.mockClear();
       res.status.mockClear();
       findOne.mockResolvedValueOnce(null);
       const req = { params: { headline: 'title-unknown' } };
       await getArticle(req, res);
-      done();
     });
 
     it('should find article with headline', () => {
@@ -71,13 +69,12 @@ describe('News article', () => {
   });
 
   describe('when there is a news item error', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       res.end.mockClear();
       res.status.mockClear();
       findOne.mockRejectedValueOnce(new Error());
       const req = { params: { headline: 'title' } };
       await getArticle(req, res);
-      done();
     });
 
     it('should return 500 status', () => {

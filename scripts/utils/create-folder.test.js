@@ -23,9 +23,8 @@ describe('Create folder', () => {
   ));
 
   describe('subdirectory when parent does not exist', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       await createFolder('./test-folder3/sub-directory');
-      done();
     });
 
     it('should create parent folder', async () => (

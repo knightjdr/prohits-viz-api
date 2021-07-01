@@ -4,8 +4,8 @@ const validateSaintStats = (fields) => {
   const fdr = Number(inputFDR);
 
   const errors = {};
-  if (fdr < 0 || fdr > 1) {
-    errors.fdr = 'FDR exceeds bounds of 0 and 1';
+  if (Number.isNaN(fdr) || fdr < 0 || fdr > 1) {
+    errors.fdr = 'FDR is not within the bounds of 0 and 1';
   }
 
   return {

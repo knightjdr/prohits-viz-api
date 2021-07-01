@@ -12,6 +12,7 @@ const createStatus = async (workDir, options) => {
     const fileContent = JSON.stringify(taskStatus, null, 2);
 
     await fs.writeFile(`${workDir}/status.json`, fileContent);
+    return taskStatus;
   } catch (error) {
     throw new Error(`Could not create status file for task ${workDir}`);
   }
