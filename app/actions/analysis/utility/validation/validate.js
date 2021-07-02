@@ -1,4 +1,5 @@
 import validatePVConvert from './pvconvert-validate.js';
+import validateSaintFEA from './saint-fea-validate.js';
 import validateSaintStats from './saint-stats-validate.js';
 import validateFiles from '../../../../helpers/validation/analysis/field-validation/files.js';
 
@@ -7,6 +8,8 @@ const validateUtility = (fields) => {
 
   if (utility === 'pvconvert') {
     return validatePVConvert(fields);
+  } if (utility === 'saintfea') {
+    return validateSaintFEA(fields);
   } if (utility === 'saintstats') {
     return validateSaintStats(fields);
   }

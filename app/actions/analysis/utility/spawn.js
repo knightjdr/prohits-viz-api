@@ -1,14 +1,9 @@
-import { spawn } from 'child_process';
-import { parseArgsStringToArgv } from 'string-argv';
+import { exec } from 'child_process';
 
 const spawnProcess = (command, workDir) => (
   new Promise((resolve) => {
-    const args = parseArgsStringToArgv(command);
-    const cmd = args.shift();
-
-    const process = spawn(
-      cmd,
-      args,
+    const process = exec(
+      command,
       { cwd: workDir },
     );
     process.on('error', (err) => {
