@@ -1,3 +1,22 @@
+const validateCircles = (circles) => {
+  if (
+    !circles
+    || !circles.order
+  ) {
+    throw new Error('The file must include a "circles" object with the "order" field');
+  }
+
+  if (
+    !Array.isArray(circles.order)
+    || circles.order[0].color === undefined
+    || circles.order[0].max === undefined
+    || circles.order[0].min === undefined
+    || circles.order[0].attribute === undefined
+  ) {
+    throw new Error('The "order" should be an array with each point having a color, max, min and attribute name');
+  }
+};
+
 const validatePlots = (plots) => {
   if (
     !plots
@@ -25,9 +44,11 @@ const validatePlots = (plots) => {
 
 const validateCircHeatmapFields = (data) => {
   const {
+    circles,
     plots,
   } = data;
 
+  validateCircles(circles);
   validatePlots(plots);
 
   return data;

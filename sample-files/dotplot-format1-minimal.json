@@ -1,12 +1,14 @@
 {
 	"dataFormat": "format1",
-	"parameters": {
-		"imageType": "dotplot",
+  "dataKeys": {
 		"abundance": "abundance",
 		"condition": "condition",
     "ratio": "ratio",
 		"readout": "readout",
-    "score": "score",
+    "score": "score"
+  },
+	"parameters": {
+		"imageType": "dotplot",
     "scoreType": "lte"
 	},
 	"data": [

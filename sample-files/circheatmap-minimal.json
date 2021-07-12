@@ -1,0 +1,58 @@
+{
+  "circles": {
+    "order": [
+      {
+        "color": "blue",
+        "max": 50,
+        "min": 0,
+        "attribute": "AvgSpec"
+      },
+      {
+        "color": "red",
+        "max": 50,
+        "min": 0,
+        "attribute": "FoldChange"
+      },
+      {
+        "color": "green",
+        "max": 50,
+        "min": 0,
+        "attribute": "RNA expression"
+      }
+    ]
+  },
+  "parameters": {
+    "imageType": "circheatmap"
+  },
+  "plots": [
+    {
+      "name": "AMOT_HeLa",
+      "readouts": [
+        {
+          "label": "ALMS1",
+          "segments": {
+            "AvgSpec": 36,
+            "FoldChange": 4.97,
+            "RNA expression": 3.1
+          }
+        },
+        {
+          "label": "AMOTL1",
+          "segments": {
+            "AvgSpec": 59,
+            "FoldChange": 590,
+            "RNA expression": 14.1
+          }
+        },
+        {
+          "label": "AMOTL2",
+          "segments": {
+            "AvgSpec": 7.5,
+            "FoldChange": 75,
+            "RNA expression": 2
+          }
+        }
+      ]
+    }
+  ]
+}

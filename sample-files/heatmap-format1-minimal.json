@@ -1,10 +1,12 @@
 {
 	"dataFormat": "format1",
-	"parameters": {
-		"imageType": "heatmap",
-		"abundance": "abundance",
+  "dataKeys": {
+    "abundance": "abundance",
 		"condition": "condition",
 		"readout": "readout"
+  },
+	"parameters": {
+		"imageType": "heatmap"
 	},
 	"data": [
 		{"condition": "baitA", "readout": "preyA", "abundance": 17},

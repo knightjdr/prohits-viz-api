@@ -1,0 +1,267 @@
+{
+  "circles": {
+    "order": [
+      {
+        "color": "blue",
+        "max": 50,
+        "min": 0,
+        "attribute": "AvgSpec"
+      },
+      {
+        "color": "red",
+        "max": 50,
+        "min": 0,
+        "attribute": "FoldChange"
+      },
+      {
+        "color": "green",
+        "max": 50,
+        "min": 0,
+        "attribute": "RNA expression"
+      }
+    ]
+  },
+  "panel": {
+    "tab": "info"
+  },
+  "parameters": {
+    "analysisType": "scv",
+    "imageType": "circheatmap",
+    "readoutColumn": "PreyGene"
+  },
+  "plots": [
+    {
+      "name": "AMOT_HeLa",
+      "readouts": [
+        {
+          "known": true,
+          "label": "ALMS1",
+          "segments": {
+            "AvgSpec": 36,
+            "FoldChange": 4.97,
+            "RNA expression": 3.1
+          }
+        },
+        {
+          "known": true,
+          "label": "AMOTL1",
+          "segments": {
+            "AvgSpec": 59,
+            "FoldChange": 590,
+            "RNA expression": 14.1
+          }
+        },
+        {
+          "known": true,
+          "label": "AMOTL2",
+          "segments": {
+            "AvgSpec": 7.5,
+            "FoldChange": 75,
+            "RNA expression": 2
+          }
+        },
+        {
+          "known": true,
+          "label": "ANKRD26",
+          "segments": {
+            "AvgSpec": 7,
+            "FoldChange": 70,
+            "RNA expression": 7.7
+          }
+        },
+        {
+          "known": false,
+          "label": "CEP72",
+          "segments": {
+            "AvgSpec": 2.5,
+            "FoldChange": 25,
+            "RNA expression": 10.4
+          }
+        },
+        {
+          "known": true,
+          "label": "CLIP1",
+          "segments": {
+            "AvgSpec": 3.5,
+            "FoldChange": 35,
+            "RNA expression": 15.8
+          }
+        },
+        {
+          "known": true,
+          "label": "CNTROB",
+          "segments": {
+            "AvgSpec": 4.5,
+            "FoldChange": 45,
+            "RNA expression": 25.1
+          }
+        },
+        {
+          "known": true,
+          "label": "CTNNB1",
+          "segments": {
+            "AvgSpec": 5.5,
+            "FoldChange": 55,
+            "RNA expression": 190
+          }
+        },
+        {
+          "known": false,
+          "label": "DLG5",
+          "segments": {
+            "AvgSpec": 152,
+            "FoldChange": 6.68,
+            "RNA expression": 9.6
+          }
+        },
+        {
+          "known": true,
+          "label": "GBAS",
+          "segments": {
+            "AvgSpec": 14.5,
+            "FoldChange": 19.33,
+            "RNA expression": 68.8
+          }
+        },
+        {
+          "known": true,
+          "label": "INADL",
+          "segments": {
+            "AvgSpec": 100.5,
+            "FoldChange": 134,
+            "RNA expression": 0
+          }
+        },
+        {
+          "known": false,
+          "label": "KIF26B",
+          "segments": {
+            "AvgSpec": 5.5,
+            "FoldChange": 22,
+            "RNA expression": 0.2
+          }
+        },
+        {
+          "known": true,
+          "label": "MPDZ",
+          "segments": {
+            "AvgSpec": 207.5,
+            "FoldChange": 138.33,
+            "RNA expression": 9.2
+          }
+        },
+        {
+          "known": true,
+          "label": "MPP5",
+          "segments": {
+            "AvgSpec": 70.5,
+            "FoldChange": 705,
+            "RNA expression": 8.9
+          }
+        },
+        {
+          "known": true,
+          "label": "NIPSNAP1",
+          "segments": {
+            "AvgSpec": 10.5,
+            "FoldChange": 105,
+            "RNA expression": 75
+          }
+        },
+        {
+          "known": true,
+          "label": "OFD1",
+          "segments": {
+            "AvgSpec": 18,
+            "FoldChange": 8,
+            "RNA expression": 17.3
+          }
+        },
+        {
+          "known": true,
+          "label": "PPFIA1",
+          "segments": {
+            "AvgSpec": 5,
+            "FoldChange": 20,
+            "RNA expression": 20.1
+          }
+        },
+        {
+          "known": true,
+          "label": "PRKCI",
+          "segments": {
+            "AvgSpec": 6,
+            "FoldChange": 60,
+            "RNA expression": 21.2
+          }
+        },
+        {
+          "known": true,
+          "label": "RAB35",
+          "segments": {
+            "AvgSpec": 5,
+            "FoldChange": 50,
+            "RNA expression": 45.7
+          }
+        },
+        {
+          "known": true,
+          "label": "RASSF8",
+          "segments": {
+            "AvgSpec": 26.5,
+            "FoldChange": 35.33,
+            "RNA expression": 8.8
+          }
+        },
+        {
+          "known": false,
+          "label": "SOGA2",
+          "segments": {
+            "AvgSpec": 5,
+            "FoldChange": 50,
+            "RNA expression": 0
+          }
+        },
+        {
+          "known": true,
+          "label": "SPICE1",
+          "segments": {
+            "AvgSpec": 4,
+            "FoldChange": 40,
+            "RNA expression": 3.9
+          }
+        },
+        {
+          "known": true,
+          "label": "TP53BP2",
+          "segments": {
+            "AvgSpec": 63.5,
+            "FoldChange": 4.88,
+            "RNA expression": 30.3
+          }
+        },
+        {
+          "known": true,
+          "label": "WWC1",
+          "segments": {
+            "AvgSpec": 7.5,
+            "FoldChange": 30,
+            "RNA expression": 17.1
+          }
+        },
+        {
+          "known": true,
+          "label": "XPR1",
+          "segments": {
+            "AvgSpec": 6,
+            "FoldChange": 60,
+            "RNA expression": 12.9
+          }
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "sortByKnown": true
+  }
+}

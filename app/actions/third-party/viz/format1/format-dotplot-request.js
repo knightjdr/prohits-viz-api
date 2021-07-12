@@ -2,7 +2,11 @@ import { workerData, parentPort } from 'worker_threads';
 
 import removeDuplicates from '../../../../utils/remove-duplicates.js';
 
-const { data, parameters } = workerData;
+const { data, dataKeys, parameters } = workerData;
+const options = {
+  ...parameters,
+  ...dataKeys,
+};
 
 const defineWorstScoreSetter = (scoreType) => {
   if (scoreType === 'gte') {
@@ -21,7 +25,7 @@ const defineWorstScoreSetter = (scoreType) => {
   ];
 };
 
-const scoreVariables = defineWorstScoreSetter(parameters.scoreType);
+const scoreVariables = defineWorstScoreSetter(options.scoreType);
 const defineWorstScore = scoreVariables[0];
 let worstScore = scoreVariables[1];
 
@@ -30,11 +34,11 @@ let readouts = [];
 const measurements = {};
 
 data.forEach((datum) => {
-  const abundance = datum[parameters.abundance];
-  const condition = datum[parameters.condition];
-  const ratio = datum[parameters.ratio];
-  const readout = datum[parameters.readout];
-  const score = datum[parameters.score];
+  const abundance = datum[options.abundance];
+  const condition = datum[options.condition];
+  const ratio = datum[options.ratio];
+  const readout = datum[options.readout];
+  const score = datum[options.score];
   conditions.push(condition);
   readouts.push(readout);
   if (!measurements[condition]) {

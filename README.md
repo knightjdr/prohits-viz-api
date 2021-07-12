@@ -32,7 +32,9 @@ Examples of the request format for the body can be found in the folder `sample-f
 
 ##### Heat maps/dot plots
 
-The request body can take two different formats. `format1` is a minimal format designed to make it as easy as possible to submit data. See the file `sample-files/heatmap-format1-minimal.json` for an example. In the `parameters` object, the `condition`, `readout` and `abundance` fields are required and refer to the keys used in the `data` array. The `data` field is an array, with a single data point per entry corresponding to a condition-readout pair with their associated abundance. In the case of a dot plot, there must also be a `score` and `ratio` field, with the ratio referring to the relative circle size from 0-1.
+The request body can take two different formats. `format1` is a minimal format designed to make it as easy as possible to submit data. See the file `sample-files/heatmap-format1-minimal.json` for an example. In the `dataKeys` object, the `condition`, `readout` and `abundance` fields are required and refer to the keys used in the `data` array to specify those properties. The `data` field is an array, with a single data point per entry corresponding to a condition-readout pair with their associated abundance. In the case of a dot plot, there must also be a `score` and `ratio` field, with the ratio referring to the relative circle size from 0-1.
+
+The `imageType` in the `parameters` object is required and indicates to the api the type of image you would like to visualize.
 
 When `format1` is drawn as an image, the first `condition` encountered in the `data` array will be the first column, the next unique condition the second column, and so on. Similarly for readouts. You do not need to specify a value for every cell (column-row) pair on the heat map as missing values will be treated as zero.
 
@@ -42,11 +44,15 @@ In `format2`, the `columnDB` array lists the column names and their order, while
 
 ##### Scatter plots
 
-Coming soon...
+See the file `sample-files/scatter-minimal.json` for an example. Each scatter plot must have a `labels` object with labels for the `x` and `y` axes, a `name` for the plot and an array of `points` to display. The `plots` array can contain multiple plots and the `name` field is used to select between them from the UI.
+
+The `imageType` in the `parameters` object is required and indicates to the api the type of image you would like to visualize.
 
 ##### Circular heat maps
 
-Coming soon...
+See the file `sample-files/circheatmap-minimal.json` for an example. Each plot requires a `circles` object and a `plots` array. `circles` will define the settings and order for the metrics being displayed. In `plots`, each plot must have a `name` and an array or `readouts`. Each entry in `readouts` will have a `label` and an object specifying the values for each of the metrics defined in `circles`. The `plots` array can contain multiple plots and the `name` field is used to select between them from the UI.
+
+The `imageType` in the `parameters` object is required and indicates to the api the type of image you would like to visualize
 
 #### Response
 
