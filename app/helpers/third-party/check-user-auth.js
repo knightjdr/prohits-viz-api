@@ -7,7 +7,7 @@ const checkUserAuth = async (req) => {
     return false;
   }
 
-  const [contact, password] = req.get('apikey').split(':');
+  const [contact, password] = apikey.split(':');
   const query = { contact };
   const match = await findOne('thirdparty', query);
   return validateKey(match, password);
