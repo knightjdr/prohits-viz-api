@@ -1,6 +1,8 @@
+/* eslint no-console: 0 */
 import fs from 'fs';
 
 import readJson from '../app/utils/read-json.js';
+import downloadDomains from './domains/index.js';
 import downloadExpression from './expression/index.js';
 import downloadInteractions from './interactions/index.js';
 import mapGeneIDs from './genedb/index.js';
@@ -14,6 +16,7 @@ const writeVersions = async (versions, outfile) => (
       ['hgnc', 'HGNC'],
       ['hpa', 'Human Protein Atlas'],
       ['intact', 'Intact'],
+      ['pfam', 'Pfam'],
       ['proteomicsdb', 'ProteomicsDB'],
       ['uniprot', 'UniProt'],
     ]);
@@ -28,7 +31,7 @@ const writeVersions = async (versions, outfile) => (
 );
 
 const mergeVersions = async () => {
-  const folders = ['expression', 'genedb', 'interactions'];
+  const folders = ['domains', 'expression', 'genedb', 'interactions'];
 
   const versions = await Promise.all(folders.map(async folder => (
     readJson(`./scripts/${folder}/downloads/versions.json`)
@@ -46,6 +49,7 @@ const mergeVersions = async () => {
 const update = async () => {
   try {
     await Promise.all([
+      downloadDomains(),
       downloadExpression(),
       downloadInteractions(),
     ]);

@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 
 import download from './download.js';
 import getVersions from './get-versions.js';
+import mapDomains from './map-domains.js';
 import mapInteractions from './map-interactions.js';
 import mapExpression from './map-expression.js';
 import parseHGNC from './parse-hgnc.js';
@@ -28,6 +29,11 @@ const mapGeneIDs = async () => {
 
     // Map identifiers in other files
     await Promise.all([
+      mapDomains(
+        './files/unmapped/domains.json',
+        './files/domains.json',
+        hgnc,
+      ),
       mapInteractions(
         './files/unmapped/interactions.json',
         './files/interactions.json',

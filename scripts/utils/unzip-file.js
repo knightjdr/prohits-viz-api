@@ -9,11 +9,9 @@ const gunzipFile = (type, file, dest) => (
       const writeStream = fs.createWriteStream(dest);
       readStream.pipe(zlib.createGunzip()).pipe(writeStream);
       readStream.on('end', () => {
-        writeStream.end();
         resolve();
       });
       readStream.on('error', (err) => {
-        writeStream.end();
         reject(err);
       });
     } else if (type === 'unzip') {

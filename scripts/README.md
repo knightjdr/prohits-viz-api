@@ -36,15 +36,26 @@ It will output json files with expression data, and files just listing cells and
 * rna-expression.json (indexed by ENSEMBLG)
 * rna-tissues.json
 
+## Download Domains
+
+Protein domain information is downloaded from Pfam
+
+### Output
+
+It will output a json file with domains for each UniProt accession in the `files/unmapped` folder. These unmapped files will be handled by the genedb script with identifiers converted to HGNC.
+
+* domains.json (indexed by Uniprot acc)
+
 ## Download human gene ID data
 
 Gene mapping data is downloaded from UniProt and HGNC.
 
 ### Output
 
-It will output a json file indexed by HGNC ID, with additional identifiers. Interaction and expression files in `files/unmapped` will be mapped to use HGNC ID. Files with be output to the `files` folder beneath the api root directory.
+It will output a json file indexed by HGNC ID, with additional identifiers. Interaction, domain and expression files in `files/unmapped` will be mapped to use HGNC ID. Files with be output to the `files` folder beneath the api root directory.
 
 * gene-db.json
+* domains.json
 * interactions.json
 * protein-expression.json
 * rna-expression.json
