@@ -1,14 +1,14 @@
 import fs from 'fs/promises';
 import mockFS from 'mock-fs';
 
-import deleteDirs from '../../../helpers/files/delete-dir.js';
+import cleanup from './cleanup.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
 import runUtilityAnalysis from './utility.js';
 import spawnTask from './spawn.js';
 import validate from './validation/validate.js';
 
-jest.mock('../../../helpers/files/delete-dir.js');
-deleteDirs.mockResolvedValue();
+jest.mock('./cleanup.js');
+cleanup.mockResolvedValue();
 jest.mock('../../../helpers/files/create-work-dir');
 jest.mock('./spawn');
 jest.mock('./validation/validate.js');
@@ -56,7 +56,7 @@ describe('Run utility analysis', () => {
         files: {
           file: [],
         },
-        params: { tool: 'saintstats' },
+        params: { tool: 'saint_stats' },
       };
 
       res.send.mockClear();
@@ -79,7 +79,7 @@ describe('Run utility analysis', () => {
 
   describe('successful run', () => {
     const req = {
-      body: { fdr: '0.01', utility: 'saintstats' },
+      body: { fdr: '0.01', utility: 'saint_stats' },
       files: {
         file: [
           {
@@ -88,11 +88,11 @@ describe('Run utility analysis', () => {
           },
         ],
       },
-      params: { tool: 'saintstats' },
+      params: { tool: 'saint_stats' },
     };
 
     beforeAll(async () => {
-      deleteDirs.mockClear();
+      cleanup.mockClear();
       res.locals.socket.emit.mockClear();
       res.send.mockClear();
       spawnTask.mockClear();
@@ -101,7 +101,7 @@ describe('Run utility analysis', () => {
       getWorkDir.mockResolvedValue('tmp/taskID');
       validate.mockReturnValue({
         errors: {},
-        fields: { fdr: '0.01', utility: 'saintstats' },
+        fields: { fdr: '0.01', utility: 'saint_stats' },
       });
 
       await runUtilityAnalysis(req, res);
@@ -112,7 +112,7 @@ describe('Run utility analysis', () => {
     });
 
     it('should send response', () => {
-      expect(res.send).toHaveBeenCalledWith({ id: 'taskID', tool: 'saintstats' });
+      expect(res.send).toHaveBeenCalledWith({ id: 'taskID', tool: 'saint_stats' });
     });
 
     it('should create subdirectory for files', async () => (
@@ -139,16 +139,16 @@ describe('Run utility analysis', () => {
     it('should update status file to indicate completion', async () => {
       const expected = {
         date: new Date().toISOString(),
-        primaryFile: 'saintstats',
+        primaryFile: 'saint_stats',
         status: 'complete',
-        tool: 'saintstats',
+        tool: 'saint_stats',
       };
       const file = await fs.readFile('tmp/taskID/status.json', 'utf8');
       expect(JSON.parse(file)).toEqual(expected);
     });
 
     it('should delete file directory', () => {
-      expect(deleteDirs).toHaveBeenCalledWith('tmp/taskID', ['files']);
+      expect(cleanup).toHaveBeenCalledWith('tmp/taskID', 'saint_stats');
     });
 
     it('socket should emit action with status', () => {
@@ -156,9 +156,9 @@ describe('Run utility analysis', () => {
         id: 'taskID',
         status: {
           date: new Date().toISOString(),
-          primaryFile: 'saintstats',
+          primaryFile: 'saint_stats',
           status: 'complete',
-          tool: 'saintstats',
+          tool: 'saint_stats',
         },
         type: 'UPDATE_TASK_STATUS',
       };
@@ -175,7 +175,7 @@ describe('Run utility analysis', () => {
       res.status.mockClear();
 
       const req = {
-        body: { fdr: '0.01', utility: 'saintstats' },
+        body: { fdr: '0.01', utility: 'saint_stats' },
         files: {
           file: [
             {
@@ -184,13 +184,13 @@ describe('Run utility analysis', () => {
             },
           ],
         },
-        params: { tool: 'saintstats' },
+        params: { tool: 'saint_stats' },
       };
 
       getWorkDir.mockResolvedValue('tmp/taskError');
       validate.mockReturnValue({
         errors: {},
-        fields: { fdr: '0.01', utility: 'saintstats' },
+        fields: { fdr: '0.01', utility: 'saint_stats' },
       });
       spawnTask.mockResolvedValue('Error: test error');
 
@@ -200,9 +200,9 @@ describe('Run utility analysis', () => {
     it('should update status file to indicate error', async () => {
       const expected = {
         date: new Date().toISOString(),
-        primaryFile: 'saintstats',
+        primaryFile: 'saint_stats',
         status: 'error',
-        tool: 'saintstats',
+        tool: 'saint_stats',
       };
       const file = await fs.readFile('tmp/taskError/status.json', 'utf8');
       expect(JSON.parse(file)).toEqual(expected);
@@ -213,9 +213,9 @@ describe('Run utility analysis', () => {
         id: 'taskError',
         status: {
           date: new Date().toISOString(),
-          primaryFile: 'saintstats',
+          primaryFile: 'saint_stats',
           status: 'error',
-          tool: 'saintstats',
+          tool: 'saint_stats',
         },
         type: 'UPDATE_TASK_STATUS',
       };
@@ -226,7 +226,7 @@ describe('Run utility analysis', () => {
   describe('throws error', () => {
     beforeAll(async () => {
       const req = {
-        body: { fdr: '0.01', utility: 'saintstats' },
+        body: { fdr: '0.01', utility: 'saint_stats' },
         files: {
           file: [
             {
@@ -235,7 +235,7 @@ describe('Run utility analysis', () => {
             },
           ],
         },
-        params: { tool: 'saintstats' },
+        params: { tool: 'saint_stats' },
       };
 
       res.end.mockClear();

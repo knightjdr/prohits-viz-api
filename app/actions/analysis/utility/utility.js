@@ -1,9 +1,10 @@
 import path from 'path';
 
+import cleanup from './cleanup.js';
 import createCommand from './create-command.js';
 import createDirs from '../../../helpers/files/create-dirs.js';
 import createStatus from '../../../helpers/status/create-status.js';
-import deleteDirs from '../../../helpers/files/delete-dir.js';
+import defineUserIndependentSettings from './define-user-independent-settings.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
 import moveFiles from '../../../helpers/files/move-files.js';
 import spawnProcess from './spawn.js';
@@ -33,18 +34,21 @@ const runUtilityAnalysis = async (req, res) => {
       fields.files = req.files.file.map(file => `files/${file.originalname}`);
 
       const workDir = await getWorkDir();
+
       const taskID = path.basename(workDir);
 
       res.send({ id: taskID, tool });
 
       await Promise.all([
-        createDirs(workDir, ['files']),
+        createDirs(workDir, ['files', 'helper-files']),
         createStatus(workDir, { tool }),
       ]);
 
+      const additionalSettings = await defineUserIndependentSettings(tool, workDir);
+
       await moveFiles(req.files.file, `${workDir}/files`);
 
-      const script = createCommand(fields);
+      const script = createCommand({ ...fields, ...additionalSettings });
       const error = await spawnProcess(script, workDir);
 
       const [status] = await Promise.all([
@@ -55,7 +59,7 @@ const runUtilityAnalysis = async (req, res) => {
             tool,
           },
         ),
-        deleteDirs(workDir, ['files']),
+        cleanup(workDir, tool),
       ]);
 
       socket.emit(
