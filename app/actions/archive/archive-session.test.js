@@ -3,11 +3,13 @@ import mockFS from 'mock-fs';
 
 import archiveSession from './archive-session.js';
 import createArchiveID from './create-id.js';
+import logger from '../../helpers/logging/logger.js';
 
 jest.mock('../../config/config', () => ({
   archiveDir: 'archive/',
 }));
 jest.mock('./create-id');
+jest.mock('../../helpers/logging/logger.js');
 
 const mockedFileSystem = {
   archive: {},
@@ -67,10 +69,11 @@ describe('Archive session file', () => {
   describe('unsuccessfully', () => {
     // Error is thrown because an error is thrown when creating ID.
     beforeAll(async () => {
+      logger.error.mockClear();
       res.end.mockClear();
       res.status.mockClear();
       createArchiveID.mockImplementation(() => {
-        throw new Error();
+        throw new Error('could not create archive ID');
       });
       const req = {
         body: {
@@ -83,6 +86,11 @@ describe('Archive session file', () => {
         },
       };
       await archiveSession(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error)
+        .toHaveBeenCalledWith('archiving - Error: could not create archive ID');
     });
 
     it('should set status', () => {

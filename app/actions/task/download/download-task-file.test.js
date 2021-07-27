@@ -1,12 +1,14 @@
 import mockFS from 'mock-fs';
 
 import downloadTaskFile from './download-task-file.js';
+import logger from '../../../helpers/logging/logger.js';
 import readStream from '../../../helpers/download/read-stream.js';
 
 jest.mock('../../../config/config', () => ({
   archiveDir: 'archive/',
   workDir: 'tmp/',
 }));
+jest.mock('../../../helpers/logging/logger.js');
 jest.mock('../../../helpers/download/read-stream.js');
 
 const mockedFileSystem = {
@@ -100,9 +102,37 @@ describe('Download task file', () => {
       it('should set status', () => {
         expect(res.status).toHaveBeenCalledWith(404);
       });
+
       it('should end response', () => {
         expect(res.end).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('unsuccessful because of server error', () => {
+    beforeAll(async () => {
+      logger.error.mockClear();
+      res.end.mockClear();
+      res.status.mockClear();
+      readStream.mockImplementation(() => {
+        throw new Error('cannot read file');
+      });
+      const req = {
+        params: { filename: 'archiveID', folder: 'archive' },
+      };
+      await downloadTaskFile(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('download task file - Error: cannot read file');
+    });
+
+    it('should set status', () => {
+      expect(res.status).toHaveBeenCalledWith(500);
+    });
+
+    it('should end response', () => {
+      expect(res.end).toHaveBeenCalled();
     });
   });
 });

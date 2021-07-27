@@ -1,7 +1,9 @@
 import exists from './task-exists.js';
+import logger from '../../../helpers/logging/logger.js';
 import status from './task-status.js';
 import updateStatus from './update-status.js';
 
+jest.mock('../../../helpers/logging/logger.js');
 jest.mock('./task-exists');
 jest.mock('./task-status');
 status.mockResolvedValue({
@@ -41,10 +43,17 @@ describe('Task information', () => {
 
   describe('unsuccessfully', () => {
     beforeAll(async () => {
+      logger.error.mockClear();
       res.end.mockClear();
       res.status.mockClear();
-      exists.mockRejectedValue();
+      exists.mockImplementation(() => {
+        throw new Error('cannot access file system');
+      });
       await updateStatus(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('update task status - Error: cannot access file system');
     });
 
     it('should set response status', () => {

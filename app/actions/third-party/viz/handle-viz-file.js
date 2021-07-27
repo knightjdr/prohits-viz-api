@@ -3,8 +3,9 @@ import path from 'path';
 
 import config from '../../../config/config.js';
 import createDirs from '../../../helpers/files/create-dirs.js';
-import validate from './validate.js';
 import createWorkDir from '../../../helpers/files/create-work-dir.js';
+import logger from '../../../helpers/logging/logger.js';
+import validate from './validate.js';
 
 const handleVizFile = async (req, res) => {
   try {
@@ -22,6 +23,7 @@ const handleVizFile = async (req, res) => {
     const url = `${config.protocol}://${config.origin}/visualization/${taskFolder}/${imageType}`;
     res.send({ url });
   } catch (error) {
+    logger.error(`third party viz - ${error.toString()}`);
     res.status(400);
     res.send({ message: error.toString() });
   }

@@ -3,11 +3,13 @@ import mockFS from 'mock-fs';
 
 import getTimestamp from '../../utils/get-timestamp.js';
 import logClientError from './index.js';
+import logger from '../../helpers/logging/logger.js';
 
 jest.mock('../../config/config.js', () => ({
   logDir: 'logs/',
 }));
 jest.mock('../../utils/get-timestamp.js');
+jest.mock('../../helpers/logging/logger.js');
 
 const mockedFileSystem = {
   logs: {},
@@ -64,14 +66,19 @@ describe('Log clientside error', () => {
         },
       };
 
+      logger.error.mockClear();
       res.end.mockClear();
       res.status.mockClear();
 
       getTimestamp.mockImplementation(() => {
-        throw new Error();
+        throw new Error('could not get timestamp');
       });
 
       await logClientError(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('client error - Error: could not get timestamp');
     });
 
     it('should set response status', () => {

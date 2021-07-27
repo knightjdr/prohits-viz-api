@@ -1,4 +1,5 @@
 import checkUserAuth from '../helpers/third-party/check-user-auth.js';
+import logger from '../helpers/logging/logger.js';
 
 export const forbidden = (res) => {
   res.status(403);
@@ -23,11 +24,17 @@ export const isRequestAuthorized = async (req, sessions, sessionID) => (
 ** a user connected to prohits-viz.org. It uses their socket ID to confirm.
 ** API endpoints at /api/third-pary are validated using their apikey. */
 export const isOriginAuthorized = async (req, res, next) => {
-  const sessionID = req.get('session');
-  const sessions = req.app.get('sessions');
-  if (await isRequestAuthorized(req, sessions, sessionID)) {
-    next();
-  } else {
-    forbidden(res);
+  try {
+    const sessionID = req.get('session');
+    const sessions = req.app.get('sessions');
+    if (await isRequestAuthorized(req, sessions, sessionID)) {
+      next();
+    } else {
+      forbidden(res);
+    }
+  } catch (error) {
+    logger.error(`origin authorization - ${error.toString()}`);
+    res.status(500);
+    res.end();
   }
 };

@@ -1,6 +1,7 @@
 import constructJSON from '../../../helpers/export/construct-json.js';
 import createWorkDir from '../../../helpers/files/create-work-dir.js';
 import heatmap from './heatmap.js';
+import logger from '../../../helpers/logging/logger.js';
 import spawnProcess from './spawn.js';
 import validate from '../../../helpers/validation/viz/validate.js';
 import writeDataFile from '../../../helpers/export/write-data-file.js';
@@ -8,6 +9,7 @@ import writeDataFile from '../../../helpers/export/write-data-file.js';
 jest.mock('../../../config/config.js', () => ({ exportFont: 'font.ttf' }));
 jest.mock('../../../helpers/export/construct-json.js');
 jest.mock('../../../helpers/files/create-work-dir');
+jest.mock('../../../helpers/logging/logger.js');
 jest.mock('./spawn');
 spawnProcess.mockResolvedValue();
 jest.mock('../../../helpers/validation/viz/validate');
@@ -63,16 +65,23 @@ describe('Exporting heatmap', () => {
 
   describe('when there is promise rejection', () => {
     beforeAll(async () => {
+      logger.error.mockClear();
       res.locals.socket.emit.mockClear();
       res.send.mockClear();
       validate.mockReturnValue({});
       constructJSON.mockReturnValue({});
-      createWorkDir.mockRejectedValue();
+      createWorkDir.mockImplementation(() => {
+        throw new Error('could not create work dir');
+      });
       await heatmap(req, res);
     });
 
     it('should end response', () => {
       expect(res.send).toHaveBeenCalled();
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('export - Error: could not create work dir');
     });
 
     it('should emit error event to socket', () => {
@@ -82,12 +91,17 @@ describe('Exporting heatmap', () => {
 
   describe('when there is a validation error', () => {
     beforeAll(async () => {
+      logger.error.mockClear();
       res.locals.socket.emit.mockClear();
       res.send.mockClear();
       validate.mockImplementation(() => {
         throw new Error('test error');
       });
       await heatmap(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('export - Error: test error');
     });
 
     it('should send error response', () => {

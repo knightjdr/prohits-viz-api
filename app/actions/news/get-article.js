@@ -1,5 +1,6 @@
 import addMongoDate from '../../utils/add-mongo-date.js';
 import findOne from '../../helpers/database/find-one.js';
+import logger from '../../helpers/logging/logger.js';
 
 const getArticle = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ const getArticle = async (req, res) => {
       res.end();
     }
   } catch (error) {
+    logger.error(`news article - ${error.toString()}`);
     res.status(500);
     res.end();
   }

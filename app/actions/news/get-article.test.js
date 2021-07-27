@@ -1,9 +1,11 @@
 import addMongoDate from '../../utils/add-mongo-date.js';
 import findOne from '../../helpers/database/find-one.js';
 import getArticle from './get-article.js';
+import logger from '../../helpers/logging/logger.js';
 
 jest.mock('../../utils/add-mongo-date');
 jest.mock('../../helpers/database/find-one');
+jest.mock('../../helpers/logging/logger.js');
 
 const res = {
   end: jest.fn(),
@@ -70,11 +72,16 @@ describe('News article', () => {
 
   describe('when there is a news item error', () => {
     beforeAll(async () => {
+      logger.error.mockClear();
       res.end.mockClear();
       res.status.mockClear();
-      findOne.mockRejectedValueOnce(new Error());
+      findOne.mockRejectedValueOnce(new Error('cannot access news'));
       const req = { params: { headline: 'title' } };
       await getArticle(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('news article - Error: cannot access news');
     });
 
     it('should return 500 status', () => {

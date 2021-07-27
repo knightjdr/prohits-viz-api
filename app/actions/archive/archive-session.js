@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 
 import config from '../../config/config.js';
 import createArchiveID from './create-id.js';
+import logger from '../../helpers/logging/logger.js';
 import updateTaskParameters from './update-task-parameters.js';
 
 const archiveSession = async (req, res) => {
@@ -14,6 +15,7 @@ const archiveSession = async (req, res) => {
     );
     res.send({ route: `/visualization/archive/${archiveID}` });
   } catch (error) {
+    logger.error(`archiving - ${error.toString()}`);
     res.status(500);
     res.end();
   }

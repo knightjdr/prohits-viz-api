@@ -3,9 +3,11 @@ import mockFS from 'mock-fs';
 
 import createWorkDir from '../../../helpers/files/create-work-dir.js';
 import handleVizFile from './handle-viz-file.js';
+import logger from '../../../helpers/logging/logger.js';
 import validate from './validate.js';
 
 jest.mock('../../../helpers/files/create-work-dir');
+jest.mock('../../../helpers/logging/logger.js');
 jest.mock('./validate');
 
 const mockedFileSystem = {
@@ -30,12 +32,17 @@ afterAll(() => {
 describe('Third party viz', () => {
   describe('with validation error', () => {
     beforeAll(async () => {
+      logger.error.mockClear();
       res.send.mockClear();
       res.status.mockClear();
       validate.mockImplementation(() => {
-        throw new Error('error');
+        throw new Error('validation error');
       });
       await handleVizFile(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('third party viz - Error: validation error');
     });
 
     it('should set response status', () => {
@@ -43,11 +50,11 @@ describe('Third party viz', () => {
     });
 
     it('should send response', () => {
-      expect(res.send).toHaveBeenCalledWith({ message: 'Error: error' });
+      expect(res.send).toHaveBeenCalledWith({ message: 'Error: validation error' });
     });
   });
 
-  describe('with validate data', () => {
+  describe('with valid data', () => {
     beforeAll(async () => {
       res.send.mockClear();
       res.status.mockClear();

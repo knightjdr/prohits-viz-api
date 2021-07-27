@@ -7,6 +7,7 @@ import createStatus from '../../../helpers/status/create-status.js';
 import definePrimaryImageFile from './primary-image-file.js';
 import defineUserIndependentSettings from './define-user-independent-settings.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
+import logger from '../../../helpers/logging/logger.js';
 import moveFiles from '../../../helpers/files/move-files.js';
 import spawnTask from './spawn.js';
 import updateStatus from '../../../helpers/status/update-status.js';
@@ -76,6 +77,7 @@ const runToolAnalysis = async (req, res) => {
       );
     }
   } catch (error) {
+    logger.error(`primary analysis - ${error.toString()}`);
     res.status(500);
     res.end();
   }

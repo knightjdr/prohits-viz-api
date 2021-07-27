@@ -1,6 +1,7 @@
 import config from '../../../config/config.js';
 import exists from '../../../helpers/download/exists.js';
 import getSubDirectory from './get-sub-directory.js';
+import logger from '../../../helpers/logging/logger.js';
 import readStream from '../../../helpers/download/read-stream.js';
 
 const downloadTaskFile = async (req, res) => {
@@ -19,6 +20,7 @@ const downloadTaskFile = async (req, res) => {
       await readStream(completeFilePath, res);
     }
   } catch (error) {
+    logger.error(`download task file - ${error.toString()}`);
     res.status(500);
     res.end();
   }

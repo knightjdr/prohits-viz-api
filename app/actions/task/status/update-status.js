@@ -1,4 +1,5 @@
 import exists from './task-exists.js';
+import logger from '../../../helpers/logging/logger.js';
 import status from './task-status.js';
 
 /* Get status of specified tasks. First checks
@@ -11,6 +12,7 @@ const updateStatus = async (req, res) => {
     const taskStatus = await status(folders);
     res.send({ tasks: taskStatus });
   } catch (error) {
+    logger.error(`update task status - ${error.toString()}`);
     res.status(500);
     res.end();
   }

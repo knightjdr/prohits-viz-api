@@ -1,9 +1,11 @@
-import addMongoDate from '../../utils/add-mongo-date';
-import find from '../../helpers/database/find';
-import getHomeContent from './get-home-content';
+import addMongoDate from '../../utils/add-mongo-date.js';
+import find from '../../helpers/database/find.js';
+import getHomeContent from './get-home-content.js';
+import logger from '../../helpers/logging/logger.js';
 
 jest.mock('../../utils/add-mongo-date');
 jest.mock('../../helpers/database/find');
+jest.mock('../../helpers/logging/logger.js');
 
 const req = {};
 const res = {
@@ -57,10 +59,15 @@ describe('Home page load', () => {
     });
 
     beforeAll(async () => {
+      logger.error.mockClear();
       find
-        .mockRejectedValueOnce(new Error())
-        .mockRejectedValueOnce(new Error());
+        .mockRejectedValueOnce(new Error('error accessing news'))
+        .mockRejectedValueOnce(new Error('error accessing spotlight'));
       await getHomeContent(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('home content - Error: error accessing news');
     });
 
     it('should return default status', () => {

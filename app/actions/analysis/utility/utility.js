@@ -6,6 +6,7 @@ import createDirs from '../../../helpers/files/create-dirs.js';
 import createStatus from '../../../helpers/status/create-status.js';
 import defineUserIndependentSettings from './define-user-independent-settings.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
+import logger from '../../../helpers/logging/logger.js';
 import moveFiles from '../../../helpers/files/move-files.js';
 import spawnProcess from './spawn.js';
 import validate from './validation/validate.js';
@@ -72,6 +73,7 @@ const runUtilityAnalysis = async (req, res) => {
       );
     }
   } catch (error) {
+    logger.error(`utility - ${error.toString()}`);
     res.status(500);
     res.end();
   }

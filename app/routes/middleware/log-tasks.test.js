@@ -1,7 +1,9 @@
 import insert from '../../helpers/database/insert.js';
+import logger from '../../helpers/logging/logger.js';
 import logTasks from './log-tasks.js';
 
 jest.mock('../../helpers/database/insert');
+jest.mock('../../helpers/logging/logger.js');
 jest.mock('../../utils/url-details', () => () => ({ host: 'test.org' }));
 
 // Mock date
@@ -18,7 +20,7 @@ afterAll(() => {
 
 describe('Log tasks', () => {
   describe('with file', () => {
-    describe('with tool', () => {
+    describe('with tool specified', () => {
       beforeAll(() => {
         insert.mockClear();
         next.mockClear();
@@ -51,7 +53,7 @@ describe('Log tasks', () => {
       });
     });
 
-    describe('with no type', () => {
+    describe('missing tool name', () => {
       beforeAll(() => {
         insert.mockClear();
         next.mockClear();
@@ -149,6 +151,35 @@ describe('Log tasks', () => {
         tool: 'dotplot',
       };
       expect(insert).toHaveBeenCalledWith('tracking', document);
+    });
+
+    it('should call next', () => {
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('with error', () => {
+    beforeAll(() => {
+      insert.mockImplementation(() => {
+        throw new Error('insertion failed');
+      });
+
+      logger.error.mockClear();
+      next.mockClear();
+      const req = {
+        files: {
+          file: [
+            { originalname: 'file1.txt', size: 1000 },
+          ],
+        },
+        params: { tool: 'dotplot' },
+        path: '/analysis/dotplot',
+      };
+      logTasks(req, {}, next);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('log task - Error: insertion failed');
     });
 
     it('should call next', () => {

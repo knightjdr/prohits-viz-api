@@ -12,10 +12,8 @@ const tsFormat = () => getTimestamp();
 const Logger = new (winston.createLogger)({
   exitOnError: false,
   format: winston.format.combine(
-    winston.format.timestamp({format: 'YYYY-MM-DD, HH:mm:ss'}),
-    winston.format.printf(info => {
-      return `${info.timestamp} - ${info.level}: ${info.message}`;
-    })
+    winston.format.timestamp({ format: 'YYYY-MM-DD, HH:mm:ss' }),
+    winston.format.printf(info => `${info.timestamp} - ${info.level}: ${info.message}`),
   ),
   transports: [
     new winston.transports.File({
@@ -30,7 +28,7 @@ const Logger = new (winston.createLogger)({
 
 // In development environment don't log to files, just console.
 if (env === 'development') {
-  Logger.add(new winston.transports.Console, {
+  Logger.add(new winston.transports.Console(), {
     colorize: true,
     timestamp: tsFormat,
   });

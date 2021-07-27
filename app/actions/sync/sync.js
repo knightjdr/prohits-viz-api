@@ -1,4 +1,5 @@
 import constructJSON from '../../helpers/export/construct-json.js';
+import logger from '../../helpers/logging/logger.js';
 import spawnProcess from './spawn.js';
 import validate from '../../helpers/validation/viz/validate.js';
 import writeDataFile from '../../helpers/export/write-data-file.js';
@@ -16,6 +17,7 @@ const sync = async (req, res) => {
     await writeDataFile(workingDir, json);
     await spawnProcess(socket, workingDir, snapshotID);
   } catch (error) {
+    logger.error(`sync - ${error.toString()}`);
     socket.emit('action', { snapshotID, type: 'SYNC_ERROR' });
   }
 };

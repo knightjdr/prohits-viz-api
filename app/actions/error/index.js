@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 
 import config from '../../config/config.js';
 import getTimestamp from '../../utils/get-timestamp.js';
+import logger from '../../helpers/logging/logger.js';
 
 const logClientError = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ const logClientError = async (req, res) => {
 
     res.end();
   } catch (error) {
+    logger.error(`client error - ${error.toString()}`);
     res.status(500);
     res.end();
   }

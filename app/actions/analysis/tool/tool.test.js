@@ -3,6 +3,7 @@ import mockFS from 'mock-fs';
 
 import cleanup from './cleanup.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
+import logger from '../../../helpers/logging/logger.js';
 import runToolAnalysis from './tool.js';
 import spawnTask from './spawn.js';
 import validate from '../../../helpers/validation/analysis/validate.js';
@@ -10,6 +11,7 @@ import validate from '../../../helpers/validation/analysis/validate.js';
 jest.mock('./cleanup.js');
 cleanup.mockResolvedValue();
 jest.mock('../../../helpers/files/create-work-dir');
+jest.mock('../../../helpers/logging/logger.js');
 jest.mock('./spawn');
 spawnTask.mockResolvedValue();
 jest.mock('../../../helpers/validation/analysis/validate');
@@ -200,6 +202,7 @@ describe('Run analysis', () => {
         params: { tool: 'dotplot' },
       };
 
+      logger.error.mockClear();
       res.end.mockClear();
       res.status.mockClear();
 
@@ -207,6 +210,11 @@ describe('Run analysis', () => {
       validate.mockReturnValue({});
 
       await runToolAnalysis(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error)
+        .toHaveBeenCalledWith('primary analysis - TypeError: Cannot convert undefined or null to object');
     });
 
     it('should set response status', () => {

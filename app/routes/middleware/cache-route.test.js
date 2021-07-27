@@ -1,11 +1,13 @@
 import mcache from 'memory-cache';
 
-import cacheRoute from './cache-route';
+import cacheRoute from './cache-route.js';
+import logger from '../../helpers/logging/logger.js';
 
 jest.mock('memory-cache', () => ({
   get: jest.fn(),
   put: jest.fn(),
 }));
+jest.mock('../../helpers/logging/logger.js');
 jest.mock('../../config/config', () => ({
   routeCacheTime: 10000,
 }));
@@ -52,7 +54,7 @@ describe('Cache route content', () => {
 
   describe('route not cached', () => {
     beforeAll(() => {
-      mcache.get.mockReturnValue(undefined);
+      mcache.get.mockReturnValue();
       mcache.put.mockClear();
       next.mockClear();
       res.setHeader.mockClear();
@@ -74,6 +76,28 @@ describe('Cache route content', () => {
       const body = { response: 'data' };
       res.send(body);
       expect(mcache.put).toHaveBeenCalledWith('__express__route', body, 10000);
+    });
+  });
+
+  describe('cache error', () => {
+    beforeAll(() => {
+      logger.error.mockClear();
+      mcache.get.mockReturnValue();
+      next.mockClear();
+      res.setHeader.mockImplementation(() => {
+        throw new Error('cannot set header');
+      });
+
+      const req = { originalUrl: 'route' };
+      cacheRoute(req, res, next);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('cache route - Error: cannot set header');
+    });
+
+    it('should call next', () => {
+      expect(next).toHaveBeenCalled();
     });
   });
 });

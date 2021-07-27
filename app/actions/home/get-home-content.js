@@ -1,5 +1,6 @@
 import addMongoDate from '../../utils/add-mongo-date.js';
 import find from '../../helpers/database/find.js';
+import logger from '../../helpers/logging/logger.js';
 
 const parseDocuments = documents => ({
   news: addMongoDate.arr(documents[0]),
@@ -16,6 +17,7 @@ const getHomeContent = async (req, res) => {
     ]);
     res.send(parseDocuments(documents));
   } catch (error) {
+    logger.error(`home content - ${error.toString()}`);
     res.send({
       news: null,
       spotlight: null,

@@ -1,4 +1,5 @@
 import insert from '../../helpers/database/insert.js';
+import logger from '../../helpers/logging/logger.js';
 import urlDetails from '../../utils/url-details.js';
 
 const calculateFileSize = (files) => {
@@ -30,10 +31,15 @@ const creatDocument = (req) => {
   };
 };
 
-const logTask = (req, res, next) => {
-  const document = creatDocument(req);
-  insert('tracking', document);
-  next();
+const logTask = async (req, res, next) => {
+  try {
+    const document = creatDocument(req);
+    await insert('tracking', document);
+    next();
+  } catch (error) {
+    logger.error(`log task - ${error.toString()}`);
+    next();
+  }
 };
 
 export default logTask;

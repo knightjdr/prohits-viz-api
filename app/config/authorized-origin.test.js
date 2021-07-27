@@ -1,8 +1,11 @@
 import checkUserAuth from '../helpers/third-party/check-user-auth.js';
-import { isRequestAuthorized } from './authorized-origin.js';
+import logger from '../helpers/logging/logger.js';
+import { isOriginAuthorized, isRequestAuthorized } from './authorized-origin.js';
 
 jest.mock('../helpers/third-party/check-user-auth');
+jest.mock('../helpers/logging/logger.js');
 
+const next = jest.fn();
 const req = {
   app: {
     get: function get(key) { return this[key]; },
@@ -10,6 +13,10 @@ const req = {
   },
   get: function get(key) { return this[key]; },
   originalUrl: '',
+};
+const res = {
+  end: jest.fn(),
+  status: jest.fn(),
 };
 
 describe('Check if request is authorized', () => {
@@ -94,5 +101,75 @@ describe('Check if request is authorized', () => {
     };
     const sessions = [];
     return expect(isRequestAuthorized(request, sessions)).resolves.toBeFalsy();
+  });
+});
+
+describe('Check if origin is authorized', () => {
+  describe('authorized origin', () => {
+    beforeAll(async () => {
+      next.mockClear();
+      const request = {
+        ...req,
+        method: 'GET',
+      };
+      await isOriginAuthorized(request, res, next);
+    });
+
+    it('should call next', () => {
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('forbidden origin', () => {
+    beforeAll(async () => {
+      next.mockClear();
+      res.end.mockClear();
+      res.status.mockClear();
+      checkUserAuth.mockReturnValue(false);
+      const request = {
+        ...req,
+        method: 'POST',
+        originalUrl: 'third-party',
+      };
+      await isOriginAuthorized(request, res, next);
+    });
+
+    it('should set response status', () => {
+      expect(res.status).toHaveBeenCalledWith(403);
+    });
+
+    it('should end response', () => {
+      expect(res.end).toHaveBeenCalled();
+    });
+  });
+
+  describe('server error', () => {
+    beforeAll(async () => {
+      logger.error.mockClear();
+      res.end.mockClear();
+      res.status.mockClear();
+      checkUserAuth.mockImplementation(() => {
+        throw new Error('cannot check auth');
+      });
+      const request = {
+        ...req,
+        method: 'POST',
+        originalUrl: 'third-party',
+      };
+      const sessions = [];
+      await isOriginAuthorized(request, res, sessions);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('origin authorization - Error: cannot check auth');
+    });
+
+    it('should set response status', () => {
+      expect(res.status).toHaveBeenCalledWith(500);
+    });
+
+    it('should end response', () => {
+      expect(res.end).toHaveBeenCalled();
+    });
   });
 });

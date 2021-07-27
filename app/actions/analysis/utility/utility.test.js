@@ -3,6 +3,7 @@ import mockFS from 'mock-fs';
 
 import cleanup from './cleanup.js';
 import getWorkDir from '../../../helpers/files/create-work-dir.js';
+import logger from '../../../helpers/logging/logger.js';
 import runUtilityAnalysis from './utility.js';
 import spawnTask from './spawn.js';
 import validate from './validation/validate.js';
@@ -10,6 +11,7 @@ import validate from './validation/validate.js';
 jest.mock('./cleanup.js');
 cleanup.mockResolvedValue();
 jest.mock('../../../helpers/files/create-work-dir');
+jest.mock('../../../helpers/logging/logger.js');
 jest.mock('./spawn');
 jest.mock('./validation/validate.js');
 
@@ -132,7 +134,8 @@ describe('Run utility analysis', () => {
     ));
 
     it('should spawn task', () => {
-      const command = 'docker run -v $(pwd):/files/ pvutilitiespython /app/saint_stats.py -f 0.01 -s files/file1.txt';
+      // eslint-disable-next-line max-len
+      const command = 'docker run --rm -v $(pwd):/files/ pvutilitiespython /app/saint_stats.py -f 0.01 -s files/file1.txt';
       expect(spawnTask).toHaveBeenCalledWith(command, 'tmp/taskID');
     });
 
@@ -238,6 +241,7 @@ describe('Run utility analysis', () => {
         params: { tool: 'saint_stats' },
       };
 
+      logger.error.mockClear();
       res.end.mockClear();
       res.status.mockClear();
 
@@ -245,6 +249,10 @@ describe('Run utility analysis', () => {
       validate.mockReturnValue({});
 
       await runUtilityAnalysis(req, res);
+    });
+
+    it('should log error', () => {
+      expect(logger.error).toHaveBeenCalledWith('utility - TypeError: Cannot convert undefined or null to object');
     });
 
     it('should set response status', () => {

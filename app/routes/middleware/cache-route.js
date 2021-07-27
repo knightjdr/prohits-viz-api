@@ -1,6 +1,7 @@
 import mcache from 'memory-cache';
 
 import config from '../../config/config.js';
+import logger from '../../helpers/logging/logger.js';
 
 const defineCacheKey = req => (
   `__express__${req.originalUrl || req.url}`
@@ -29,9 +30,14 @@ const sendOrGenerateContent = (res, next, cachedContent) => {
 };
 
 const cache = (req, res, next) => {
-  const cachedContent = createCacheContent(req);
-  res.setHeader('Expires', new Date(Date.now() + config.routeCacheTime).toUTCString());
-  sendOrGenerateContent(res, next, cachedContent);
+  try {
+    const cachedContent = createCacheContent(req);
+    res.setHeader('Expires', new Date(Date.now() + config.routeCacheTime).toUTCString());
+    sendOrGenerateContent(res, next, cachedContent);
+  } catch (error) {
+    logger.error(`cache route - ${error.toString()}`);
+    next();
+  }
 };
 
 export default cache;
