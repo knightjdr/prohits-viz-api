@@ -1,5 +1,5 @@
-import checkUserAuth from './check-user-auth';
-import validateKey from './validate-key';
+import checkUserAuth from './check-user-auth.js';
+import validateKey from './validate-key.js';
 
 jest.mock('../database/find-one');
 jest.mock('./validate-key');

@@ -17,6 +17,19 @@ const calculateFileSize = (files) => {
   return fileSize;
 };
 
+const getOrigin = (req) => {
+  const { path } = req;
+  if (path.startsWith('/third-party')) {
+    const apikey = req.get('apikey');
+    if (!apikey) {
+      return 'unknown';
+    }
+    const [contact] = apikey.split(':');
+    return contact;
+  }
+  return urlDetails(req).host;
+};
+
 const creatDocument = (req) => {
   const { files, params, path } = req;
   const fileSize = calculateFileSize(files?.file);
@@ -25,7 +38,7 @@ const creatDocument = (req) => {
     date: new Date().toISOString(),
     file: fileSize > 0,
     fileSize,
-    origin: urlDetails(req).host,
+    origin: getOrigin(req),
     path,
     tool: params && params.tool ? params.tool : '',
   };

@@ -158,6 +158,42 @@ describe('Log tasks', () => {
     });
   });
 
+  describe('from third party', () => {
+    beforeAll(() => {
+      insert.mockClear();
+      next.mockClear();
+      const req = {
+        get: function get(key) { return this.headers[key]; },
+        headers: {
+          apikey: 'user@email.com:secretApiKey',
+        },
+        files: {
+          file: [
+            { originalname: 'file1.txt', size: 1000 },
+          ],
+        },
+        path: '/third-party/viz',
+      };
+      logTasks(req, {}, next);
+    });
+
+    it('should call insert', () => {
+      const document = {
+        date: new Date().toISOString(),
+        file: true,
+        fileSize: 1000,
+        origin: 'user@email.com',
+        path: '/third-party/viz',
+        tool: '',
+      };
+      expect(insert).toHaveBeenCalledWith('tracking', document);
+    });
+
+    it('should call next', () => {
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
   describe('with error', () => {
     beforeAll(() => {
       insert.mockImplementation(() => {

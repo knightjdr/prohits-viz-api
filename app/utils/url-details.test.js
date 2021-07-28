@@ -1,4 +1,4 @@
-import urlDetails from './url-details';
+import urlDetails from './url-details.js';
 
 describe('URL details', () => {
   it('should return url object when referrer available', () => {
