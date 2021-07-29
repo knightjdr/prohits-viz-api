@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import createFolder from '../utils/create-folder.js';
+import mkdirp from 'mkdirp';
+
 import downloadFtp from '../utils/download-ftp-to-file.js';
 import downloadHttps from '../utils/download-https-to-file.js';
 import unzipFile from '../utils/unzip-file.js';
@@ -38,7 +39,7 @@ const populateConfigTemplate = downloadFolder => ({
 });
 
 const download = async (downloadFolder) => {
-  await createFolder(downloadFolder);
+  await mkdirp(downloadFolder);
 
   const config = populateConfigTemplate(downloadFolder);
 

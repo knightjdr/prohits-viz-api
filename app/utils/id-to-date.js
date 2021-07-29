@@ -1,16 +1,14 @@
-import mongodb from 'mongodb';
-
-const { ObjectID } = mongodb;
+import { ObjectId } from 'mongodb';
 
 const getTimestamp = id => (
   typeof id === 'string'
-    ? ObjectID(id).getTimestamp()
+    ? ObjectId(id).getTimestamp()
     : id.getTimestamp()
 );
 
 // Gets the ISO date from a mongo _id field.
 const idToDate = id => (
-  ObjectID.isValid(id) ? getTimestamp(id) : null
+  ObjectId.isValid(id) ? getTimestamp(id) : null
 );
 
 export default idToDate;

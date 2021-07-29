@@ -1,4 +1,6 @@
-import createFolder from '../utils/create-folder.js';
+/* eslint-disable max-len */
+import mkdirp from 'mkdirp';
+
 import downloadFtp from '../utils/download-ftp-to-file.js';
 import downloadHttps from '../utils/download-https-to-file.js';
 import unzipFile from '../utils/unzip-file.js';
@@ -33,7 +35,7 @@ const populateConfigTemplate = (downloadFolder, versions) => ({
 
 /* Download and unzip interactions database from BioGrid and Intact. */
 const download = async (downloadFolder, versions) => {
-  await createFolder(downloadFolder);
+  await mkdirp(downloadFolder);
 
   const config = populateConfigTemplate(downloadFolder, versions);
 

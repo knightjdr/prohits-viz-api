@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
+import mkdirp from 'mkdirp';
 import fs from 'fs/promises';
 
-import createFolder from '../utils/create-folder.js';
 import protein from './protein/protein.js';
 import rna from './rna/rna.js';
 
@@ -10,7 +10,7 @@ const OUTFILE_VERSIONS = './scripts/expression/downloads/versions.json';
 
 const downloadExpression = async () => {
   try {
-    await createFolder(DOWNLOAD_FOLDER);
+    await mkdirp(DOWNLOAD_FOLDER);
 
     const versions = await Promise.all([
       protein(DOWNLOAD_FOLDER),

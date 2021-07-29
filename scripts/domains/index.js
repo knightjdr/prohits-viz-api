@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
+import mkdirp from 'mkdirp';
 import fs from 'fs/promises';
 
-import createFolder from '../utils/create-folder.js';
 import download from './download.js';
 import getVersion from './get-version.js';
 import parseDomains from './parse-domains.js';
@@ -12,7 +12,7 @@ const OUTFILE_VERSIONS = './scripts/domains/downloads/versions.json';
 
 const downloadDomains = async () => {
   try {
-    await createFolder(DOWNLOAD_FOLDER);
+    await mkdirp(DOWNLOAD_FOLDER);
 
     const domainFile = await download(DOWNLOAD_FOLDER);
     const version = await getVersion(domainFile);

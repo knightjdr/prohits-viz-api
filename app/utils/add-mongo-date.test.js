@@ -1,7 +1,7 @@
-import { ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
-import addMongoDate from './add-mongo-date';
-import idToDate from './id-to-date';
+import addMongoDate from './add-mongo-date.js';
+import idToDate from './id-to-date.js';
 
 // mock idToDate
 jest.mock('./id-to-date');
@@ -13,14 +13,14 @@ idToDate
   .mockReturnValueOnce(null);
 
 const startingArr = [
-  { _id: ObjectID('5aa6ac91c63eb43ab21a072c') },
-  { _id: ObjectID('5aa6ac98c63eb43ab21a072d') },
+  { _id: ObjectId('5aa6ac91c63eb43ab21a072c') },
+  { _id: ObjectId('5aa6ac98c63eb43ab21a072d') },
   { _id: 'aaaa' },
   { field: 'bbb' },
 ];
 const mappedArr = [
-  { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), dbDate: '2018-03-12T16:36:33Z' },
-  { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), dbDate: '2018-03-12T16:36:40Z' },
+  { _id: ObjectId('5aa6ac91c63eb43ab21a072c'), dbDate: '2018-03-12T16:36:33Z' },
+  { _id: ObjectId('5aa6ac98c63eb43ab21a072d'), dbDate: '2018-03-12T16:36:40Z' },
   { _id: 'aaaa', dbDate: null },
   { field: 'bbb', dbDate: null },
 ];

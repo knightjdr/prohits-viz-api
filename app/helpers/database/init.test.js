@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-import init from './init';
+import init from './init.js';
 
 const err = new Error('err');
 

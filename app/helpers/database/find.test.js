@@ -1,5 +1,5 @@
 import mongodb from 'mongo-mock';
-import { ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 import database from './database.js';
 import find from './find.js';
@@ -16,8 +16,8 @@ jest.mock('./database', () => ({
 }));
 
 const documents = [
-  { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
+  { _id: ObjectId('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
+  { _id: ObjectId('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
 ];
 
 beforeAll((done) => {
@@ -59,8 +59,8 @@ describe('find', () => {
   it('should find sort returned documents from database', async () => {
     const docs = await find('documents', {}, {}, { _id: -1 });
     const expected = [
-      { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
-      { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
+      { _id: ObjectId('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
+      { _id: ObjectId('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
     ];
     expect(docs).toEqual(expected);
   });
@@ -68,7 +68,7 @@ describe('find', () => {
   it('should find limit returned documents from database', async () => {
     const docs = await find('documents', {}, {}, {}, 1);
     const expected = [
-      { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
+      { _id: ObjectId('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
     ];
     expect(docs).toEqual(expected);
   });
