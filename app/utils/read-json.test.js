@@ -1,6 +1,6 @@
 import mockFS from 'mock-fs';
 
-import readJSON from './read-json';
+import readJSON from './read-json.js';
 
 const mockedFileSystem = {
   'file.json': `{

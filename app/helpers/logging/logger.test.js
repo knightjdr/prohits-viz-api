@@ -32,10 +32,6 @@ afterAll(() => {
   mockFS.restore();
 });
 
-afterAll(() => {
-  mockFS.restore();
-});
-
 describe('Logging', () => {
   beforeAll(() => {
     Logger.error('test');
