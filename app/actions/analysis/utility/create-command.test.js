@@ -25,7 +25,7 @@ describe('Create utility script command', () => {
       geneFile: 'helper-files/gene-db.json',
     };
     const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/saint_domain_enrich.py '
+      + 'pvutilitiespython /app/saint_domain_enrich/main.py '
       + '-b all -f 0.01 -i refseqp -s file.txt -t 0 -d helper-files/domains.json -g helper-files/gene-db.json';
     expect(createCommand({ ...fields, ...additionalSettings })).toBe(expected);
   });
@@ -38,7 +38,7 @@ describe('Create utility script command', () => {
       utility: 'saint_fea',
     };
     const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/saint_fea.py -f 0.01 -s file.txt -t 0';
+      + 'pvutilitiespython /app/saint_fea/main.py -f 0.01 -s file.txt -t 0';
     expect(createCommand(fields)).toBe(expected);
   });
 
@@ -49,7 +49,7 @@ describe('Create utility script command', () => {
       utility: 'saint_stats',
     };
     const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/saint_stats.py -f 0.01 -s file.txt';
+      + 'pvutilitiespython /app/saint_stats/main.py -f 0.01 -s file.txt';
     expect(createCommand(fields)).toBe(expected);
   });
 });
