@@ -1,6 +1,6 @@
 import validateSaintStats from './saint-stats-validate.js';
 
-describe('Validate saintstats utility fields', () => {
+describe('Validate saint_stats utility fields', () => {
   it('should handle valid fields', () => {
     const fields = { fdr: '0.01' };
     const expected = {

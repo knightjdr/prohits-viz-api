@@ -1,6 +1,6 @@
 import validateSaintFEA from './saint-fea-validate.js';
 
-describe('Validate saintfea utility fields', () => {
+describe('Validate saint_fea utility fields', () => {
   it('should handle valid fields', () => {
     const fields = { fdr: '0.01', topPreys: '0' };
     const expected = {

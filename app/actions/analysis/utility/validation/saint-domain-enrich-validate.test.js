@@ -1,6 +1,6 @@
 import validateSaintDomainEnrich from './saint-domain-enrich-validate.js';
 
-describe('Validate saintfea utility fields', () => {
+describe('Validate saint_fea utility fields', () => {
   it('should handle valid fields', () => {
     const fields = {
       background: 'all',

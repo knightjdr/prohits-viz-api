@@ -1,4 +1,7 @@
 const scripts = {
+  crispr_convert: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+    + 'pvutilitiespython /app/crispr_convert/main.py '
+    + `-f files -t ${fields.tool}`,
   pvconvert: fields => `pvconvert --file="${fields.files[0]}" --imageType="${fields.imageType}"`,
   saint_domain_enrich: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
     + 'pvutilitiespython /app/saint_domain_enrich/main.py '

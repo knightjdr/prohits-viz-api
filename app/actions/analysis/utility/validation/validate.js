@@ -1,3 +1,4 @@
+import validateCrisprConvert from './crispr-convert-validate.js';
 import validatePVConvert from './pvconvert-validate.js';
 import validateSaintDomainEnrich from './saint-domain-enrich-validate.js';
 import validateSaintFEA from './saint-fea-validate.js';
@@ -7,7 +8,9 @@ import validateFiles from '../../../../helpers/validation/analysis/field-validat
 const validateUtility = (fields) => {
   const { utility } = fields;
 
-  if (utility === 'pvconvert') {
+  if (utility === 'crispr_convert') {
+    return validateCrisprConvert(fields);
+  } if (utility === 'pvconvert') {
     return validatePVConvert(fields);
   } if (utility === 'saint_domain_enrich') {
     return validateSaintDomainEnrich(fields);

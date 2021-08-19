@@ -1,6 +1,18 @@
 import createCommand from './create-command.js';
 
 describe('Create utility script command', () => {
+  it('should create the command for crispr_convert', () => {
+    const fields = {
+      files: ['condition1.txt', 'condition2.txt'],
+      tool: 'bagel',
+      utility: 'crispr_convert',
+    };
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+      + 'pvutilitiespython /app/crispr_convert/main.py '
+      + '-f files -t bagel';
+    expect(createCommand(fields)).toBe(expected);
+  });
+
   it('should create the command for pvconvert', () => {
     const fields = {
       files: ['file.txt'],
