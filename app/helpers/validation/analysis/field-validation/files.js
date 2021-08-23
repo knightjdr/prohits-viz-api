@@ -3,7 +3,7 @@ const validateFiles = files => (
     ? {}
     : {
       errors: {
-        files: 'Missing file',
+        files: 'missing file',
       },
     }
 );

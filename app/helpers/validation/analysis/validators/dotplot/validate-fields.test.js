@@ -4,6 +4,7 @@ describe('Validate dotplot analysis fields', () => {
   it('should validate acceptable fields', () => {
     const form = {
       abundanceCap: '50',
+      automaticallySetFill: 'true',
       biclusteringApprox: 'true',
       clustering: 'hierarchical',
       clusteringMethod: 'complete',
@@ -27,6 +28,7 @@ describe('Validate dotplot analysis fields', () => {
 
     const expected = {
       abundanceCap: 50,
+      automaticallySetFill: true,
       biclusteringApprox: true,
       clustering: 'hierarchical',
       clusteringMethod: 'complete',
@@ -56,6 +58,7 @@ describe('Validate dotplot analysis fields', () => {
   it('should invalidate unacceptable fields', () => {
     const form = {
       abundanceCap: 'a',
+      automaticallySetFill: 'yes',
       biclusteringApprox: 'yes',
       clustering: 'unknown',
       clusteringMethod: 'unknown',
@@ -79,6 +82,7 @@ describe('Validate dotplot analysis fields', () => {
 
     const expected = {
       abundanceCap: 'should be a number',
+      automaticallySetFill: 'should be a boolean',
       biclusteringApprox: 'should be a boolean',
       clustering: 'invalid value',
       clusteringMethod: 'invalid method',

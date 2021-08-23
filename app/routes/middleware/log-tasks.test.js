@@ -20,11 +20,12 @@ afterAll(() => {
 
 describe('Log tasks', () => {
   describe('with file', () => {
-    describe('with tool specified', () => {
+    describe('with tool and fileType specified', () => {
       beforeAll(() => {
         insert.mockClear();
         next.mockClear();
         const req = {
+          body: { fileType: 'saint' },
           files: {
             file: [
               { originalname: 'file1.txt', size: 1000 },
@@ -41,6 +42,7 @@ describe('Log tasks', () => {
           date: new Date().toISOString(),
           file: true,
           fileSize: 1000,
+          fileType: 'saint',
           origin: 'test.org',
           path: '/analysis/dotplot',
           tool: 'dotplot',
@@ -53,7 +55,7 @@ describe('Log tasks', () => {
       });
     });
 
-    describe('missing tool name', () => {
+    describe('missing tool and fileType', () => {
       beforeAll(() => {
         insert.mockClear();
         next.mockClear();
@@ -75,6 +77,7 @@ describe('Log tasks', () => {
           date: new Date().toISOString(),
           file: true,
           fileSize: 1000,
+          fileType: '',
           origin: 'test.org',
           path: '/analysis/dotplot',
           tool: '',
@@ -94,6 +97,7 @@ describe('Log tasks', () => {
       next.mockClear();
       const req = {
         get: () => 'test.org',
+        body: { fileType: 'saint' },
         files: {
           file: [
             { originalname: 'samplefile.txt', size: 0 },
@@ -110,6 +114,7 @@ describe('Log tasks', () => {
         date: new Date().toISOString(),
         file: false,
         fileSize: 0,
+        fileType: 'saint',
         origin: 'test.org',
         path: '/analysis/dotplot',
         tool: 'dotplot',
@@ -128,6 +133,7 @@ describe('Log tasks', () => {
       next.mockClear();
       const req = {
         get: () => 'test.org',
+        body: { fileType: 'saint' },
         files: {
           file: [
             { originalname: 'samplefile.txt', size: 0 },
@@ -146,6 +152,7 @@ describe('Log tasks', () => {
         date: new Date().toISOString(),
         file: true,
         fileSize: 2000,
+        fileType: 'saint',
         origin: 'test.org',
         path: '/analysis/dotplot',
         tool: 'dotplot',
@@ -182,6 +189,7 @@ describe('Log tasks', () => {
         date: new Date().toISOString(),
         file: true,
         fileSize: 1000,
+        fileType: '',
         origin: 'user@email.com',
         path: '/third-party/viz',
         tool: '',
@@ -203,6 +211,7 @@ describe('Log tasks', () => {
       logger.error.mockClear();
       next.mockClear();
       const req = {
+        body: { fileType: 'saint' },
         files: {
           file: [
             { originalname: 'file1.txt', size: 1000 },

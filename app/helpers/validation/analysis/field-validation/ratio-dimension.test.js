@@ -1,6 +1,6 @@
 import validateRatioDimension from './ratio-dimension.js';
 
-describe('Validate ratio-dimension', () => {
+describe('Validate ratio dimension', () => {
   it('should validate acceptable dimension', () => {
     const expected = [true, 'area'];
 

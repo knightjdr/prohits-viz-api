@@ -18,6 +18,8 @@ const validateFields = (type, value) => {
   if (validatedResult === null) {
     const validateField = getFieldValidator(value);
     switch (type) {
+      case 'automaticallySetFill':
+        return validateField(criteria.isBoolean, 'should be a boolean');
       case 'abundanceCap':
         return validateField(criteria.isNumber, 'should be a number');
       case 'biclusteringApprox':

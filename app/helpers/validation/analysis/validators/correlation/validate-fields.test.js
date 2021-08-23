@@ -3,6 +3,7 @@ import validateCorrelation from './validate-fields.js';
 describe('Validate correlation analysis fields', () => {
   it('should validate acceptable fields', () => {
     const form = {
+      automaticallySetFill: 'true',
       clustering: 'hierarchical',
       clusteringMethod: 'complete',
       clusteringOptimize: 'true',
@@ -21,6 +22,7 @@ describe('Validate correlation analysis fields', () => {
     };
 
     const expected = {
+      automaticallySetFill: true,
       clustering: 'hierarchical',
       clusteringMethod: 'complete',
       clusteringOptimize: true,
@@ -45,6 +47,7 @@ describe('Validate correlation analysis fields', () => {
 
   it('should invalidate unacceptable fields', () => {
     const form = {
+      automaticallySetFill: 'yes',
       clustering: 'unknown',
       clusteringMethod: 'unknown',
       clusteringOptimize: 'yes',
@@ -63,6 +66,7 @@ describe('Validate correlation analysis fields', () => {
     };
 
     const expected = {
+      automaticallySetFill: 'should be a boolean',
       clustering: 'invalid value',
       clusteringMethod: 'invalid method',
       clusteringOptimize: 'should be a boolean',
