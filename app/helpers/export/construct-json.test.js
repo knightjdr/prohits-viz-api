@@ -28,6 +28,7 @@ describe('Construct JSON for pvsync', () => {
       rowDB: [{ data: [{ ratio: 0.5, score: 0.01, value: 1 }], name: 'a' }],
       rowOrder: [0],
       abundanceCap: 50,
+      abundanceType: 'positive',
       edgeColor: 'red',
       fillColor: 'blue',
       minAbundance: 0,
@@ -46,6 +47,7 @@ describe('Construct JSON for pvsync', () => {
       rowOrder: data.rowOrder,
       settings: {
         abundanceCap: data.abundanceCap,
+        abundanceType: 'positive',
         edgeColor: data.edgeColor,
         fillColor: data.fillColor,
         minAbundance: data.minAbundance,

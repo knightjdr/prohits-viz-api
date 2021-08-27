@@ -8,7 +8,7 @@ import validateClusteringType,
 import validateRatioDimension from '../../field-validation/ratio-dimension.js';
 import validateMinCondition from '../../field-validation/min-conditions.js';
 
-const validateNoClusteringType = (value) => (
+const validateNoClusteringType = value => (
   criteria.isString(value) || Array.isArray(value)
 );
 

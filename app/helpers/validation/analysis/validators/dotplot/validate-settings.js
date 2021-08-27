@@ -7,7 +7,8 @@ export const validateClustering = (currentValues, currentErrors) => {
   const errors = { ...currentErrors };
   const validated = { ...currentValues };
 
-  const reQuotes = new RegExp(/['"]+/g);
+  // eslint-disable-next-line no-useless-escape
+  const reQuotes = new RegExp(/['"\[\]]+/g);
   const reSeparator = new RegExp(/[\s,]+/);
 
   const parseList = (text) => {

@@ -1,6 +1,7 @@
 const settings = {
   dotplot: {
     abundanceCap: 50,
+    abundanceType: 'positive',
     annotationFontSize: 12,
     conditionColumn: 'Conditions',
     fillColor: 'blue',
@@ -17,6 +18,7 @@ const settings = {
   },
   heatmap: {
     abundanceCap: 50,
+    abundanceType: 'positive',
     annotationFontSize: 12,
     conditionColumn: 'Conditions',
     fillColor: 'blue',

@@ -1,5 +1,6 @@
 import criteria from '../field-validation/criteria.js';
 import settings from './default-values.js';
+import validateAbundanceType from '../field-validation/abundance-type.js';
 import validateAnnotations from '../field-validation/annotations.js';
 import validateColor from '../field-validation/color.js';
 import validateMarkers from '../field-validation/markers.js';
@@ -10,6 +11,8 @@ const validateHeatmap = (type, value, defaultSettings = settings.heatmap) => {
   switch (type) {
     case 'abundanceCap':
       return criteria.isNumber(value, defaultSettings.abundanceCap);
+    case 'abundanceType':
+      return validateAbundanceType(value, defaultSettings.abundanceType);
     case 'annotations':
       return validateAnnotations(value);
     case 'columnDB':
