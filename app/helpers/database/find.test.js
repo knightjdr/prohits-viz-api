@@ -27,10 +27,14 @@ beforeAll((done) => {
 
   // Insert some documents.
   MongoClient.connect(url, {}, (err, db) => {
-    database.connection = db;
-    db.collection('test_documents').insertMany(documents, () => {
+    if (err) {
       done();
-    });
+    } else {
+      database.connection = db;
+      db.collection('test_documents').insertMany(documents, () => {
+        done();
+      });
+    }
   });
 });
 

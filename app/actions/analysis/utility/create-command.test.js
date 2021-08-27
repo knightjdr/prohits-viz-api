@@ -7,9 +7,9 @@ describe('Create utility script command', () => {
       tool: 'bagel',
       utility: 'crispr_convert',
     };
-    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/crispr_convert/main.py '
-      + '-f files -t bagel';
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
+      'pvutilitiespython /app/crispr_convert/main.py ' +
+      '-f files -t bagel';
     expect(createCommand(fields)).toBe(expected);
   });
 
@@ -36,9 +36,9 @@ describe('Create utility script command', () => {
       domainFile: 'helper-files/domains.json',
       geneFile: 'helper-files/gene-db.json',
     };
-    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/saint_domain_enrich/main.py '
-      + '-b all -f 0.01 -i refseqp -s file.txt -t 0 -d helper-files/domains.json -g helper-files/gene-db.json';
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
+      'pvutilitiespython /app/saint_domain_enrich/main.py ' +
+      '-b all -f 0.01 -i refseqp -s file.txt -t 0 -d helper-files/domains.json -g helper-files/gene-db.json';
     expect(createCommand({ ...fields, ...additionalSettings })).toBe(expected);
   });
 
@@ -49,8 +49,8 @@ describe('Create utility script command', () => {
       topPreys: 0,
       utility: 'saint_fea',
     };
-    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/saint_fea/main.py -f 0.01 -s file.txt -t 0';
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
+      'pvutilitiespython /app/saint_fea/main.py -f 0.01 -s file.txt -t 0';
     expect(createCommand(fields)).toBe(expected);
   });
 
@@ -60,8 +60,8 @@ describe('Create utility script command', () => {
       fdr: 0.01,
       utility: 'saint_stats',
     };
-    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/saint_stats/main.py -f 0.01 -s file.txt';
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
+      'pvutilitiespython /app/saint_stats/main.py -f 0.01 -s file.txt';
     expect(createCommand(fields)).toBe(expected);
   });
 });

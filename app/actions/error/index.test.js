@@ -44,8 +44,8 @@ describe('Log clientside error', () => {
     });
 
     it('should log error to file', async () => {
-      const expected = '2021-01-21, 1:05:06 p.m., Error: component error\n'
-        + '{\n  "message": "error message"\n}\n\n';
+      const expected = '2021-01-21, 1:05:06 p.m., Error: component error\n' +
+        '{\n  "message": "error message"\n}\n\n';
       const data = await fs.readFile('logs/client.log', 'utf8');
       expect(data).toBe(expected);
     });

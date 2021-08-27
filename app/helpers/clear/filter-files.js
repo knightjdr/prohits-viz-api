@@ -16,8 +16,8 @@ const filterFilesToIgnore = async (files, directoryInfo) => {
   }
 
   return files.filter(file => (
-    !foldersToIgnore.some(re => re.test(file))
-    && !whiteListLookup[file]
+    !foldersToIgnore.some(re => re.test(file)) &&
+    !whiteListLookup[file]
   ));
 };
 

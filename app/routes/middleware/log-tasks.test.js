@@ -170,7 +170,7 @@ describe('Log tasks', () => {
       insert.mockClear();
       next.mockClear();
       const req = {
-        get: function get(key) { return this.headers[key]; },
+        get: function get (key) { return this.headers[key]; },
         headers: {
           apikey: 'user@email.com:secretApiKey',
         },

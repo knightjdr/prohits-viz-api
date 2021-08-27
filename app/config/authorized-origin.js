@@ -6,17 +6,17 @@ export const forbidden = (res) => {
   res.end();
 };
 
-const urlRE = new RegExp(/third-party/);
+const urlRE = /third-party/;
 
 export const isRequestAuthorized = async (req, sessions, sessionID) => (
-  req.method === 'GET'
-  || (
-    req.method === 'POST'
-    && sessions.includes(sessionID)
-  )
-  || (
-    urlRE.test(req.originalUrl)
-    && checkUserAuth(req)
+  req.method === 'GET' ||
+  (
+    req.method === 'POST' &&
+    sessions.includes(sessionID)
+  ) ||
+  (
+    urlRE.test(req.originalUrl) &&
+    checkUserAuth(req)
   )
 );
 

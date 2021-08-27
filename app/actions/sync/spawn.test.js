@@ -25,7 +25,6 @@ describe('Spawning the sync process', () => {
       await spawnProcess(socket, 'testdir/', 'id');
     });
 
-
     it('should call socket emit with url written to stdout', () => {
       const uri = 'data:image/png;base64,dGVzdA==';
       expect(socket.emit).toHaveBeenCalledWith('action', { snapshotID: 'id', syncedImage: uri, type: 'MINIMAP_SYNCHED' });
@@ -44,9 +43,9 @@ describe('Spawning the sync process', () => {
 
   it('should reject with a runtime panic error', () => {
     const err = new Error('spawn ENOENT');
-    testSpawn.setDefault(function error(cb) {
+    testSpawn.setDefault(function error (cb) {
       this.emit('error', err);
-      setTimeout(() => cb(8), 10);
+      setTimeout(() => cb(null, 8), 10);
     });
     return expect(spawnProcess(socket, 'testdir/', 'id')).rejects.toEqual(err);
   });

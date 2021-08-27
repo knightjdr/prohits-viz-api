@@ -23,8 +23,12 @@ beforeAll((done) => {
 
   // Insert some documents.
   MongoClient.connect(url, {}, (err, db) => {
-    database.connection = db;
-    done();
+    if (err) {
+      done();
+    } else {
+      database.connection = db;
+      done();
+    }
   });
 });
 

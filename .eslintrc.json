@@ -1,19 +1,22 @@
 {
   "env": {
-    "jest": true
+    "es2021": true,
+    "jest/globals": true,
+    "node": true
   },
-  "extends": "airbnb-base",
-  "parser": "babel-eslint",
+  "extends": [
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "jest"
+  ],
+  "root": true,
   "rules": {
-    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
-    "function-paren-newline": "off",
-    "no-underscore-dangle": "off",
-    "import/extensions": ["error", "ignorePackages"],
-    "max-len": [
-      "error",
-      {
-        "code": 120
-      }
-    ]
+    "comma-dangle": [2, "always-multiline"],
+    "semi": [2, "always"]
   }
 }

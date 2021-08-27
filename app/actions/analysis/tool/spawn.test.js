@@ -28,9 +28,9 @@ describe('Spawn dotplot analysis', () => {
 
   it('should resolve on error', () => {
     const err = new Error('spawn ENOENT');
-    testSpawn.setDefault(function error(cb) {
+    testSpawn.setDefault(function error (cb) {
       this.emit('error', err);
-      setTimeout(() => cb(8), 10);
+      setTimeout(() => cb(null, 8), 10);
     });
     return expect(spawnProcess('workDir/')).resolves.toBeUndefined();
   });

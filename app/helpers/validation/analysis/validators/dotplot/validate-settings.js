@@ -8,8 +8,8 @@ export const validateClustering = (currentValues, currentErrors) => {
   const validated = { ...currentValues };
 
   // eslint-disable-next-line no-useless-escape
-  const reQuotes = new RegExp(/['"\[\]]+/g);
-  const reSeparator = new RegExp(/[\s,]+/);
+  const reQuotes = /['"\[\]]+/g;
+  const reSeparator = /[\s,]+/;
 
   const parseList = (text) => {
     const arr = text.trim().split(reSeparator).filter((string) => string);

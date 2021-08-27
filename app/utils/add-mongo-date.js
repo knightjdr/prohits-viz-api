@@ -16,8 +16,8 @@ const addToArray = (arr) => {
 
 const addToObject = (obj) => {
   if (
-    typeof obj === 'object'
-    && !Array.isArray(obj)
+    typeof obj === 'object' &&
+    !Array.isArray(obj)
   ) {
     return {
       ...obj,
