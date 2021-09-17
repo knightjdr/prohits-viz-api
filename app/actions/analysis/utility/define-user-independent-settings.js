@@ -20,6 +20,13 @@ const defineUserIndependentSettings = async (tool, workDir) => {
       domainFile: files[0],
       geneFile: files[1],
     };
+  } if (tool === 'saint_biogrid_network' || tool === 'text_biogrid_network') {
+    const geneFile = await addFile('gene-db.json', workDir);
+
+    return {
+      accessKey: config.biogridKey,
+      geneFile,
+    };
   }
 
   return {};

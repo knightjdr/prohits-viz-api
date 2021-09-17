@@ -1,5 +1,6 @@
-import config from '../../../../config/config.js';
 import isTrue from '../../../../utils/is-true.js';
+
+import { parseArray } from '../../../../utils/parse-form.js';
 
 const evidenceOptions = [
   'affinity capture-luminescence',
@@ -29,7 +30,7 @@ const evidenceOptions = [
   'synthetic haploinsufficiency',
   'synthetic lethality',
   'synthetic rescue',
-  'two-hybrid'
+  'two-hybrid',
 ];
 
 const idTypeOptions = [
@@ -43,6 +44,11 @@ const idTypeOptions = [
   'uniprotid',
 ];
 
+const throughputOptions = [
+  'all',
+  'high',
+  'low',
+];
 
 const validateTextBiogridNetwork = (fields) => {
   const {
@@ -56,13 +62,16 @@ const validateTextBiogridNetwork = (fields) => {
     interSpeciesExcluded,
     isSaint,
     max: inputMax,
+    throughputTag,
   } = fields;
 
   const fdr = Number(inputFDR);
-  const max = Number(inputMax),
+  const max = Number(inputMax);
 
   const errors = {};
-  const evidenceList = inputEvidenceList.filter((evidence) => evidenceOptions.includes(evidence))
+
+  const evidenceList = parseArray(inputEvidenceList).filter((evidence) => evidenceOptions.includes(evidence));
+
   if (Number.isNaN(fdr) || fdr < 0 || fdr > 1) {
     errors.fdr = 'FDR is not within the bounds of 0 and 1';
   }
@@ -72,13 +81,16 @@ const validateTextBiogridNetwork = (fields) => {
   }
 
   if (Number.isNaN(max) || max < 0 || max > 10000) {
-    errors.max = 'max is not within the bounds of 0 and 10000';
+    errors.max = 'Max is not within the bounds of 0 and 10000';
+  }
+
+  if (!throughputOptions.includes(throughputTag)) {
+    errors.throughputTag = 'Invalid throughput option';
   }
 
   return {
     fields: {
-      accessKey: config.biogridKey,
-      evidenceList: 
+      evidenceList,
       fdr,
       idType,
       includeEvidence: isTrue(includeEvidence),
@@ -88,6 +100,7 @@ const validateTextBiogridNetwork = (fields) => {
       interSpeciesExcluded: isTrue(interSpeciesExcluded),
       isSaint: isTrue(isSaint),
       max,
+      throughputTag,
     },
     errors,
   };

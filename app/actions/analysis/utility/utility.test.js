@@ -135,7 +135,7 @@ describe('Run utility analysis', () => {
 
     it('should spawn task', () => {
       // eslint-disable-next-line max-len
-      const command = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) pvutilitiespython /app/saint_stats/main.py -f 0.01 -s files/file1.txt';
+      const command = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) pvutilitiespython /app/saint_stats/main.py -f 0.01 -s "files/file1.txt"';
       expect(spawnTask).toHaveBeenCalledWith(command, 'tmp/taskID');
     });
 

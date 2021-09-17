@@ -13,6 +13,8 @@ const validateUtility = (fields) => {
     return validateCrisprConvert(fields);
   } if (utility === 'pvconvert') {
     return validatePVConvert(fields);
+  } if (utility === 'saint_biogrid_network') {
+    return validateTextBiogridNetwork(fields);
   } if (utility === 'saint_domain_enrich') {
     return validateSaintDomainEnrich(fields);
   } if (utility === 'saint_fea') {
