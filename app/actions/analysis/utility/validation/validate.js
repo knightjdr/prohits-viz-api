@@ -1,9 +1,10 @@
 import validateCrisprConvert from './crispr-convert-validate.js';
+import validateFiles from '../../../../helpers/validation/analysis/field-validation/files.js';
 import validatePVConvert from './pvconvert-validate.js';
 import validateSaintDomainEnrich from './saint-domain-enrich-validate.js';
 import validateSaintFEA from './saint-fea-validate.js';
 import validateSaintStats from './saint-stats-validate.js';
-import validateFiles from '../../../../helpers/validation/analysis/field-validation/files.js';
+import validateTextBiogridNetwork from './text-biogrid-validate.js';
 
 const validateUtility = (fields) => {
   const { utility } = fields;
@@ -18,6 +19,8 @@ const validateUtility = (fields) => {
     return validateSaintFEA(fields);
   } if (utility === 'saint_stats') {
     return validateSaintStats(fields);
+  } if (utility === 'text_biogrid_network') {
+    return validateTextBiogridNetwork(fields);
   }
   return { fields: null, errors: null };
 };
