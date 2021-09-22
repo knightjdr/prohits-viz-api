@@ -122,4 +122,17 @@ describe('Create utility script command', () => {
       + '-m 10000 -tt all';
     expect(createCommand({ ...fields, ...additionalSettings })).toBe(expected);
   });
+
+  it('should create the command for text_symbol_fix', () => {
+    const fields = {
+      columns: ['column1', 'column2'],
+      files: ['file.txt'],
+      utility: 'text_symbol_fix',
+    };
+    const additionalSettings = {};
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+      + 'pvutilitiespython /app/text_symbol_fix/main.py '
+      + '-c "column1|column2" -f "file.txt"';
+    expect(createCommand({ ...fields, ...additionalSettings })).toBe(expected);
+  });
 });

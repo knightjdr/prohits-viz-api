@@ -27,6 +27,9 @@ const scripts = {
     + `-ipi ${fields.includePrimaryInteractions} -isi ${fields.includeSecondaryInteractions} `
     + `-ise ${fields.interSpeciesExcluded} -g "${fields.geneFile}" `
     + `-m ${fields.max} -tt ${fields.throughputTag}`,
+  text_symbol_fix: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+    + 'pvutilitiespython /app/text_symbol_fix/main.py '
+    + `-c "${fields.columns.join('|')}" -f "${fields.files[0]}"`,
 };
 
 const createCommand = fields => scripts[fields.utility](fields);

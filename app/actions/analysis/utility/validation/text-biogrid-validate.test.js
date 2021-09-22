@@ -24,19 +24,36 @@ describe('Validate text_biogrid_network utility fields', () => {
     expect(validateTextBiogridNetwork(fields)).toEqual(expected);
   });
 
-  it('should filter out invalid evidence fields', () => {
-    const fields = {
-      ...validFields,
-      evidenceList: ['affinity capture-ms', 'fret', 'other'],
-    };
-    const expected = {
-      errors: {},
-      fields: {
+  describe('evidenceList', () => {
+    it('should filter out invalid evidence fields', () => {
+      const fields = {
         ...validFields,
-        evidenceList: ['affinity capture-ms', 'fret'],
-      },
-    };
-    expect(validateTextBiogridNetwork(fields)).toEqual(expected);
+        evidenceList: ['affinity capture-ms', 'fret', 'other'],
+      };
+      const expected = {
+        errors: {},
+        fields: {
+          ...validFields,
+          evidenceList: ['affinity capture-ms', 'fret'],
+        },
+      };
+      expect(validateTextBiogridNetwork(fields)).toEqual(expected);
+    });
+
+    it('should validate JSON evidence list', () => {
+      const fields = {
+        ...validFields,
+        evidenceList: '["affinity capture-ms", "fret", "other"]',
+      };
+      const expected = {
+        errors: {},
+        fields: {
+          ...validFields,
+          evidenceList: ['affinity capture-ms', 'fret'],
+        },
+      };
+      expect(validateTextBiogridNetwork(fields)).toEqual(expected);
+    });
   });
 
   describe('fdr', () => {
