@@ -27,7 +27,7 @@ describe('Validate utility fields', () => {
 
     const expected = {
       errors: {
-        files: 'Missing file',
+        files: 'missing file',
         imageType: 'Invalid image type',
       },
       fields: {

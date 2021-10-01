@@ -11,8 +11,8 @@ const isJSON = (json, isString = true) => {
     // but... JSON.parse(null) returns null, and typeof null === "object",
     // so we must check for that, too.
     if (
-      parsedJSON
-      && typeof parsedJSON === 'object'
+      parsedJSON &&
+      typeof parsedJSON === 'object'
     ) {
       return parsedJSON;
     }

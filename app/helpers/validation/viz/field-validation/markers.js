@@ -15,19 +15,19 @@ markers = [
 */
 
 const isValidMarkerList = list => (
-  isObject(list)
-  && Object.values(list).every(marker => (
-    Number.isInteger(marker.height)
-    && Number.isInteger(marker.width)
-    && isInRange(marker.x, 0, 1)
-    && isInRange(marker.y, 0, 1)
+  isObject(list) &&
+  Object.values(list).every(marker => (
+    Number.isInteger(marker.height) &&
+    Number.isInteger(marker.width) &&
+    isInRange(marker.x, 0, 1) &&
+    isInRange(marker.y, 0, 1)
   ))
 );
 
 const validateMarkers = (data) => {
   if (
-    data?.list
-    && isValidMarkerList(data.list)
+    data?.list &&
+    isValidMarkerList(data.list)
   ) {
     return {
       color: isValidColor(data.color, defaults.color),

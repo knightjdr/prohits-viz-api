@@ -8,6 +8,7 @@ const constructJSON = data => ({
   rowOrder: data.rowOrder,
   settings: {
     abundanceCap: data.abundanceCap,
+    abundanceType: data.abundanceType,
     edgeColor: data.edgeColor,
     fillColor: data.fillColor,
     minAbundance: data.minAbundance,

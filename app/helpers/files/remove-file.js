@@ -6,7 +6,7 @@ const removeFile = file => (
       if (!err) {
         resolve();
       }
-      reject();
+      reject(new Error('could not remove file'));
     });
   })
 );

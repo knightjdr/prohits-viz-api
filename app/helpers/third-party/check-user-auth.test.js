@@ -5,7 +5,7 @@ jest.mock('../database/find-one');
 jest.mock('./validate-key');
 
 const req = {
-  get: function get(key) { return this[key]; },
+  get: function get (key) { return this[key]; },
 };
 
 describe('Third party authorization', () => {

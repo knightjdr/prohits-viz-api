@@ -4,6 +4,7 @@ describe('Dotplot/Heatmap validation interface', () => {
   it('should return valid object', () => {
     const data = {
       abundanceCap: 20,
+      abundanceType: 'positive',
       annotations: {
         fontSize: 15,
         list: {
@@ -44,6 +45,7 @@ describe('Dotplot/Heatmap validation interface', () => {
 
     const expected = {
       ...data,
+      abundanceType: 'positive',
       imageType: 'dotplot',
     };
     expect(validate('dotplot', data)).toEqual(expected);

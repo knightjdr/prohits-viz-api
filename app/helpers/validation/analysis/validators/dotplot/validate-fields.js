@@ -5,9 +5,10 @@ import validateClusteringMethod from '../../field-validation/clustering-method.j
 import validateClusteringMetric from '../../field-validation/clustering-metric.js';
 import validateClusteringType,
 { validateConditionClustering, validateReadoutClustering } from '../../field-validation/clustering-type.js';
+import validateRatioDimension from '../../field-validation/ratio-dimension.js';
 import validateMinCondition from '../../field-validation/min-conditions.js';
 
-const validateNoClusteringType = (value) => (
+const validateNoClusteringType = value => (
   criteria.isString(value) || Array.isArray(value)
 );
 
@@ -17,6 +18,8 @@ const validateFields = (type, value) => {
   if (validatedResult === null) {
     const validateField = getFieldValidator(value);
     switch (type) {
+      case 'automaticallySetFill':
+        return validateField(criteria.isBoolean, 'should be a boolean');
       case 'abundanceCap':
         return validateField(criteria.isNumber, 'should be a number');
       case 'biclusteringApprox':
@@ -45,6 +48,8 @@ const validateFields = (type, value) => {
         return validateField(criteria.isBoolean, 'should be a boolean');
       case 'primaryFilter':
         return validateField(criteria.isNumber, 'should be a number');
+      case 'ratioDimension':
+        return validateField(validateRatioDimension, 'invalid value');
       case 'readoutClustering':
         return validateField(validateReadoutClustering, 'invalid value');
       case 'readoutList':

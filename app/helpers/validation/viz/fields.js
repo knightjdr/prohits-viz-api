@@ -1,6 +1,7 @@
 export const requiredFields = {
   dotplot: [
     'abundanceCap',
+    'abundanceType',
     'annotations',
     'columnDB',
     'columnOrder',
@@ -18,6 +19,7 @@ export const requiredFields = {
   ],
   heatmap: [
     'abundanceCap',
+    'abundanceType',
     'annotations',
     'columnDB',
     'columnOrder',

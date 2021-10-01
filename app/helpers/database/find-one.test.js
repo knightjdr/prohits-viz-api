@@ -21,14 +21,18 @@ beforeAll((done) => {
 
   // Insert some documents.
   MongoClient.connect(url, {}, (err, db) => {
-    database.connection = db;
-    const docs = [
-      { _id: 1, name: 'test' },
-      { _id: 2, name: 'test2' },
-    ];
-    db.collection('test_documents').insertMany(docs, () => {
+    if (err) {
       done();
-    });
+    } else {
+      database.connection = db;
+      const docs = [
+        { _id: 1, name: 'test' },
+        { _id: 2, name: 'test2' },
+      ];
+      db.collection('test_documents').insertMany(docs, () => {
+        done();
+      });
+    }
   });
 });
 

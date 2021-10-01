@@ -9,10 +9,10 @@ jest.mock('socket.io', () => ({
 }));
 
 const app = {
-  get: function getAppValue(key) {
+  get: function getAppValue (key) {
     return this[key];
   },
-  set: function setAppValue(key, value) {
+  set: function setAppValue (key, value) {
     this[key] = value;
   },
 };

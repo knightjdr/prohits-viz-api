@@ -21,20 +21,20 @@ annotations = {
 */
 
 const isValidAnnotationList = list => (
-  isObject(list)
-  && Object.values(list).every(annotation => (
-    annotation.text
-    && annotation.position
-    && isObject(annotation.position)
-    && isInRange(annotation.position.x, 0, 1)
-    && isInRange(annotation.position.y, 0, 1)
+  isObject(list) &&
+  Object.values(list).every(annotation => (
+    annotation.text &&
+    annotation.position &&
+    isObject(annotation.position) &&
+    isInRange(annotation.position.x, 0, 1) &&
+    isInRange(annotation.position.y, 0, 1)
   ))
 );
 
 const validateAnnotations = (data) => {
   if (
-    data?.list
-    && isValidAnnotationList(data.list)
+    data?.list &&
+    isValidAnnotationList(data.list)
   ) {
     return {
       fontSize: criteria.isNumber(data.fontSize, defaults.fontSize),

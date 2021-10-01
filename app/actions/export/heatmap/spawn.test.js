@@ -38,9 +38,9 @@ describe('Spawning the export process', () => {
 
   it('should reject with a runtime panic error', () => {
     const err = new Error('spawn ENOENT');
-    testSpawn.setDefault(function error(cb) {
+    testSpawn.setDefault(function error (cb) {
       this.emit('error', err);
-      setTimeout(() => cb(8), 10);
+      setTimeout(() => cb(null, 8), 10);
     });
     return expect(spawnProcess(socket, {})).rejects.toEqual(err);
   });

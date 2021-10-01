@@ -3,6 +3,7 @@ const common = [
   'condition',
   'control',
   'ctrlSub',
+  'fileType',
   'logBase',
   'mockConditionAbundance',
   'normalization',
@@ -27,6 +28,7 @@ const fields = {
   ],
   correlation: [
     ...common,
+    'automaticallySetFill',
     'clustering',
     'clusteringMethod',
     'clusteringOptimize',
@@ -46,6 +48,7 @@ const fields = {
   dotplot: [
     ...common,
     'abundanceCap',
+    'automaticallySetFill',
     'biclusteringApprox',
     'clustering',
     'clusteringMethod',
@@ -59,6 +62,7 @@ const fields = {
     'minConditions',
     'parsimoniousReadoutFiltering',
     'primaryFilter',
+    'ratioDimension',
     'readoutClustering',
     'readoutList',
     'secondaryFilter',

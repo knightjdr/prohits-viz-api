@@ -8,10 +8,10 @@ jest.mock('../helpers/logging/logger.js');
 const next = jest.fn();
 const req = {
   app: {
-    get: function get(key) { return this[key]; },
+    get: function get (key) { return this[key]; },
     sessions: ['session1', 'session2'],
   },
-  get: function get(key) { return this[key]; },
+  get: function get (key) { return this[key]; },
   originalUrl: '',
 };
 const res = {

@@ -7,9 +7,9 @@ describe('Create utility script command', () => {
       tool: 'bagel',
       utility: 'crispr_convert',
     };
-    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
-      + 'pvutilitiespython /app/crispr_convert/main.py '
-      + '-f files -t bagel';
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
+      'pvutilitiespython /app/crispr_convert/main.py ' +
+      '-f files -t bagel';
     expect(createCommand(fields)).toBe(expected);
   });
 

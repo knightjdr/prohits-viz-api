@@ -5,13 +5,13 @@ import config from '../../config/config.js';
 const defineMethodAndPath = (file, useSample) => (
   useSample && Boolean(useSample) && file.originalname === 'samplefile.txt'
     ? {
-      method: 'copyFile',
-      filePath: config.samplefile,
-    }
+        method: 'copyFile',
+        filePath: config.samplefile,
+      }
     : {
-      method: 'rename',
-      filePath: file.path,
-    }
+        method: 'rename',
+        filePath: file.path,
+      }
 );
 
 const moveFile = async (dest, file, useSample) => {

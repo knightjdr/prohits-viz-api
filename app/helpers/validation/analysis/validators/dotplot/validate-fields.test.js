@@ -4,6 +4,7 @@ describe('Validate dotplot analysis fields', () => {
   it('should validate acceptable fields', () => {
     const form = {
       abundanceCap: '50',
+      automaticallySetFill: 'true',
       biclusteringApprox: 'true',
       clustering: 'hierarchical',
       clusteringMethod: 'complete',
@@ -17,6 +18,7 @@ describe('Validate dotplot analysis fields', () => {
       minConditions: '1',
       parsimoniousReadoutFiltering: 'false',
       primaryFilter: '0.01',
+      ratioDimension: 'area',
       readoutClustering: 'readouts',
       readoutList: 'readoutA   readoutB',
       secondaryFilter: '0.05',
@@ -26,6 +28,7 @@ describe('Validate dotplot analysis fields', () => {
 
     const expected = {
       abundanceCap: 50,
+      automaticallySetFill: true,
       biclusteringApprox: true,
       clustering: 'hierarchical',
       clusteringMethod: 'complete',
@@ -39,6 +42,7 @@ describe('Validate dotplot analysis fields', () => {
       minConditions: 1,
       parsimoniousReadoutFiltering: false,
       primaryFilter: 0.01,
+      ratioDimension: 'area',
       readoutClustering: 'readouts',
       readoutList: 'readoutA   readoutB',
       secondaryFilter: 0.05,
@@ -54,6 +58,7 @@ describe('Validate dotplot analysis fields', () => {
   it('should invalidate unacceptable fields', () => {
     const form = {
       abundanceCap: 'a',
+      automaticallySetFill: 'yes',
       biclusteringApprox: 'yes',
       clustering: 'unknown',
       clusteringMethod: 'unknown',
@@ -67,6 +72,7 @@ describe('Validate dotplot analysis fields', () => {
       minConditions: '0',
       parsimoniousReadoutFiltering: 'no',
       primaryFilter: 'a',
+      ratioDimension: 'unknown',
       readoutClustering: 'unknown',
       readoutList: 1,
       secondaryFilter: 'a',
@@ -76,6 +82,7 @@ describe('Validate dotplot analysis fields', () => {
 
     const expected = {
       abundanceCap: 'should be a number',
+      automaticallySetFill: 'should be a boolean',
       biclusteringApprox: 'should be a boolean',
       clustering: 'invalid value',
       clusteringMethod: 'invalid method',
@@ -89,6 +96,7 @@ describe('Validate dotplot analysis fields', () => {
       minConditions: 'should be a number > 0',
       parsimoniousReadoutFiltering: 'should be a boolean',
       primaryFilter: 'should be a number',
+      ratioDimension: 'invalid value',
       readoutClustering: 'invalid value',
       readoutList: 'missing list of readouts for clustering',
       secondaryFilter: 'should be a number',

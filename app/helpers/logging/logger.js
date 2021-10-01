@@ -9,6 +9,7 @@ const logDir = 'logs';
 
 const tsFormat = () => getTimestamp();
 
+// eslint-disable-next-line new-cap
 const Logger = new (winston.createLogger)({
   exitOnError: false,
   format: winston.format.combine(

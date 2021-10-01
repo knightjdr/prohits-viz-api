@@ -8,6 +8,7 @@ describe('Form validation', () => {
         condition: 'Bait',
         control: 'ctrlCounts',
         ctrlSub: 'true',
+        fileType: 'saint',
         logBase: '10',
         mockConditionAbundance: 'false',
         normalization: 'total',
@@ -35,6 +36,7 @@ describe('Form validation', () => {
           condition: 'Bait',
           control: 'ctrlCounts',
           ctrlSub: true,
+          fileType: 'saint',
           logBase: '10',
           mockConditionAbundance: false,
           normalization: 'total',
@@ -65,6 +67,7 @@ describe('Form validation', () => {
         condition: 'Bait',
         control: 'ctrlCounts',
         ctrlSub: 'true',
+        fileType: 'saint',
         logBase: '10',
         mockConditionAbundance: 'false',
         normalization: 'total',
@@ -77,6 +80,7 @@ describe('Form validation', () => {
         scoreType: 'lte',
         png: 'false',
 
+        automaticallySetFill: 'true',
         clustering: 'hierarchical',
         clusteringMethod: 'complete',
         clusteringOptimize: 'true',
@@ -102,6 +106,7 @@ describe('Form validation', () => {
           condition: 'Bait',
           control: 'ctrlCounts',
           ctrlSub: true,
+          fileType: 'saint',
           logBase: '10',
           mockConditionAbundance: false,
           normalization: 'total',
@@ -114,6 +119,7 @@ describe('Form validation', () => {
           scoreType: 'lte',
           png: false,
 
+          automaticallySetFill: true,
           clustering: 'hierarchical',
           clusteringMethod: 'complete',
           clusteringOptimize: true,
@@ -142,6 +148,7 @@ describe('Form validation', () => {
         condition: 'Bait',
         control: 'ctrlCounts',
         ctrlSub: 'true',
+        fileType: 'saint',
         logBase: '10',
         mockConditionAbundance: 'false',
         normalization: 'total',
@@ -155,6 +162,7 @@ describe('Form validation', () => {
         png: 'false',
 
         abundanceCap: '50',
+        automaticallySetFill: 'true',
         biclusteringApprox: 'false',
         clustering: 'hierarchical',
         clusteringMethod: 'complete',
@@ -168,6 +176,7 @@ describe('Form validation', () => {
         minConditions: '1',
         parsimoniousReadoutFiltering: 'false',
         primaryFilter: '0.01',
+        ratioDimension: 'diameter',
         readoutClustering: '',
         readoutList: '',
         secondaryFilter: '0.05',
@@ -183,6 +192,7 @@ describe('Form validation', () => {
           condition: 'Bait',
           control: 'ctrlCounts',
           ctrlSub: true,
+          fileType: 'saint',
           logBase: '10',
           mockConditionAbundance: false,
           normalization: 'total',
@@ -196,6 +206,7 @@ describe('Form validation', () => {
           png: false,
 
           abundanceCap: 50,
+          automaticallySetFill: true,
           biclusteringApprox: false,
           clustering: 'hierarchical',
           clusteringMethod: 'complete',
@@ -209,6 +220,7 @@ describe('Form validation', () => {
           minConditions: 1,
           parsimoniousReadoutFiltering: false,
           primaryFilter: 0.01,
+          ratioDimension: 'diameter',
           readoutClustering: '',
           readoutList: '',
           secondaryFilter: 0.05,
@@ -220,6 +232,87 @@ describe('Form validation', () => {
     });
   });
 
+  describe('SCV validation interface', () => {
+    it('should return valid object', () => {
+      const data = {
+        abundance: ['AvgSpec', 'otherColumn'],
+        condition: 'Bait',
+        control: 'ctrlCounts',
+        ctrlSub: 'true',
+        fileType: 'saint',
+        logBase: '10',
+        mockConditionAbundance: 'false',
+        normalization: 'total',
+        normalizationReadout: '',
+        otherAbundance: [],
+        readout: 'PreyGene',
+        readoutLength: '',
+        readoutLengthNorm: 'false',
+        sampleFile: 'true',
+        score: 'BFDR',
+        scoreType: 'lte',
+        png: 'false',
+
+        abundanceCap: '50',
+        abundanceFilterColumn: 'otherColumn',
+        conditionIDType: 'symbol',
+        conditionMapColumn: '',
+        conditionMapFile: [],
+        known: 'interaction',
+        minAbundance: '0',
+        primaryFilter: '0.01',
+        proteinTissues: [],
+        readoutIDType: 'entrez',
+        readoutMapColumn: '',
+        readoutMapFile: [],
+        rnaTissues: [],
+        specificity: 'true',
+        verticalHeatmap: 'false',
+      };
+      const files = [{}];
+
+      const expected = {
+        errors: {},
+        values: {
+          abundance: 'otherColumn',
+          condition: 'Bait',
+          control: 'ctrlCounts',
+          ctrlSub: true,
+          fileType: 'saint',
+          logBase: '10',
+          mockConditionAbundance: false,
+          normalization: 'total',
+          normalizationReadout: '',
+          readout: 'PreyGene',
+          readoutLength: '',
+          readoutLengthNorm: false,
+          sampleFile: true,
+          score: 'BFDR',
+          scoreType: 'lte',
+          png: false,
+
+          abundanceCap: 50,
+          abundanceFilterColumn: 'otherColumn',
+          conditionIDType: 'symbol',
+          conditionMapColumn: '',
+          conditionMapFile: [],
+          known: 'interaction',
+          minAbundance: 0,
+          otherAbundance: ['AvgSpec'],
+          primaryFilter: 0.01,
+          proteinTissues: [],
+          readoutIDType: 'entrez',
+          readoutMapColumn: '',
+          readoutMapFile: [],
+          rnaTissues: [],
+          specificity: true,
+          verticalHeatmap: false,
+        },
+      };
+      expect(validate('scv', data, files)).toEqual(expected);
+    });
+  });
+
   describe('Specificity validation interface', () => {
     it('should return valid object', () => {
       const data = {
@@ -227,6 +320,7 @@ describe('Form validation', () => {
         condition: 'Bait',
         control: 'ctrlCounts',
         ctrlSub: 'true',
+        fileType: 'saint',
         logBase: '10',
         mockConditionAbundance: 'false',
         normalization: 'total',
@@ -251,6 +345,7 @@ describe('Form validation', () => {
           condition: 'Bait',
           control: 'ctrlCounts',
           ctrlSub: true,
+          fileType: 'saint',
           logBase: '10',
           mockConditionAbundance: false,
           normalization: 'total',

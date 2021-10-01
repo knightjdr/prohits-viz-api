@@ -31,16 +31,22 @@ const getOrigin = (req) => {
 };
 
 const creatDocument = (req) => {
-  const { files, params, path } = req;
+  const {
+    body,
+    files,
+    params,
+    path,
+  } = req;
   const fileSize = calculateFileSize(files?.file);
 
   return {
     date: new Date().toISOString(),
     file: fileSize > 0,
     fileSize,
+    fileType: body?.fileType || '',
     origin: getOrigin(req),
     path,
-    tool: params && params.tool ? params.tool : '',
+    tool: params?.tool || '',
   };
 };
 

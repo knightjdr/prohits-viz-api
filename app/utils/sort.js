@@ -13,8 +13,8 @@ const checkCharactersDefined = (a, b) => {
 
 const checkNumbersDefined = (a, b) => {
   if (
-    (!isNumber(a) || a == null)
-    && (!isNumber(b) || b == null)
+    (!isNumber(a) || a == null) &&
+    (!isNumber(b) || b == null)
   ) {
     return 0;
   } if (!isNumber(a) || a == null) {

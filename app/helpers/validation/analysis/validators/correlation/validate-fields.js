@@ -13,6 +13,8 @@ const validateFields = (type, value) => {
   if (validatedResult === null) {
     const validateField = getFieldValidator(value);
     switch (type) {
+      case 'automaticallySetFill':
+        return validateField(criteria.isBoolean, 'should be a boolean');
       case 'clustering':
         return validateField(validateClusteringType, 'invalid value');
       case 'clusteringMethod':

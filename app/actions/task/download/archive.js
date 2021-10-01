@@ -8,8 +8,8 @@ const archive = (folder, res) => (
       zlib: { level: 9 },
     });
     zip.on('finish', () => { res.end(); });
-    zip.on('error', () => { reject(); });
-    zip.on('warning', () => { reject(); });
+    zip.on('error', () => { reject(new Error('could not zip folder')); });
+    zip.on('warning', () => { reject(new Error('could not zip folder')); });
     zip.pipe(res);
     zip.directory(folder, false);
     zip.finalize();

@@ -25,13 +25,13 @@ assuming other will conform to the formats used.
 */
 export const validateRows = (imageType, rowData) => {
   if (
-    rowData?.[0]?.name
-    && isNumber(rowData?.[0]?.data?.[0]?.value)
-    && (
-      imageType === 'heatmap'
-      || (
-        isNumber(rowData?.[0]?.data?.[0].ratio)
-        && isNumber(rowData?.[0]?.data?.[0].score)
+    rowData?.[0]?.name &&
+    isNumber(rowData?.[0]?.data?.[0]?.value) &&
+    (
+      imageType === 'heatmap' ||
+      (
+        isNumber(rowData?.[0]?.data?.[0].ratio) &&
+        isNumber(rowData?.[0]?.data?.[0].score)
       )
     )
   ) {
@@ -43,9 +43,9 @@ export const validateRows = (imageType, rowData) => {
 
 export const validateRowOrder = (data) => {
   if (
-    Array.isArray(data)
-    && data.length > 0
-    && data.every(datum => typeof datum === 'number')
+    Array.isArray(data) &&
+    data.length > 0 &&
+    data.every(datum => typeof datum === 'number')
   ) {
     return data;
   }
