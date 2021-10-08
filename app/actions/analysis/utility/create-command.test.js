@@ -7,9 +7,9 @@ describe('Create utility script command', () => {
       tool: 'bagel',
       utility: 'crispr_convert',
     };
-    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
-      'pvutilitiespython /app/crispr_convert/main.py ' +
-      '-f files -t bagel';
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+      + 'pvutilitiespython /app/crispr_convert/main.py '
+      + '-f files -t bagel';
     expect(createCommand(fields)).toBe(expected);
   });
 
@@ -81,6 +81,18 @@ describe('Create utility script command', () => {
     };
     const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
       + 'pvutilitiespython /app/saint_fea/main.py -f 0.01 -s "file.txt" -t 0';
+    expect(createCommand(fields)).toBe(expected);
+  });
+
+  it('should create the command for saint_specificity', () => {
+    const fields = {
+      controlSubtract: true,
+      files: ['file.txt'],
+      metric: 'fe',
+      utility: 'saint_specificity',
+    };
+    const expected = 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+      + 'pvutilitiespython /app/saint_specificity/main.py -c true -m fe -s "file.txt"';
     expect(createCommand(fields)).toBe(expected);
   });
 

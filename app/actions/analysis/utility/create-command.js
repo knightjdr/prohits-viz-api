@@ -1,7 +1,7 @@
 const scripts = {
-  crispr_convert: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) ' +
-    'pvutilitiespython /app/crispr_convert/main.py ' +
-    `-f files -t ${fields.tool}`,
+  crispr_convert: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+    + 'pvutilitiespython /app/crispr_convert/main.py '
+    + `-f files -t ${fields.tool}`,
   pvconvert: fields => `pvconvert --file="${fields.files[0]}" --imageType="${fields.imageType}"`,
   saint_biogrid_network: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
     + 'pvutilitiespython /app/text_biogrid_network/main.py '
@@ -17,6 +17,9 @@ const scripts = {
   saint_fea: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
     + 'pvutilitiespython /app/saint_fea/main.py '
     + `-f ${fields.fdr} -s "${fields.files[0]}" -t ${fields.topPreys}`,
+  saint_specificity: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
+    + 'pvutilitiespython /app/saint_specificity/main.py '
+    + `-c ${fields.controlSubtract} -m ${fields.metric} -s "${fields.files[0]}"`,
   saint_stats: fields => 'docker run --rm -v $(pwd):/files/ --user $(id -u):$(id -g) '
     + 'pvutilitiespython /app/saint_stats/main.py '
     + `-f ${fields.fdr} -s "${fields.files[0]}"`,

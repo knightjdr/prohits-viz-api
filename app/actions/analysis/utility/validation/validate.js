@@ -3,6 +3,7 @@ import validateFiles from '../../../../helpers/validation/analysis/field-validat
 import validatePVConvert from './pvconvert-validate.js';
 import validateSaintDomainEnrich from './saint-domain-enrich-validate.js';
 import validateSaintFEA from './saint-fea-validate.js';
+import validateSaintSpecificity from './saint-specificity-validate.js';
 import validateSaintStats from './saint-stats-validate.js';
 import validateTextBiogridNetwork from './text-biogrid-validate.js';
 import validateTextSymbolFix from './text-symbol-fix-validate.js';
@@ -20,6 +21,8 @@ const validateUtility = (fields) => {
     return validateSaintDomainEnrich(fields);
   } if (utility === 'saint_fea') {
     return validateSaintFEA(fields);
+  } if (utility === 'saint_specificity') {
+    return validateSaintSpecificity(fields);
   } if (utility === 'saint_stats') {
     return validateSaintStats(fields);
   } if (utility === 'text_biogrid_network') {
