@@ -71,8 +71,4 @@ The `imageType` in the `parameters` object is required and indicates to the api 
 # Rate limit
 Requests are limited to 5 per second.
 
-# Tests
-
-`npm test`
-
 © 2021 James Knight.
