@@ -1,24 +1,30 @@
 {
-	"legend": [
-    { "color": "#0066cc", "text": "BFDR ≤ 0.01" },
-    { "color": "#99ccff", "text": "0.01 \u003c BFDR ≤ 0.05" }
+  "legend": [
+    {
+      "color": "#0066cc",
+      "text": "BFDR ≤ 0.01"
+    },
+    {
+      "color": "#99ccff",
+      "text": "0.01 < BFDR ≤ 0.05"
+    }
   ],
-	"parameters": {
-    "abundanceColumn":"AvgSpec",
-    "analysisType":"condition-condition",
-    "conditionColumn":"Bait",
-    "controlColumn":"ctrlCounts",
-    "imageType":"scatter",
-    "readoutColumn":"PreyGene",
-    "scoreColumn":"BFDR",
-    "scoreType":"lte"
+  "parameters": {
+    "abundanceColumn": "AvgSpec",
+    "analysisType": "condition-condition",
+    "conditionColumn": "Bait",
+    "controlColumn": "ctrlCounts",
+    "imageType": "scatter",
+    "readoutColumn": "PreyGene",
+    "scoreColumn": "BFDR",
+    "scoreType": "lte"
   },
-	"settings": {
+  "settings": {
     "logBase": "none",
     "xFilter": 0,
     "yFilter": 0
   },
-	"plots": [
+  "plots": [
     {
       "labels": {
         "x": "PPP6R1",
@@ -26,42 +32,222 @@
       },
       "name": "PPP6R1 v PPP6R2",
       "points": [
-        { "color": "#0066cc", "label":"AIP", "x":0.00, "y":4.00 },
-        { "color": "#0066cc", "label":"ANKRD28", "x":134.14, "y":147.14 },
-        { "color": "#0066cc", "label":"ANKRD44", "x":42.00, "y":21.00 },
-        { "color": "#0066cc", "label":"ANKRD52", "x":91.00, "y":82.50 },
-        { "color": "#0066cc", "label":"CACYBP", "x":12.18, "y":26.68 },
-        { "color": "#0066cc", "label":"CNOT1", "x":27.04, "y":7.04 },
-        { "color": "#0066cc", "label":"CNOT10", "x":9.32, "y":2.82 },
-        { "color": "#99ccff", "label":"CNOT3", "x":6.82, "y":0.00 },
-        { "color": "#99ccff", "label":"DNAJC11", "x":2.46, "y":2.96 },
-        { "color": "#0066cc", "label":"DPCD", "x":3.00, "y":12.00 },
-        { "color": "#99ccff", "label":"EGLN1", "x":3.43, "y":2.93 },
-        { "color": "#99ccff", "label":"FKBP4", "x":4.32, "y":13.82 },
-        { "color": "#0066cc", "label":"HSPA4", "x":38.07, "y":21.57 },
-        { "color": "#99ccff", "label":"HSPA4L", "x":6.36, "y":2.86 },
-        { "color": "#0066cc", "label":"IKBKAP", "x":5.00, "y":0.00 },
-        { "color": "#0066cc", "label":"KIAA0528", "x":3.96, "y":0.00 },
-        { "color": "#99ccff", "label":"KIAA1217", "x":4.39, "y":1.39 },
-        { "color": "#0066cc", "label":"KNTC1", "x":14.39, "y":0.39 },
-        { "color": "#0066cc", "label":"NUDC", "x":48.07, "y":101.57 },
-        { "color": "#99ccff", "label":"NUDCD3", "x":0.00, "y":7.43 },
-        { "color": "#99ccff", "label":"PFDN1", "x":4.39, "y":6.89 },
-        { "color": "#0066cc", "label":"PFDN2", "x":19.86, "y":23.86 },
-        { "color": "#0066cc", "label":"PFDN5", "x":12.57, "y":14.57 },
-        { "color": "#0066cc", "label":"PFDN6", "x":11.18, "y":12.18 },
-        { "color": "#0066cc", "label":"PLK1", "x":2.82, "y":70.82 },
-        { "color": "#0066cc", "label":"PPP6C", "x":70.18, "y":87.68 },
-        { "color": "#0066cc", "label":"PPP6R1", "x":0.00, "y":25.96 },
-        { "color": "#0066cc", "label":"PPP6R2", "x":20.89, "y":0.00 },
-        { "color": "#99ccff", "label":"RPAP3", "x":14.21, "y":30.71 },
-        { "color": "#0066cc", "label":"RUVBL2", "x":113.00, "y":285.00 },
-        { "color": "#0066cc", "label":"SH3GLB2", "x":1.50, "y":3.00 },
-        { "color": "#99ccff", "label":"ST13", "x":0.96, "y":3.96 },
-        { "color": "#0066cc", "label":"TTC1", "x":0.50, "y":4.50 },
-        { "color": "#0066cc", "label":"TTF2", "x":28.96, "y":3.46 },
-        { "color": "#0066cc", "label":"USP10", "x":18.36, "y":15.36 },
-        { "color": "#0066cc", "label":"WDR92", "x":2.00, "y":5.00 }
+        {
+          "color": "#0066cc",
+          "label": "AIP",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "color": "#0066cc",
+          "label": "ANKRD28",
+          "x": 134.14,
+          "y": 147.14
+        },
+        {
+          "color": "#0066cc",
+          "label": "ANKRD44",
+          "x": 42,
+          "y": 21
+        },
+        {
+          "color": "#0066cc",
+          "label": "ANKRD52",
+          "x": 91,
+          "y": 82.5
+        },
+        {
+          "color": "#0066cc",
+          "label": "CACYBP",
+          "x": 12.18,
+          "y": 26.68
+        },
+        {
+          "color": "#0066cc",
+          "label": "CNOT1",
+          "x": 27.04,
+          "y": 7.04
+        },
+        {
+          "color": "#0066cc",
+          "label": "CNOT10",
+          "x": 9.32,
+          "y": 2.82
+        },
+        {
+          "color": "#99ccff",
+          "label": "CNOT3",
+          "x": 6.82,
+          "y": 0
+        },
+        {
+          "color": "#99ccff",
+          "label": "DNAJC11",
+          "x": 2.46,
+          "y": 2.96
+        },
+        {
+          "color": "#0066cc",
+          "label": "DPCD",
+          "x": 3,
+          "y": 12
+        },
+        {
+          "color": "#99ccff",
+          "label": "EGLN1",
+          "x": 3.43,
+          "y": 2.93
+        },
+        {
+          "color": "#99ccff",
+          "label": "FKBP4",
+          "x": 4.32,
+          "y": 13.82
+        },
+        {
+          "color": "#0066cc",
+          "label": "HSPA4",
+          "x": 38.07,
+          "y": 21.57
+        },
+        {
+          "color": "#99ccff",
+          "label": "HSPA4L",
+          "x": 6.36,
+          "y": 2.86
+        },
+        {
+          "color": "#0066cc",
+          "label": "IKBKAP",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "color": "#0066cc",
+          "label": "KIAA0528",
+          "x": 3.96,
+          "y": 0
+        },
+        {
+          "color": "#99ccff",
+          "label": "KIAA1217",
+          "x": 4.39,
+          "y": 1.39
+        },
+        {
+          "color": "#0066cc",
+          "label": "KNTC1",
+          "x": 14.39,
+          "y": 0.39
+        },
+        {
+          "color": "#0066cc",
+          "label": "NUDC",
+          "x": 48.07,
+          "y": 101.57
+        },
+        {
+          "color": "#99ccff",
+          "label": "NUDCD3",
+          "x": 0,
+          "y": 7.43
+        },
+        {
+          "color": "#99ccff",
+          "label": "PFDN1",
+          "x": 4.39,
+          "y": 6.89
+        },
+        {
+          "color": "#0066cc",
+          "label": "PFDN2",
+          "x": 19.86,
+          "y": 23.86
+        },
+        {
+          "color": "#0066cc",
+          "label": "PFDN5",
+          "x": 12.57,
+          "y": 14.57
+        },
+        {
+          "color": "#0066cc",
+          "label": "PFDN6",
+          "x": 11.18,
+          "y": 12.18
+        },
+        {
+          "color": "#0066cc",
+          "label": "PLK1",
+          "x": 2.82,
+          "y": 70.82
+        },
+        {
+          "color": "#0066cc",
+          "label": "PPP6C",
+          "x": 70.18,
+          "y": 87.68
+        },
+        {
+          "color": "#0066cc",
+          "label": "PPP6R1",
+          "x": 0,
+          "y": 25.96
+        },
+        {
+          "color": "#0066cc",
+          "label": "PPP6R2",
+          "x": 20.89,
+          "y": 0
+        },
+        {
+          "color": "#99ccff",
+          "label": "RPAP3",
+          "x": 14.21,
+          "y": 30.71
+        },
+        {
+          "color": "#0066cc",
+          "label": "RUVBL2",
+          "x": 113,
+          "y": 285
+        },
+        {
+          "color": "#0066cc",
+          "label": "SH3GLB2",
+          "x": 1.5,
+          "y": 3
+        },
+        {
+          "color": "#99ccff",
+          "label": "ST13",
+          "x": 0.96,
+          "y": 3.96
+        },
+        {
+          "color": "#0066cc",
+          "label": "TTC1",
+          "x": 0.5,
+          "y": 4.5
+        },
+        {
+          "color": "#0066cc",
+          "label": "TTF2",
+          "x": 28.96,
+          "y": 3.46
+        },
+        {
+          "color": "#0066cc",
+          "label": "USP10",
+          "x": 18.36,
+          "y": 15.36
+        },
+        {
+          "color": "#0066cc",
+          "label": "WDR92",
+          "x": 2,
+          "y": 5
+        }
       ]
     }
   ]

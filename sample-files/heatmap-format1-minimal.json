@@ -1,17 +1,33 @@
 {
-	"dataFormat": "format1",
+  "dataFormat": "format1",
   "dataKeys": {
     "abundance": "abundance",
-		"condition": "condition",
-		"readout": "readout"
+    "condition": "condition",
+    "readout": "readout"
   },
-	"parameters": {
-		"imageType": "heatmap"
-	},
-	"data": [
-		{"condition": "baitA", "readout": "preyA", "abundance": 17},
-		{"condition": "baitA", "readout": "preyB", "abundance": 13},
-		{"condition": "baitB", "readout": "preyA", "abundance": 25},
-		{"condition": "baitB", "readout": "preyC", "abundance": 73}
-	]
+  "parameters": {
+    "imageType": "heatmap"
+  },
+  "data": [
+    {
+      "condition": "baitA",
+      "readout": "preyA",
+      "abundance": 17
+    },
+    {
+      "condition": "baitA",
+      "readout": "preyB",
+      "abundance": 13
+    },
+    {
+      "condition": "baitB",
+      "readout": "preyA",
+      "abundance": 25
+    },
+    {
+      "condition": "baitB",
+      "readout": "preyC",
+      "abundance": 73
+    }
+  ]
 }

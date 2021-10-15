@@ -1,18 +1,28 @@
 {
-	"parameters": {
-		"imageType": "scatter"
-	},
-	"plots": [
-		{
-			"labels": {
-				"x": "PPP6R1",
-				"y": "PPP6R2"
-			},
-			"name": "PPP6R1 v PPP6R2",
-			"points": [
-				{ "color": "#0066cc", "label": "AIP", "x": 3.00," y": 4.00 },
-        { "color": "#0066cc", "label": "ANKRD28", "x": 134.14, "y": 147.14 }
-			]
-		}
+  "parameters": {
+    "imageType": "scatter"
+  },
+  "plots": [
+    {
+      "labels": {
+        "x": "PPP6R1",
+        "y": "PPP6R2"
+      },
+      "name": "PPP6R1 v PPP6R2",
+      "points": [
+        {
+          "color": "#0066cc",
+          "label": "AIP",
+          "x": 25,
+          "y": 4
+        },
+        {
+          "color": "#0066cc",
+          "label": "ANKRD28",
+          "x": 134.14,
+          "y": 147.14
+        }
+      ]
+    }
   ]
-}	
+}
