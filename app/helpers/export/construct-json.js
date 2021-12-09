@@ -13,6 +13,7 @@ const constructJSON = data => ({
     fillColor: data.fillColor,
     minAbundance: data.minAbundance,
     primaryFilter: data.primaryFilter,
+    resetRatios: data.resetRatios,
     scoreType: data.scoreType,
     secondaryFilter: data.secondaryFilter,
   },

@@ -33,6 +33,7 @@ describe('Construct JSON for pvsync', () => {
       fillColor: 'blue',
       minAbundance: 0,
       primaryFilter: 0.01,
+      resetRatios: true,
       scoreType: 'lte',
       secondaryFilter: 0.05,
     };
@@ -52,6 +53,7 @@ describe('Construct JSON for pvsync', () => {
         fillColor: data.fillColor,
         minAbundance: data.minAbundance,
         primaryFilter: data.primaryFilter,
+        resetRatios: true,
         scoreType: data.scoreType,
         secondaryFilter: data.secondaryFilter,
       },

@@ -13,6 +13,8 @@ const validateDotplot = (type, value, defaultSettings = settings.dotplot) => {
         return validateColor(value, defaultSettings.edgeColor);
       case 'primaryFilter':
         return criteria.isNumber(value, defaultSettings.primaryFilter);
+      case 'resetRatios':
+        return criteria.isBoolean(value, defaultSettings.resetRatios);
       case 'scoreType':
         return validateScoreType(value, defaultSettings.scoreType);
       case 'secondaryFilter':

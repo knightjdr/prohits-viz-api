@@ -32,6 +32,7 @@ describe('Dotplot/Heatmap validation interface', () => {
       },
       minAbundance: 5,
       primaryFilter: 0.01,
+      resetRatios: false,
       rowDB: [
         { data: [{ ratio: 0.5, score: 0.01, value: 0.5 }], name: 'a' },
         { data: [{ ratio: 1, score: 0.05, value: 0.8 }], name: 'b' },

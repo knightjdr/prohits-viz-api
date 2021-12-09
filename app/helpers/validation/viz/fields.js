@@ -14,6 +14,7 @@ export const requiredFields = {
 
     'edgeColor',
     'primaryFilter',
+    'resetRatios',
     'scoreType',
     'secondaryFilter',
   ],

@@ -13,6 +13,7 @@ const settings = {
     edgeColor: 'blue',
     imageType: 'dotplot',
     primaryFilter: 0.01,
+    resetRatios: false,
     scoreType: 'lte',
     secondaryFilter: 0.05,
   },

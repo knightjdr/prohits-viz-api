@@ -38,6 +38,20 @@ describe('Dotplot validation', () => {
     });
   });
 
+  describe('reset ratios', () => {
+    it('should validate boolean', () => {
+      const resetRatios = true;
+      const expected = true;
+      expect(validateDotplot('resetRatios', resetRatios)).toBe(expected);
+    });
+
+    it('should return default', () => {
+      const resetRatios = 'yes';
+      const expected = false;
+      expect(validateDotplot('resetRatios', resetRatios)).toBe(expected);
+    });
+  });
+
   describe('score type', () => {
     it('should validate number', () => {
       const scoreType = 'gte';
