@@ -9,9 +9,18 @@ const addFile = async (filename, workDir) => {
   return `helper-files/${filename}`;
 };
 
-const addMapFileName = (value, name) => {
+const addUserFileName = (value, name) => {
   if (Array.isArray(value) && value.length > 0) {
     return name;
+  }
+  return '';
+};
+
+const addKnownnessFile = async (knownOption, customFile, workDir) => {
+  if (knownOption === 'interaction') {
+    return addFile('interactions.json', workDir);
+  } if (knownOption === 'custom') {
+    return addUserFileName(customFile, 'helper-files/knownness.txt');
   }
   return '';
 };
@@ -20,6 +29,7 @@ const defineUserIndependentSettings = async (settings, workDir) => {
   const {
     conditionMapFile,
     known,
+    knownFile,
     proteinTissues,
     readoutMapFile,
     rnaTissues,
@@ -29,18 +39,18 @@ const defineUserIndependentSettings = async (settings, workDir) => {
   if (tool === 'scv') {
     const files = await Promise.all([
       addFile('gene-db.json', workDir),
-      known === 'interaction' ? addFile('interactions.json', workDir) : '',
       proteinTissues.length > 0 ? addFile('protein-expression.json', workDir) : '',
       rnaTissues.length > 0 ? addFile('rna-expression.json', workDir) : '',
+      addKnownnessFile(known, knownFile, workDir),
     ]);
 
     return {
-      conditionMapFile: addMapFileName(conditionMapFile, 'helper-files/condition-map.txt'),
+      conditionMapFile: addUserFileName(conditionMapFile, 'helper-files/condition-map.txt'),
       geneFile: files[0],
-      knownFile: files[1],
-      proteinExpressionFile: files[2],
-      readoutMapFile: addMapFileName(readoutMapFile, 'helper-files/readout-map.txt'),
-      rnaExpressionFile: files[3],
+      knownFile: files[3],
+      proteinExpressionFile: files[1],
+      readoutMapFile: addUserFileName(readoutMapFile, 'helper-files/readout-map.txt'),
+      rnaExpressionFile: files[2],
     };
   }
 

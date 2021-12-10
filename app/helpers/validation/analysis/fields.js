@@ -77,6 +77,7 @@ const fields = {
     'conditionMapColumn',
     'conditionMapFile',
     'known',
+    'knownFile',
     'minAbundance',
     'otherAbundance',
     'primaryFilter',

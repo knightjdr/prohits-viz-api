@@ -21,7 +21,7 @@ const validateIDType = (value) => {
   return [false, null];
 };
 
-const acceptedMetrics = ['', 'interaction'];
+const acceptedMetrics = ['', 'custom', 'interaction'];
 
 const validateKnownMetric = (value) => {
   if (!value || acceptedMetrics.includes(value)) {
@@ -49,6 +49,8 @@ const validateFields = (type, value) => {
         return validateField(criteria.isArray, 'should be an array');
       case 'known':
         return validateField(validateKnownMetric, `invalid metric: ${value}`);
+      case 'knownFile':
+        return validateField(criteria.isArray, 'should be an array');
       case 'minAbundance':
         return validateField(criteria.isNumber, 'should be a number');
       case 'primaryFilter':

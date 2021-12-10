@@ -110,6 +110,40 @@ describe('Define user-independent analysis settings', () => {
         expect(fs.lstat('tmp/test/helper-files/rna-expression.json')).resolves.toBeTruthy()
       ));
     });
+
+    describe('custom knownness file', () => {
+      let settings;
+
+      afterAll(async () => {
+        await fs.unlink('tmp/test/helper-files/gene-db.json');
+      });
+
+      beforeAll(async () => {
+        const formSettings = {
+          conditionMapFile: [],
+          known: 'custom',
+          knownFile: [{}],
+          proteinTissues: [],
+          readoutMapFile: [],
+          rnaTissues: [],
+          type: 'scv',
+        };
+        const workDir = 'tmp/test';
+        settings = await defineUserIndependentSettings(formSettings, workDir);
+      });
+
+      it('should return object with path to files', () => {
+        const expected = {
+          conditionMapFile: '',
+          geneFile: 'helper-files/gene-db.json',
+          knownFile: 'helper-files/knownness.txt',
+          proteinExpressionFile: '',
+          readoutMapFile: '',
+          rnaExpressionFile: '',
+        };
+        expect(settings).toEqual(expected);
+      });
+    });
   });
 
   it('should return empty object for tools with no settings to add', () => {
