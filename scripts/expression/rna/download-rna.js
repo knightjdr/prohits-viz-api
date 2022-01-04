@@ -9,7 +9,7 @@ const configTemplate = {
   },
   tissue: {
     file: '%DOWNLOAD_FOLDER%rna-tissues.tsv',
-    url: 'https://www.proteinatlas.org/download/rna_tissue.tsv.zip',
+    url: 'https://www.proteinatlas.org/download/rna_tissue_consensus.tsv.zip',
     zipFile: '%DOWNLOAD_FOLDER%rna-tissues.zip',
   },
 };

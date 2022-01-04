@@ -16,7 +16,7 @@ const downloadExpression = async () => {
       protein(DOWNLOAD_FOLDER),
       rna(DOWNLOAD_FOLDER),
     ]);
-    console.log(`Downloading ProteomicsDB version ${versions[0]} and HPA version ${versions[1]}`);
+    console.log(`Downloaded ProteomicsDB version ${versions[0]} and HPA version ${versions[1]}`);
 
     await fs.writeFile(OUTFILE_VERSIONS, JSON.stringify({ proteomicsdb: versions[0], hpa: versions[1] }, null, 2));
   } catch (error) {
