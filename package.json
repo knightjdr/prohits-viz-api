@@ -49,7 +49,7 @@
     "mongodb": "^4.2.1",
     "multer": "^1.4.4",
     "nanoid": "^3.1.31",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^3.1.1",
     "rimraf": "^3.0.2",
     "socket.io": "^4.4.0",
     "string-argv": "^0.3.1",
