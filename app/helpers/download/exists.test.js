@@ -7,33 +7,22 @@ mockFS({
   'file.txt': 'file content',
 });
 
-const res = {
-  end: jest.fn(),
-  status: jest.fn(),
-};
-
 afterAll(() => {
   mockFS.restore();
 });
 
 describe('Download file existence check', () => {
   it('should resolve when file exists', () => (
-    expect(exists('file.txt', res)).resolves.toBeDefined()
+    expect(exists('file.txt')).resolves.toBeDefined()
   ));
 
-  describe('when file does not exist', () => {
-    beforeAll(async () => {
-      res.end.mockClear();
-      res.status.mockClear();
-      await exists('missing.txt', res);
-    });
-
-    it('should set status code', () => {
-      expect(res.status).toHaveBeenCalledWith(404);
-    });
-
-    it('should end response', () => {
-      expect(res.end).toHaveBeenCalled();
-    });
+  it('should throw an error when the file does not exist', async () => {
+    expect.assertions(1);
+    const expected = "Error: ENOENT, no such file or directory 'missing.txt'";
+    try {
+      await exists('missing.txt');
+    } catch (e) {
+      expect(e.toString()).toEqual(expected);
+    }
   });
 });

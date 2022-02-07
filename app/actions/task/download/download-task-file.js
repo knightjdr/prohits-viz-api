@@ -15,10 +15,8 @@ const downloadTaskFile = async (req, res) => {
       const { file, subDirectory } = getSubDirectory(filename);
       completeFilePath = `${config.workDir}${folder}${subDirectory}/${file}`;
     }
-    const fileExists = await exists(completeFilePath, res);
-    if (fileExists) {
-      await readStream(completeFilePath, res);
-    }
+    await exists(completeFilePath, res);
+    readStream(completeFilePath, res);
   } catch (error) {
     logger.error(`download task file - ${error.toString()}`);
     res.status(500);

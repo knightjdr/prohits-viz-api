@@ -64,7 +64,7 @@ describe('Download task file', () => {
       });
 
       it('should set status', () => {
-        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.status).toHaveBeenCalledWith(500);
       });
       it('should end response', () => {
         expect(res.end).toHaveBeenCalled();
@@ -100,7 +100,7 @@ describe('Download task file', () => {
       });
 
       it('should set status', () => {
-        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.status).toHaveBeenCalledWith(500);
       });
 
       it('should end response', () => {
