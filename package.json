@@ -48,7 +48,7 @@
     "mkdirp": "^1.0.4",
     "mongodb": "^4.2.1",
     "multer": "^1.4.4",
-    "nanoid": "^3.1.30",
+    "nanoid": "^3.1.31",
     "node-fetch": "^2.6.6",
     "rimraf": "^3.0.2",
     "socket.io": "^4.4.0",
