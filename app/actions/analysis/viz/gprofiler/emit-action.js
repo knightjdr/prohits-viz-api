@@ -6,7 +6,7 @@ const emitAction = (socket, analysisName, error, response) => {
       data: response && formatResponse(response),
       didError: Boolean(error),
       isProcessing: false,
-      message: error ? 'There was an error performing the analysi' : '',
+      message: error ? 'There was an error performing the analysis' : '',
     },
     name: analysisName,
     type: 'UPDATE_ANALYSIS',

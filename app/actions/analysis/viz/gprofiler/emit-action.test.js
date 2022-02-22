@@ -16,7 +16,7 @@ describe('Emit action for g:Profiler result', () => {
       analysis: {
         didError: true,
         isProcessing: false,
-        message: 'There was an error performing the analysi',
+        message: 'There was an error performing the analysis',
       },
       name: analysisName,
       type: 'UPDATE_ANALYSIS',
